@@ -7,6 +7,7 @@
   <title>MBS Evolution</title>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
@@ -17,6 +18,7 @@
       --muted:#817b78;
       --accent:#b77c6b;
       --accent-soft:#ead8d1;
+      --dark:#121212;
       --radius:25px;
       --shadow:0 2px 10px rgba(0,0,0,.035);
     }
@@ -97,7 +99,7 @@
 
     .hero{
       margin-top:22px;
-      min-height:195px;
+      min-height:155px;
       padding:25px;
       border-radius:30px;
       background:
@@ -105,28 +107,22 @@
         linear-gradient(140deg,#fff,#f1e7e2);
       display:flex;
       flex-direction:column;
-      justify-content:flex-end;
+      justify-content:space-between;
     }
 
     .hero-label{
       font-size:13px;
       color:var(--accent);
-      margin-bottom:auto;
       text-transform:uppercase;
       letter-spacing:.6px;
     }
 
-    .hero h2{
-      font-size:29px;
-      max-width:450px;
-      margin-bottom:9px;
-    }
-
     .hero p{
-      margin:0;
+      margin:25px 0 0;
       color:#655e5a;
       line-height:1.45;
       max-width:470px;
+      font-size:16px;
     }
 
     .grid{
@@ -334,7 +330,11 @@
       height:6px;
       flex:1;
       border-radius:999px;
-      background:linear-gradient(90deg,var(--accent) 38%,#eadfd9 38%);
+      background:linear-gradient(
+        90deg,
+        var(--accent) 38%,
+        #eadfd9 38%
+      );
     }
 
     .duration{
@@ -390,13 +390,26 @@
       font-weight:600;
     }
 
-    .success{
+    .primary:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
+
+    .success,.error{
       padding:13px;
       border-radius:15px;
       margin-top:13px;
       display:none;
+    }
+
+    .success{
       background:#edf4ed;
       color:#4d684d;
+    }
+
+    .error{
+      background:#f8e9e7;
+      color:#8b4d46;
     }
 
     .habits{
@@ -438,7 +451,9 @@
 
     .habit-info{flex:1;}
 
-    .habit-title{font-weight:600;}
+    .habit-title{
+      font-weight:600;
+    }
 
     .habit-meta{
       color:var(--muted);
@@ -546,7 +561,9 @@
       margin-bottom:4px;
     }
 
-    .nav-text{display:block;}
+    .nav-text{
+      display:block;
+    }
 
     @media(max-width:375px){
       h1{font-size:32px}
@@ -560,977 +577,672 @@
 
 <main class="app">
 
-  <!-- HOME -->
-  <section id="home" class="page active">
+<section id="home" class="page active">
 
-    <div class="topline">Bine ai venit ♡</div>
+  <div class="topline">Bine ai venit ♡</div>
 
-    <h1>MBS Evolution</h1>
-    <p class="subtitle">Mind • Body • Soul</p>
+  <h1>MBS Evolution</h1>
+
+  <p class="subtitle">
+    Mind • Body • Soul
+  </p>
+
+  <button
+    class="hero"
+    data-page="checkin"
+    style="border:0;width:100%;text-align:left;color:inherit;"
+  >
+    <div class="hero-label">
+      Check-in de azi
+    </div>
+
+    <p>
+      Observă corpul, emoția, disconfortul și ceea ce ai nevoie
+      în acest moment.
+    </p>
+  </button>
+
+  <div class="section-head">
+    <h3>Explorează</h3>
+  </div>
+
+  <div class="grid">
+
+    <button class="tile" data-page="audio">
+      <div class="tile-icon">▶</div>
+      <div>
+        <div class="tile-title">Audio & Podcasturi</div>
+        <div class="tile-sub">
+          Reflecții, episoade și materiale audio
+        </div>
+      </div>
+    </button>
+
+    <button class="tile" data-page="meditations">
+      <div class="tile-icon">◌</div>
+      <div>
+        <div class="tile-title">Meditații</div>
+        <div class="tile-sub">
+          Spațiu pentru calm și conectare
+        </div>
+      </div>
+    </button>
+
+    <button class="tile" data-page="practices">
+      <div class="tile-icon">◎</div>
+      <div>
+        <div class="tile-title">Practici</div>
+        <div class="tile-sub">
+          Exerciții și procese ghidate
+        </div>
+      </div>
+    </button>
+
+    <button class="tile accent-tile" data-page="habits">
+      <div class="tile-icon">✓</div>
+      <div>
+        <div class="tile-title">Obiceiurile mele</div>
+        <div class="tile-sub">
+          Construiește, urmărește, continuă
+        </div>
+      </div>
+    </button>
+
+    <button class="tile" data-page="nutrition">
+      <div class="tile-icon">◇</div>
+      <div>
+        <div class="tile-title">Alimentație</div>
+        <div class="tile-sub">
+          Rutină și comportamente alimentare
+        </div>
+      </div>
+    </button>
+
+    <button class="tile" data-page="sleep">
+      <div class="tile-icon">☾</div>
+      <div>
+        <div class="tile-title">Somn</div>
+        <div class="tile-sub">
+          Rutine și resurse pentru odihnă
+        </div>
+      </div>
+    </button>
+
+    <button class="tile" data-page="movement">
+      <div class="tile-icon">↗</div>
+      <div>
+        <div class="tile-title">Mișcare</div>
+        <div class="tile-sub">
+          Corpul în mișcare, fără perfecționism
+        </div>
+      </div>
+    </button>
+
+    <button class="tile" data-page="emotional">
+      <div class="tile-icon">♡</div>
+      <div>
+        <div class="tile-title">Psiho-emoțional</div>
+        <div class="tile-sub">
+          Emoții, reacții, nevoi și tipare
+        </div>
+      </div>
+    </button>
+
+    <button class="tile" data-page="answers">
+      <div class="tile-icon">?</div>
+      <div>
+        <div class="tile-title">Răspund la întrebări</div>
+        <div class="tile-sub">
+          Caută după subiect sau hashtag
+        </div>
+      </div>
+    </button>
+
+    <button class="tile" data-page="moment">
+      <div class="tile-icon">✦</div>
+      <div>
+        <div class="tile-title">
+          Pentru momentul în care...
+        </div>
+        <div class="tile-sub">
+          Găsește rapid o resursă potrivită
+        </div>
+      </div>
+    </button>
+
+    <button class="tile wide-tile" data-page="programs">
+      <div class="tile-icon">▦</div>
+      <div>
+        <div class="tile-title">Programele MBS</div>
+        <div class="tile-sub">
+          Descoperă programele disponibile
+        </div>
+      </div>
+    </button>
+
+    <button class="tile wide-tile" data-page="work">
+      <div class="tile-icon">○</div>
+      <div>
+        <div class="tile-title">
+          Cum putem lucra împreună
+        </div>
+        <div class="tile-sub">
+          Sesiuni 1:1 și modalități de colaborare
+        </div>
+      </div>
+    </button>
+
+  </div>
+
+</section>
+
+<!-- CHECK-IN -->
+
+<section id="checkin" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Check-in</h2>
+
+  <p class="subtitle">
+    Observă. Nu trebuie să repari nimic acum.
+  </p>
+
+  <div class="form-card">
+
+    <label>Cum te simți acum?</label>
+
+    <select id="mood">
+      <option>Calmă</option>
+      <option>Bine</option>
+      <option>Obosită</option>
+      <option>Copleșită</option>
+      <option>Anxioasă</option>
+      <option>Tristă</option>
+      <option>Iritată</option>
+      <option>Nu știu exact</option>
+    </select>
+
+    <label>
+      Intensitate:
+      <span id="intensityValue">5</span>/10
+    </label>
+
+    <input
+      id="intensity"
+      type="range"
+      min="1"
+      max="10"
+      value="5"
+    >
+
+    <label>Ce observi în corp?</label>
+
+    <textarea
+      id="bodyFeeling"
+      placeholder="Tensiune, durere, greutate, energie..."
+    ></textarea>
+
+    <label>
+      Ce te deranjează cel mai mult acum?
+    </label>
+
+    <textarea
+      id="painNow"
+      placeholder="Scrie ce este prezent acum..."
+    ></textarea>
+
+    <label>
+      Ce îți dorești în acest moment?
+    </label>
+
+    <textarea
+      id="wishNow"
+      placeholder="Odihnă, claritate, apropiere, spațiu..."
+    ></textarea>
 
     <button
-      class="hero"
-      data-page="checkin"
-      style="border:0;width:100%;text-align:left;color:inherit;"
+      class="primary"
+      id="saveCheckin"
     >
-      <div class="hero-label">Check-in de azi</div>
-
-      <h2>Cum ești chiar acum?</h2>
-
-      <p>
-        Observă corpul, emoția, disconfortul și ceea ce ai nevoie
-        în acest moment.
-      </p>
+      Salvează check-in-ul
     </button>
-
-    <div class="section-head">
-      <h3>Explorează</h3>
-    </div>
-
-    <div class="grid">
-
-      <button class="tile" data-page="audio">
-        <div class="tile-icon">▶</div>
-        <div>
-          <div class="tile-title">Audio & Podcasturi</div>
-          <div class="tile-sub">
-            Reflecții, episoade și materiale audio
-          </div>
-        </div>
-      </button>
-
-      <button class="tile" data-page="meditations">
-        <div class="tile-icon">◌</div>
-        <div>
-          <div class="tile-title">Meditații</div>
-          <div class="tile-sub">
-            Spațiu pentru calm și conectare
-          </div>
-        </div>
-      </button>
-
-      <button class="tile" data-page="practices">
-        <div class="tile-icon">◎</div>
-        <div>
-          <div class="tile-title">Practici</div>
-          <div class="tile-sub">
-            Exerciții și procese ghidate
-          </div>
-        </div>
-      </button>
-
-      <button class="tile accent-tile" data-page="habits">
-        <div class="tile-icon">✓</div>
-        <div>
-          <div class="tile-title">Obiceiurile mele</div>
-          <div class="tile-sub">
-            Construiește, urmărește, continuă
-          </div>
-        </div>
-      </button>
-
-      <button class="tile" data-page="nutrition">
-        <div class="tile-icon">◇</div>
-        <div>
-          <div class="tile-title">Alimentație</div>
-          <div class="tile-sub">
-            Rutină și comportamente alimentare
-          </div>
-        </div>
-      </button>
-
-      <button class="tile" data-page="sleep">
-        <div class="tile-icon">☾</div>
-        <div>
-          <div class="tile-title">Somn</div>
-          <div class="tile-sub">
-            Rutine și resurse pentru odihnă
-          </div>
-        </div>
-      </button>
-
-      <button class="tile" data-page="movement">
-        <div class="tile-icon">↗</div>
-        <div>
-          <div class="tile-title">Mișcare</div>
-          <div class="tile-sub">
-            Corpul în mișcare, fără perfecționism
-          </div>
-        </div>
-      </button>
-
-      <button class="tile" data-page="emotional">
-        <div class="tile-icon">♡</div>
-        <div>
-          <div class="tile-title">Psiho-emoțional</div>
-          <div class="tile-sub">
-            Emoții, reacții, nevoi și tipare
-          </div>
-        </div>
-      </button>
-
-      <button class="tile" data-page="answers">
-        <div class="tile-icon">?</div>
-        <div>
-          <div class="tile-title">Răspund la întrebări</div>
-          <div class="tile-sub">
-            Caută după subiect sau hashtag
-          </div>
-        </div>
-      </button>
-
-      <button class="tile" data-page="moment">
-        <div class="tile-icon">✦</div>
-        <div>
-          <div class="tile-title">
-            Pentru momentul în care...
-          </div>
-          <div class="tile-sub">
-            Găsește rapid o resursă potrivită
-          </div>
-        </div>
-      </button>
-
-      <button class="tile wide-tile" data-page="programs">
-        <div class="tile-icon">▦</div>
-        <div>
-          <div class="tile-title">Programele MBS</div>
-          <div class="tile-sub">
-            Descoperă programele disponibile
-          </div>
-        </div>
-      </button>
-
-      <button class="tile wide-tile" data-page="work">
-        <div class="tile-icon">○</div>
-        <div>
-          <div class="tile-title">
-            Cum putem lucra împreună
-          </div>
-          <div class="tile-sub">
-            Sesiuni 1:1 și modalități de colaborare
-          </div>
-        </div>
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- PRACTICI -->
-  <section id="practices" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Practici</h2>
-
-    <p class="subtitle">
-      Alege practica potrivită momentului tău.
-    </p>
-
-    <div class="search">
-      <span>⌕</span>
-      <input
-        id="practiceSearch"
-        type="text"
-        placeholder="Caută o practică..."
-      >
-    </div>
-
-    <div class="tags" id="practiceTags">
-      <button class="tag active" data-filter="all">Toate</button>
-      <button class="tag" data-filter="corp">#corp</button>
-      <button class="tag" data-filter="emotii">#emoții</button>
-      <button class="tag" data-filter="reactii">#reacții</button>
-      <button class="tag" data-filter="somn">#somn</button>
-      <button class="tag" data-filter="relatii">#relații</button>
-    </div>
-
-    <div class="stack" id="practiceList"></div>
-
-  </section>
-
-
-  <!-- AUDIO -->
-  <section id="audio" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Audio & Podcasturi</h2>
-
-    <p class="subtitle">
-      Ascultă, salvează și revino când ai nevoie.
-    </p>
-
-    <div class="search">
-      <span>⌕</span>
-      <input
-        id="audioSearch"
-        type="text"
-        placeholder="Caută audio..."
-      >
-    </div>
-
-    <div class="tags" id="audioTags">
-      <button class="tag active" data-filter="all">Toate</button>
-      <button class="tag" data-filter="obiceiuri">#obiceiuri</button>
-      <button class="tag" data-filter="emotii">#emoții</button>
-      <button class="tag" data-filter="corp">#corp</button>
-      <button class="tag" data-filter="relatii">#relații</button>
-    </div>
-
-    <div class="stack" id="audioList"></div>
-
-  </section>
-
-
-  <!-- MEDITATII -->
-  <section id="meditations" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Meditații</h2>
-
-    <p class="subtitle">
-      Alege în funcție de ce ai nevoie acum.
-    </p>
-
-    <div class="stack" style="margin-top:20px;">
-
-      <div class="content-card">
-        <div class="content-title">
-          Întoarcerea în corp
-        </div>
-        <div class="meta">
-          7 minute • conectare
-        </div>
-        <div class="play-row">
-          <button class="play">▶</button>
-          <div class="wave"></div>
-          <div class="duration">7:00</div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-title">
-          Înainte de somn
-        </div>
-        <div class="meta">
-          10 minute • relaxare
-        </div>
-        <div class="play-row">
-          <button class="play">▶</button>
-          <div class="wave"></div>
-          <div class="duration">10:00</div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-title">
-          Când simți că e prea mult
-        </div>
-        <div class="meta">
-          5 minute • reglare
-        </div>
-        <div class="play-row">
-          <button class="play">▶</button>
-          <div class="wave"></div>
-          <div class="duration">5:00</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- ANSWERS -->
-  <section id="answers" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Răspund la întrebări</h2>
-
-    <p class="subtitle">
-      Caută tema care te interesează.
-    </p>
-
-    <div class="search">
-      <span>⌕</span>
-      <input
-        id="answerSearch"
-        type="text"
-        placeholder="Caută..."
-      >
-    </div>
-
-    <div class="tags" id="answerTags">
-      <button class="tag active" data-filter="all">Toate</button>
-      <button class="tag" data-filter="anxietate">#anxietate</button>
-      <button class="tag" data-filter="relatii">#relații</button>
-      <button class="tag" data-filter="corp">#corp</button>
-      <button class="tag" data-filter="obiceiuri">#obiceiuri</button>
-      <button class="tag" data-filter="somn">#somn</button>
-    </div>
-
-    <div class="stack" id="answerList"></div>
-
-  </section>
-
-
-  <!-- HABITS -->
-  <section id="habits" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Obiceiurile mele</h2>
-
-    <p class="subtitle">
-      Consecvență, nu perfecțiune.
-    </p>
-
-    <div class="section-head">
-      <h3>Astăzi</h3>
-      <span id="habitCount" class="meta">0/0</span>
-    </div>
-
-    <div class="progress-wrap">
-
-      <div class="progress-head">
-        <strong>Progresul zilei</strong>
-        <span id="habitPercent">0%</span>
-      </div>
-
-      <div class="progress-track">
-        <div
-          class="progress-fill"
-          id="habitProgress"
-        ></div>
-      </div>
-
-    </div>
-
-    <div class="habits" id="habitList"></div>
-
-    <div class="form-card">
-
-      <label for="newHabit">
-        Adaugă un obicei
-      </label>
-
-      <input
-        id="newHabit"
-        type="text"
-        placeholder="Ex: 10 minute de mișcare"
-      >
-
-      <button class="primary" id="addHabit">
-        Adaugă
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- CHECKIN -->
-  <section id="checkin" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Check-in</h2>
-
-    <p class="subtitle">
-      Observă. Nu trebuie să repari nimic acum.
-    </p>
-
-    <div class="form-card">
-
-      <label>Cum te simți acum?</label>
-
-      <select id="mood">
-        <option>Calmă</option>
-        <option>Bine</option>
-        <option>Obosită</option>
-        <option>Copleșită</option>
-        <option>Anxioasă</option>
-        <option>Tristă</option>
-        <option>Iritată</option>
-        <option>Nu știu exact</option>
-      </select>
-
-      <label>
-        Intensitate:
-        <span id="intensityValue">5</span>/10
-      </label>
-
-      <input
-        id="intensity"
-        type="range"
-        min="1"
-        max="10"
-        value="5"
-      >
-
-      <label>Ce observi în corp?</label>
-
-      <textarea
-        id="bodyFeeling"
-        placeholder="Tensiune, durere, greutate, energie..."
-      ></textarea>
-
-      <label>
-        Ce te deranjează cel mai mult acum?
-      </label>
-
-      <textarea
-        id="painNow"
-        placeholder="Scrie ce este prezent acum..."
-      ></textarea>
-
-      <label>
-        Ce îți dorești în acest moment?
-      </label>
-
-      <textarea
-        id="wishNow"
-        placeholder="Odihnă, claritate, apropiere, spațiu..."
-      ></textarea>
-
-      <button
-        class="primary"
-        id="saveCheckin"
-      >
-        Salvează check-in-ul
-      </button>
-
-      <div
-        class="success"
-        id="checkinSaved"
-      >
-        Check-in salvat ♡
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- NUTRITION -->
-  <section id="nutrition" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Alimentație</h2>
-
-    <p class="subtitle">
-      Relația cu mâncarea, rutină și alegeri conștiente.
-    </p>
-
-    <div class="stack" style="margin-top:20px;">
-
-      <div class="content-card">
-        <div class="content-title">
-          Foame sau nevoie de reglare?
-        </div>
-        <div class="meta">
-          Practică • 5 minute
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-title">
-          Mâncatul pe pilot automat
-        </div>
-        <div class="meta">
-          Audio • 8 minute
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-title">
-          Rutina meselor
-        </div>
-        <div class="meta">
-          Ghid practic
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- SLEEP -->
-  <section id="sleep" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Somn</h2>
-
-    <p class="subtitle">
-      Observă ritmul și construiește o rutină sustenabilă.
-    </p>
-
-    <div class="stack" style="margin-top:20px;">
-
-      <div class="content-card">
-        <div class="content-title">
-          Închiderea zilei
-        </div>
-        <div class="meta">
-          Practică de seară • 7 minute
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-title">
-          Mintea care nu se oprește
-        </div>
-        <div class="meta">
-          Audio • 9 minute
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- MOVEMENT -->
-  <section id="movement" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Mișcare</h2>
-
-    <p class="subtitle">
-      Mișcare ca grijă pentru corp, nu ca pedeapsă.
-    </p>
-
-    <div class="stack" style="margin-top:20px;">
-
-      <div class="content-card">
-        <div class="content-title">
-          10 minute contează
-        </div>
-        <div class="meta">
-          Practică
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-title">
-          Totul sau nimic în mișcare
-        </div>
-        <div class="meta">
-          Audio
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- EMOTIONAL -->
-  <section id="emotional" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Psiho-emoțional</h2>
-
-    <p class="subtitle">
-      Înțelege mecanismul din spatele reacției.
-    </p>
-
-    <div class="grid" style="margin-top:20px;">
-
-      <button class="tile" data-page="practices">
-        <div class="tile-icon">◎</div>
-        <div class="tile-title">
-          Reacții automate
-        </div>
-      </button>
-
-      <button class="tile" data-page="practices">
-        <div class="tile-icon">♡</div>
-        <div class="tile-title">
-          Emoții
-        </div>
-      </button>
-
-      <button class="tile">
-        <div class="tile-icon">↻</div>
-        <div class="tile-title">
-          Tipare
-        </div>
-      </button>
-
-      <button class="tile">
-        <div class="tile-icon">○</div>
-        <div class="tile-title">
-          Nevoi
-        </div>
-      </button>
-
-      <button class="tile">
-        <div class="tile-icon">⇄</div>
-        <div class="tile-title">
-          Relații
-        </div>
-      </button>
-
-      <button class="tile">
-        <div class="tile-icon">│</div>
-        <div class="tile-title">
-          Limite
-        </div>
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- MOMENT -->
-  <section id="moment" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Pentru momentul în care...</h2>
-
-    <p class="subtitle">
-      Alege ce se apropie cel mai mult de ceea ce trăiești acum.
-    </p>
-
-    <div class="stack" style="margin-top:20px;">
-
-      <button
-        class="content-card"
-        data-page="meditations"
-        style="border:0;text-align:left;color:inherit;"
-      >
-        <div class="content-title">
-          Mă simt copleșită
-        </div>
-        <div class="meta">
-          Vezi resursele recomandate →
-        </div>
-      </button>
-
-      <button
-        class="content-card"
-        data-page="sleep"
-        style="border:0;text-align:left;color:inherit;"
-      >
-        <div class="content-title">
-          Nu pot dormi
-        </div>
-        <div class="meta">
-          Vezi resursele recomandate →
-        </div>
-      </button>
-
-      <button
-        class="content-card"
-        data-page="nutrition"
-        style="border:0;text-align:left;color:inherit;"
-      >
-        <div class="content-title">
-          Vreau să mănânc, dar nu îmi este foame
-        </div>
-        <div class="meta">
-          Vezi resursele recomandate →
-        </div>
-      </button>
-
-      <button
-        class="content-card"
-        data-page="emotional"
-        style="border:0;text-align:left;color:inherit;"
-      >
-        <div class="content-title">
-          Am reacționat și acum regret
-        </div>
-        <div class="meta">
-          Vezi resursele recomandate →
-        </div>
-      </button>
-
-      <button
-        class="content-card"
-        data-page="emotional"
-        style="border:0;text-align:left;color:inherit;"
-      >
-        <div class="content-title">
-          Nu știu ce simt
-        </div>
-        <div class="meta">
-          Vezi resursele recomandate →
-        </div>
-      </button>
-
-      <button
-        class="content-card"
-        data-page="movement"
-        style="border:0;text-align:left;color:inherit;"
-      >
-        <div class="content-title">
-          Nu am energie
-        </div>
-        <div class="meta">
-          Vezi resursele recomandate →
-        </div>
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- PROGRAMS -->
-  <section id="programs" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Programele MBS</h2>
-
-    <p class="subtitle">
-      Resurse și procese structurate pentru diferite etape.
-    </p>
-
-    <div class="stack" style="margin-top:20px;">
-
-      <div class="content-card">
-
-        <div class="content-top">
-
-          <div>
-            <div class="content-title">
-              MBS Evolution
-            </div>
-
-            <div class="meta">
-              Program de evoluție integrativă
-            </div>
-          </div>
-
-          <span class="mini-tag">
-            MBS
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="content-card">
-        <div class="content-title">
-          Obiceiuri care rămân
-        </div>
-
-        <div class="meta">
-          Comportamente și consecvență
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- WORK -->
-  <section id="work" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Cum putem lucra împreună</h2>
-
-    <p class="subtitle">
-      Alege formatul potrivit pentru tine.
-    </p>
-
-    <div class="stack" style="margin-top:20px;">
-
-      <div class="content-card">
-
-        <div class="content-title">
-          Sesiune individuală 1:1
-        </div>
-
-        <div class="meta">
-          Spațiu individual de explorare și lucru
-        </div>
-
-        <button
-          class="primary"
-          id="bookSession"
-        >
-          Programează o sesiune
-        </button>
-
-      </div>
-
-      <div class="content-card">
-
-        <div class="content-title">
-          Programe MBS
-        </div>
-
-        <div class="meta">
-          Procese structurate și materiale ghidate
-        </div>
-
-        <button
-          class="primary"
-          data-page="programs"
-        >
-          Vezi programele
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- EVOLUTION -->
-  <section id="evolution" class="page">
-
-    <div class="topline">
-      Spațiul tău
-    </div>
-
-    <h2>Evoluția mea</h2>
-
-    <p class="subtitle">
-      Obiceiuri, check-in și progres.
-    </p>
-
-    <div class="grid" style="margin-top:22px;">
-
-      <button
-        class="tile accent-tile"
-        data-page="habits"
-      >
-        <div class="tile-icon">✓</div>
-
-        <div>
-          <div class="tile-title">
-            Obiceiurile mele
-          </div>
-          <div class="tile-sub">
-            Tracker zilnic
-          </div>
-        </div>
-      </button>
-
-      <button
-        class="tile"
-        data-page="checkin"
-      >
-        <div class="tile-icon">♡</div>
-
-        <div>
-          <div class="tile-title">
-            Check-in
-          </div>
-          <div class="tile-sub">
-            Cum sunt acum?
-          </div>
-        </div>
-      </button>
-
-      <button
-        class="tile"
-        data-page="programs"
-      >
-        <div class="tile-icon">▦</div>
-
-        <div>
-          <div class="tile-title">
-            Programe
-          </div>
-          <div class="tile-sub">
-            Resurse disponibile
-          </div>
-        </div>
-      </button>
-
-      <button class="tile">
-        <div class="tile-icon">↗</div>
-
-        <div>
-          <div class="tile-title">
-            Progres
-          </div>
-          <div class="tile-sub">
-            În curând
-          </div>
-        </div>
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- FAVORITES -->
-  <section id="favorites" class="page">
-
-    <div class="topline">
-      Biblioteca ta
-    </div>
-
-    <h2>Favorite</h2>
-
-    <div class="search">
-      <span>⌕</span>
-
-      <input
-        id="favoriteSearch"
-        type="text"
-        placeholder="Caută în favorite..."
-      >
-    </div>
 
     <div
-      class="stack"
-      id="favoriteList"
-    ></div>
+      class="success"
+      id="checkinSaved"
+    >
+      Check-in salvat ♡
+    </div>
 
-  </section>
+  </div>
+
+</section>
+
+<!-- PRACTICI -->
+
+<section id="practices" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Practici</h2>
+
+  <p class="subtitle">
+    Alege practica potrivită momentului tău.
+  </p>
+
+  <div class="stack" style="margin-top:20px;">
+
+    <div class="content-card">
+      <div class="content-title">
+        Observarea reacției automate
+      </div>
+      <div class="meta">
+        Practică ghidată • 5 min
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Întoarcerea în corp
+      </div>
+      <div class="meta">
+        Conștientizare • 7 min
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Pauza dintre impuls și alegere
+      </div>
+      <div class="meta">
+        Practică • 3 min
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- AUDIO -->
+
+<section id="audio" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Audio & Podcasturi</h2>
+
+  <p class="subtitle">
+    Ascultă și revino când ai nevoie.
+  </p>
+
+  <div class="stack" style="margin-top:20px;">
+
+    <div class="content-card">
+      <div class="content-title">
+        De ce repetăm comportamente pe care vrem să le schimbăm?
+      </div>
+      <div class="meta">
+        Podcast • 8:24
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Când corpul spune primul că este prea mult
+      </div>
+      <div class="meta">
+        Audio • 6:10
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- MEDITATII -->
+
+<section id="meditations" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Meditații</h2>
+
+  <p class="subtitle">
+    Alege în funcție de ce ai nevoie acum.
+  </p>
+
+  <div class="stack" style="margin-top:20px;">
+
+    <div class="content-card">
+      <div class="content-title">
+        Întoarcerea în corp
+      </div>
+      <div class="meta">
+        7 minute • conectare
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Înainte de somn
+      </div>
+      <div class="meta">
+        10 minute • relaxare
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Când simți că e prea mult
+      </div>
+      <div class="meta">
+        5 minute • reglare
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ALIMENTATIE -->
+
+<section id="nutrition" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Alimentație</h2>
+
+  <p class="subtitle">
+    Relația cu mâncarea, rutină și alegeri conștiente.
+  </p>
+
+</section>
+
+<!-- SOMN -->
+
+<section id="sleep" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Somn</h2>
+
+  <p class="subtitle">
+    Rutine și resurse pentru odihnă.
+  </p>
+
+</section>
+
+<!-- MISCARE -->
+
+<section id="movement" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Mișcare</h2>
+
+  <p class="subtitle">
+    Mișcare ca grijă pentru corp.
+  </p>
+
+</section>
+
+<!-- PSIHO EMOTIONAL -->
+
+<section id="emotional" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Psiho-emoțional</h2>
+
+  <p class="subtitle">
+    Emoții, reacții, nevoi și tipare.
+  </p>
+
+</section>
+
+<!-- INTREBARI -->
+
+<section id="answers" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Răspund la întrebări</h2>
+
+  <p class="subtitle">
+    Răspunsuri la întrebări frecvente.
+  </p>
+
+</section>
+
+<!-- MOMENT -->
+
+<section id="moment" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Pentru momentul în care...</h2>
+
+  <div class="stack" style="margin-top:20px;">
+
+    <div class="content-card">
+      <div class="content-title">
+        Mă simt copleșită
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Nu pot dormi
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Vreau să mănânc, dar nu îmi este foame
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Am reacționat și acum regret
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-title">
+        Nu știu ce simt
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PROGRAME -->
+
+<section id="programs" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Programele MBS</h2>
+
+  <p class="subtitle">
+    Procese și resurse structurate.
+  </p>
+
+</section>
+
+<!-- WORK -->
+
+<section id="work" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Cum putem lucra împreună</h2>
+
+  <div class="content-card" style="margin-top:20px;">
+
+    <div class="content-title">
+      Sesiune individuală 1:1
+    </div>
+
+    <div class="meta">
+      Spațiu individual de explorare și lucru
+    </div>
+
+  </div>
+
+</section>
+
+<!-- HABITS -->
+
+<section id="habits" class="page">
+
+  <button class="back" data-page="home">
+    ‹ Înapoi
+  </button>
+
+  <h2>Obiceiurile mele</h2>
+
+  <p class="subtitle">
+    Consecvență, nu perfecțiune.
+  </p>
+
+  <div class="section-head">
+    <h3>Astăzi</h3>
+    <span id="habitCount" class="meta">0/0</span>
+  </div>
+
+  <div class="progress-wrap">
+
+    <div class="progress-head">
+      <strong>Progresul zilei</strong>
+      <span id="habitPercent">0%</span>
+    </div>
+
+    <div class="progress-track">
+      <div
+        class="progress-fill"
+        id="habitProgress"
+      ></div>
+    </div>
+
+  </div>
+
+  <div
+    class="habits"
+    id="habitList"
+  ></div>
+
+  <div class="form-card">
+
+    <label for="newHabit">
+      Adaugă un obicei
+    </label>
+
+    <input
+      id="newHabit"
+      type="text"
+      placeholder="Ex: 10 minute de mișcare"
+    >
+
+    <button
+      class="primary"
+      id="addHabit"
+    >
+      Adaugă
+    </button>
+
+  </div>
+
+</section>
+
+<!-- EVOLUTION -->
+
+<section id="evolution" class="page">
+
+  <div class="topline">
+    Spațiul tău
+  </div>
+
+  <h2>Evoluția mea</h2>
+
+  <div class="grid" style="margin-top:22px;">
+
+    <button
+      class="tile accent-tile"
+      data-page="habits"
+    >
+      <div class="tile-icon">✓</div>
+
+      <div>
+        <div class="tile-title">
+          Obiceiurile mele
+        </div>
+      </div>
+    </button>
+
+    <button
+      class="tile"
+      data-page="checkin"
+    >
+      <div class="tile-icon">♡</div>
+
+      <div>
+        <div class="tile-title">
+          Check-in
+        </div>
+      </div>
+    </button>
+
+  </div>
+
+</section>
+
+<!-- FAVORITES -->
+
+<section id="favorites" class="page">
+
+  <div class="topline">
+    Biblioteca ta
+  </div>
+
+  <h2>Favorite</h2>
+
+  <div class="empty">
+    ♡
+    <br><br>
+    Materialele salvate vor apărea aici.
+  </div>
+
+</section>
 
 </main>
-
-
-<!-- NAVIGATION -->
 
 <nav class="nav">
 
@@ -1559,1081 +1271,337 @@
 
 </nav>
 
-
 <script>
 
-  /* =========================================
-     TELEGRAM
-  ========================================= */
+const pages =
+  document.querySelectorAll(".page");
 
-  const tg = window.Telegram?.WebApp;
+const navButtons =
+  document.querySelectorAll(".nav button");
 
-  if (tg) {
-    tg.ready();
-    tg.expand();
+const pageButtons =
+  document.querySelectorAll("[data-page]");
+
+
+function openPage(id){
+
+  pages.forEach(page => {
+    page.classList.remove("active");
+  });
+
+  const page =
+    document.getElementById(id);
+
+  if(page){
+    page.classList.add("active");
   }
 
+  navButtons.forEach(button => {
 
-  /* =========================================
-     NAVIGARE
-  ========================================= */
+    button.classList.toggle(
+      "active",
+      button.dataset.page === id
+    );
 
-  const pages =
-    document.querySelectorAll(".page");
+  });
 
-  const navButtons =
-    document.querySelectorAll(".nav button");
-
-  function openPage(id) {
-
-    pages.forEach(page => {
-      page.classList.remove("active");
-    });
-
-    const target =
-      document.getElementById(id);
-
-    if (target) {
-      target.classList.add("active");
-    }
-
-    navButtons.forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.page === id
-      );
-
-    });
-
-    window.scrollTo(0,0);
-  }
+  window.scrollTo(0,0);
+}
 
 
-  document.addEventListener("click", event => {
+pageButtons.forEach(button => {
 
-    const button =
-      event.target.closest("[data-page]");
-
-    if (!button) return;
+  button.addEventListener("click", () => {
 
     const page =
       button.dataset.page;
 
-    if (page) {
+    if(page){
       openPage(page);
     }
 
   });
 
-
-  /* =========================================
-     CONTENT
-  ========================================= */
-
-  const practices = [
-
-    {
-      id:"p1",
-      title:"Observarea reacției automate",
-      meta:"Practică ghidată • 5 min",
-      tags:["reactii","emotii"],
-      display:["#reacții","#emoții"]
-    },
-
-    {
-      id:"p2",
-      title:"Întoarcerea în corp",
-      meta:"Conștientizare • 7 min",
-      tags:["corp","emotii"],
-      display:["#corp","#emoții"]
-    },
-
-    {
-      id:"p3",
-      title:"Pauza dintre impuls și alegere",
-      meta:"Practică • 3 min",
-      tags:["reactii"],
-      display:["#reacții"]
-    },
-
-    {
-      id:"p4",
-      title:"Închiderea zilei",
-      meta:"Practică de seară • 7 min",
-      tags:["somn","corp"],
-      display:["#somn","#corp"]
-    },
-
-    {
-      id:"p5",
-      title:"Ce se activează în relație?",
-      meta:"Autoexplorare • 10 min",
-      tags:["relatii","emotii"],
-      display:["#relații","#emoții"]
-    }
-
-  ];
+});
 
 
-  const audios = [
+/* =========================
+   HABITS
+========================= */
 
-    {
-      id:"a1",
-      title:"De ce repetăm comportamente pe care vrem să le schimbăm?",
-      meta:"Podcast • 8:24",
-      duration:"8:24",
-      tags:["obiceiuri","emotii"],
-      display:["#obiceiuri","#emoții"]
-    },
-
-    {
-      id:"a2",
-      title:"Când corpul spune primul că este prea mult",
-      meta:"Audio • 6:10",
-      duration:"6:10",
-      tags:["corp","emotii"],
-      display:["#corp","#emoții"]
-    },
-
-    {
-      id:"a3",
-      title:"De ce reacționezi diferit în relații?",
-      meta:"Podcast • 11:40",
-      duration:"11:40",
-      tags:["relatii","emotii"],
-      display:["#relații","#emoții"]
-    }
-
-  ];
+let habits =
+  JSON.parse(
+    localStorage.getItem("mbsHabits") ||
+    JSON.stringify([
+      {
+        id:1,
+        title:"Apă dimineața",
+        done:false
+      },
+      {
+        id:2,
+        title:"10 minute de mișcare",
+        done:false
+      },
+      {
+        id:3,
+        title:"Pauză conștientă",
+        done:false
+      }
+    ])
+  );
 
 
-  const answers = [
+function saveHabits(){
 
-    {
-      id:"q1",
-      title:"De ce mă simt anxioasă chiar dacă nu s-a întâmplat nimic?",
-      meta:"Răspuns audio • 4 min",
-      duration:"4:00",
-      tags:["anxietate","corp"],
-      display:["#anxietate","#corp"]
-    },
+  localStorage.setItem(
+    "mbsHabits",
+    JSON.stringify(habits)
+  );
 
-    {
-      id:"q2",
-      title:"De ce știu ce trebuie să fac, dar tot nu fac?",
-      meta:"Răspuns audio • 5 min",
-      duration:"5:00",
-      tags:["obiceiuri"],
-      display:["#obiceiuri"]
-    },
-
-    {
-      id:"q3",
-      title:"De ce mă activează atât de tare anumite persoane?",
-      meta:"Răspuns audio • 6 min",
-      duration:"6:00",
-      tags:["relatii"],
-      display:["#relații"]
-    },
-
-    {
-      id:"q4",
-      title:"De ce nu pot adormi când sunt obosită?",
-      meta:"Răspuns audio • 4 min",
-      duration:"4:00",
-      tags:["somn","anxietate"],
-      display:["#somn","#anxietate"]
-    }
-
-  ];
+}
 
 
-  /* =========================================
-     FAVORITE
-  ========================================= */
+function renderHabits(){
 
-  let favorites =
-    JSON.parse(
-      localStorage.getItem("mbsFavorites") || "[]"
-    );
+  const list =
+    document.getElementById("habitList");
+
+  if(!list) return;
 
 
-  function saveFavorites() {
+  list.innerHTML =
+    habits.map(habit => `
 
-    localStorage.setItem(
-      "mbsFavorites",
-      JSON.stringify(favorites)
-    );
+      <div class="habit ${
+        habit.done ? "done" : ""
+      }">
 
-  }
+        <button
+          class="habit-check"
+          data-habit="${habit.id}"
+        ></button>
 
+        <div class="habit-info">
 
-  function isFavorite(id,type) {
-
-    return favorites.includes(
-      type + ":" + id
-    );
-
-  }
-
-
-  function toggleFavorite(id,type) {
-
-    const key =
-      type + ":" + id;
-
-    if (favorites.includes(key)) {
-
-      favorites =
-        favorites.filter(
-          item => item !== key
-        );
-
-    } else {
-
-      favorites.push(key);
-
-    }
-
-    saveFavorites();
-    renderAll();
-
-  }
-
-
-  function cardHTML(
-    item,
-    type,
-    withPlayer=false
-  ) {
-
-    return `
-      <div class="content-card">
-
-        <div class="content-top">
-
-          <div>
-
-            <div class="content-title">
-              ${item.title}
-            </div>
-
-            <div class="meta">
-              ${item.meta}
-            </div>
-
+          <div class="habit-title">
+            ${habit.title}
           </div>
 
-        </div>
-
-        <div class="mini-tags">
-
-          ${item.display
-            .map(tag =>
-              `<span class="mini-tag">${tag}</span>`
-            )
-            .join("")}
-
-        </div>
-
-        ${
-          withPlayer
-          ? `
-            <div class="play-row">
-              <button
-                class="play"
-                type="button"
-              >
-                ▶
-              </button>
-
-              <div class="wave"></div>
-
-              <div class="duration">
-                ${item.duration}
-              </div>
-            </div>
-          `
-          : ""
-        }
-
-        <div class="actions">
-
-          <button
-            class="action-btn ${
-              isFavorite(item.id,type)
-              ? "liked"
-              : ""
-            }"
-            data-favorite="${item.id}"
-            data-type="${type}"
-          >
+          <div class="habit-meta">
 
             ${
-              isFavorite(item.id,type)
-              ? "♥ Salvat"
-              : "♡ Salvează"
+              habit.done
+              ? "Completat astăzi"
+              : "De făcut astăzi"
             }
 
-          </button>
+          </div>
 
         </div>
 
       </div>
-    `;
 
-  }
-
-
-  let practiceFilter="all";
-  let audioFilter="all";
-  let answerFilter="all";
+    `).join("");
 
 
-  function renderItems(
-    items,
-    containerId,
-    type,
-    searchId,
-    filter,
-    withPlayer
-  ) {
+  list
+    .querySelectorAll("[data-habit]")
+    .forEach(button => {
 
-    const container =
-      document.getElementById(containerId);
+      button.addEventListener(
+        "click",
+        () => {
 
-    if (!container) return;
+          const id =
+            Number(button.dataset.habit);
 
-    const search =
-      (
-        document.getElementById(searchId)?.value || ""
-      )
-      .trim()
-      .toLowerCase();
+          habits =
+            habits.map(habit =>
 
+              habit.id === id
+              ? {
+                  ...habit,
+                  done:!habit.done
+                }
+              : habit
 
-    const filtered =
-      items.filter(item => {
+            );
 
-        const tagMatch =
-          filter === "all" ||
-          item.tags.includes(filter);
+          saveHabits();
+          renderHabits();
 
-        const searchMatch =
-          !search ||
-          item.title
-            .toLowerCase()
-            .includes(search) ||
-          item.display
-            .join(" ")
-            .toLowerCase()
-            .includes(search);
-
-        return tagMatch && searchMatch;
-
-      });
-
-
-    if (!filtered.length) {
-
-      container.innerHTML = `
-        <div class="empty">
-          Nu am găsit materiale pentru această căutare.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    container.innerHTML =
-      filtered
-        .map(item =>
-          cardHTML(
-            item,
-            type,
-            withPlayer
-          )
-        )
-        .join("");
-
-  }
-
-
-  function renderAll() {
-
-    renderItems(
-      practices,
-      "practiceList",
-      "practice",
-      "practiceSearch",
-      practiceFilter,
-      false
-    );
-
-    renderItems(
-      audios,
-      "audioList",
-      "audio",
-      "audioSearch",
-      audioFilter,
-      true
-    );
-
-    renderItems(
-      answers,
-      "answerList",
-      "answer",
-      "answerSearch",
-      answerFilter,
-      true
-    );
-
-    renderFavorites();
-
-  }
-
-
-  /* =========================================
-     FILTER TAGS
-  ========================================= */
-
-  function bindTagGroup(
-    id,
-    setter
-  ) {
-
-    const group =
-      document.getElementById(id);
-
-    if (!group) return;
-
-
-    group.addEventListener(
-      "click",
-      event => {
-
-        const button =
-          event.target.closest(".tag");
-
-        if (!button) return;
-
-
-        group
-          .querySelectorAll(".tag")
-          .forEach(item => {
-            item.classList.remove("active");
-          });
-
-
-        button.classList.add("active");
-
-        setter(
-          button.dataset.filter
-        );
-
-        renderAll();
-
-      }
-    );
-
-  }
-
-
-  bindTagGroup(
-    "practiceTags",
-    value => practiceFilter=value
-  );
-
-  bindTagGroup(
-    "audioTags",
-    value => audioFilter=value
-  );
-
-  bindTagGroup(
-    "answerTags",
-    value => answerFilter=value
-  );
-
-
-  [
-    "practiceSearch",
-    "audioSearch",
-    "answerSearch"
-  ]
-  .forEach(id => {
-
-    document
-      .getElementById(id)
-      ?.addEventListener(
-        "input",
-        renderAll
+        }
       );
+
+    });
+
+
+  const done =
+    habits.filter(
+      habit => habit.done
+    ).length;
+
+  const total =
+    habits.length;
+
+  const percent =
+    total
+    ? Math.round(done / total * 100)
+    : 0;
+
+
+  document.getElementById(
+    "habitCount"
+  ).textContent =
+    `${done}/${total}`;
+
+
+  document.getElementById(
+    "habitPercent"
+  ).textContent =
+    `${percent}%`;
+
+
+  document.getElementById(
+    "habitProgress"
+  ).style.width =
+    `${percent}%`;
+
+}
+
+
+document
+  .getElementById("addHabit")
+  ?.addEventListener("click", () => {
+
+    const input =
+      document.getElementById("newHabit");
+
+    const title =
+      input.value.trim();
+
+    if(!title) return;
+
+
+    habits.push({
+      id:Date.now(),
+      title:title,
+      done:false
+    });
+
+
+    input.value="";
+
+    saveHabits();
+    renderHabits();
 
   });
 
 
-  /* =========================================
-     FAVORITE EVENTS
-  ========================================= */
+/* =========================
+   CHECK-IN
+========================= */
 
-  document.addEventListener(
+const intensity =
+  document.getElementById("intensity");
+
+
+intensity?.addEventListener(
+  "input",
+  () => {
+
+    document.getElementById(
+      "intensityValue"
+    ).textContent =
+      intensity.value;
+
+  }
+);
+
+
+document
+  .getElementById("saveCheckin")
+  ?.addEventListener(
     "click",
-    event => {
+    () => {
 
-      const button =
-        event.target.closest(
-          "[data-favorite]"
+      const mood =
+        document.getElementById("mood").value;
+
+      const intensityValue =
+        document.getElementById(
+          "intensity"
+        ).value;
+
+      const body =
+        document.getElementById(
+          "bodyFeeling"
+        ).value;
+
+      const pain =
+        document.getElementById(
+          "painNow"
+        ).value;
+
+      const wish =
+        document.getElementById(
+          "wishNow"
+        ).value;
+
+
+      const checkins =
+        JSON.parse(
+          localStorage.getItem(
+            "mbsCheckins"
+          ) || "[]"
         );
 
-      if (!button) return;
 
+      checkins.unshift({
 
-      toggleFavorite(
-        button.dataset.favorite,
-        button.dataset.type
-      );
+        date:
+          new Date().toISOString(),
 
-    }
-  );
-
-
-  /* =========================================
-     FAVORITE PAGE
-  ========================================= */
-
-  function renderFavorites() {
-
-    const container =
-      document.getElementById(
-        "favoriteList"
-      );
-
-    if (!container) return;
-
-
-    const search =
-      (
-        document
-          .getElementById("favoriteSearch")
-          ?.value || ""
-      )
-      .trim()
-      .toLowerCase();
-
-
-    const allContent = [
-
-      ...practices.map(item => ({
-        ...item,
-        type:"practice"
-      })),
-
-      ...audios.map(item => ({
-        ...item,
-        type:"audio"
-      })),
-
-      ...answers.map(item => ({
-        ...item,
-        type:"answer"
-      }))
-
-    ];
-
-
-    const selected =
-      allContent.filter(item => {
-
-        const favorite =
-          favorites.includes(
-            item.type + ":" + item.id
-          );
-
-        const searchMatch =
-          !search ||
-          item.title
-            .toLowerCase()
-            .includes(search);
-
-        return favorite && searchMatch;
+        mood,
+        intensity:intensityValue,
+        body,
+        pain,
+        wish
 
       });
 
 
-    if (!selected.length) {
-
-      container.innerHTML = `
-        <div class="empty">
-          ♡
-          <br><br>
-          Materialele pe care le salvezi vor apărea aici.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    container.innerHTML =
-      selected
-        .map(item =>
-          cardHTML(
-            item,
-            item.type,
-            item.type !== "practice"
-          )
-        )
-        .join("");
-
-  }
-
-
-  document
-    .getElementById("favoriteSearch")
-    ?.addEventListener(
-      "input",
-      renderFavorites
-    );
-
-
-  /* =========================================
-     HABITS
-  ========================================= */
-
-  const defaultHabits = [
-
-    {
-      id:1,
-      title:"Apă dimineața",
-      done:false
-    },
-
-    {
-      id:2,
-      title:"10 minute de mișcare",
-      done:false
-    },
-
-    {
-      id:3,
-      title:"Pauză conștientă",
-      done:false
-    }
-
-  ];
-
-
-  let habits =
-    JSON.parse(
-      localStorage.getItem("mbsHabits") ||
-      JSON.stringify(defaultHabits)
-    );
-
-
-  function saveHabits() {
-
-    localStorage.setItem(
-      "mbsHabits",
-      JSON.stringify(habits)
-    );
-
-  }
-
-
-  function renderHabits() {
-
-    const list =
-      document.getElementById(
-        "habitList"
+      localStorage.setItem(
+        "mbsCheckins",
+        JSON.stringify(checkins)
       );
 
 
-    list.innerHTML =
-      habits
-        .map(habit => `
-
-          <div class="habit ${
-            habit.done
-            ? "done"
-            : ""
-          }">
-
-            <button
-              class="habit-check"
-              data-habit="${habit.id}"
-              aria-label="Bifează obiceiul"
-            ></button>
-
-            <div class="habit-info">
-
-              <div class="habit-title">
-                ${habit.title}
-              </div>
-
-              <div class="habit-meta">
-
-                ${
-                  habit.done
-                  ? "Completat astăzi"
-                  : "De făcut astăzi"
-                }
-
-              </div>
-
-            </div>
-
-          </div>
-
-        `)
-        .join("");
-
-
-    const done =
-      habits.filter(
-        habit => habit.done
-      ).length;
-
-
-    const total =
-      habits.length;
-
-
-    const percent =
-      total
-      ? Math.round(
-          done / total * 100
-        )
-      : 0;
-
-
-    document.getElementById(
-      "habitCount"
-    ).textContent =
-      `${done}/${total}`;
-
-
-    document.getElementById(
-      "habitPercent"
-    ).textContent =
-      `${percent}%`;
-
-
-    document.getElementById(
-      "habitProgress"
-    ).style.width =
-      `${percent}%`;
-
-  }
-
-
-  document.addEventListener(
-    "click",
-    event => {
-
-      const button =
-        event.target.closest(
-          "[data-habit]"
-        );
-
-      if (!button) return;
-
-
-      const id =
-        Number(
-          button.dataset.habit
+      const success =
+        document.getElementById(
+          "checkinSaved"
         );
 
 
-      habits =
-        habits.map(habit =>
-
-          habit.id === id
-          ? {
-              ...habit,
-              done:!habit.done
-            }
-          : habit
-
-        );
+      success.style.display="block";
 
 
-      saveHabits();
-      renderHabits();
+      setTimeout(() => {
+
+        success.style.display="none";
+
+      },2500);
 
     }
   );
 
 
-  document
-    .getElementById("addHabit")
-    .addEventListener(
-      "click",
-      () => {
-
-        const input =
-          document.getElementById(
-            "newHabit"
-          );
-
-
-        const title =
-          input.value.trim();
-
-
-        if (!title) return;
-
-
-        habits.push({
-
-          id:Date.now(),
-
-          title:title,
-
-          done:false
-
-        });
-
-
-        input.value="";
-
-
-        saveHabits();
-        renderHabits();
-
-      }
-    );
-
-
-  /* =========================================
-     CHECK-IN
-  ========================================= */
-
-  const intensity =
-    document.getElementById(
-      "intensity"
-    );
-
-
-  intensity.addEventListener(
-    "input",
-    () => {
-
-      document.getElementById(
-        "intensityValue"
-      ).textContent =
-        intensity.value;
-
-    }
-  );
-
-
-  let checkins =
-    JSON.parse(
-      localStorage.getItem(
-        "mbsCheckins"
-      ) || "[]"
-    );
-
-
-  document
-    .getElementById("saveCheckin")
-    .addEventListener(
-      "click",
-      () => {
-
-        const mood =
-          document.getElementById(
-            "mood"
-          ).value;
-
-
-        const intensityValue =
-          Number(
-            document.getElementById(
-              "intensity"
-            ).value
-          );
-
-
-        const body =
-          document
-            .getElementById(
-              "bodyFeeling"
-            )
-            .value
-            .trim();
-
-
-        const pain =
-          document
-            .getElementById(
-              "painNow"
-            )
-            .value
-            .trim();
-
-
-        const wish =
-          document
-            .getElementById(
-              "wishNow"
-            )
-            .value
-            .trim();
-
-
-        const checkin = {
-
-          id:
-            Date.now(),
-
-          date:
-            new Date().toISOString(),
-
-          mood:
-            mood,
-
-          intensity:
-            intensityValue,
-
-          body:
-            body,
-
-          pain:
-            pain,
-
-          wish:
-            wish
-
-        };
-
-
-        checkins.unshift(
-          checkin
-        );
-
-
-        localStorage.setItem(
-          "mbsCheckins",
-          JSON.stringify(checkins)
-        );
-
-
-        const success =
-          document.getElementById(
-            "checkinSaved"
-          );
-
-
-        success.style.display =
-          "block";
-
-
-        document.getElementById(
-          "bodyFeeling"
-        ).value="";
-
-
-        document.getElementById(
-          "painNow"
-        ).value="";
-
-
-        document.getElementById(
-          "wishNow"
-        ).value="";
-
-
-        document.getElementById(
-          "intensity"
-        ).value="5";
-
-
-        document.getElementById(
-          "intensityValue"
-        ).textContent="5";
-
-
-        setTimeout(
-          () => {
-
-            success.style.display =
-              "none";
-
-          },
-          2500
-        );
-
-      }
-    );
-
-
-  /* =========================================
-     PROGRAMARE
-  ========================================= */
-
-  document
-    .getElementById("bookSession")
-    .addEventListener(
-      "click",
-      () => {
-
-        if (tg) {
-
-          tg.showAlert(
-            "Aici vom conecta linkul pentru programarea sesiunilor 1:1."
-          );
-
-        } else {
-
-          alert(
-            "Aici vom conecta linkul pentru programarea sesiunilor 1:1."
-          );
-
-        }
-
-      }
-    );
-
-
-  /* =========================================
-     PLAY BUTTONS
-  ========================================= */
-
-  document.addEventListener(
-    "click",
-    event => {
-
-      const button =
-        event.target.closest(".play");
-
-      if (!button) return;
-
-
-      button.textContent =
-        button.textContent.trim() === "▶"
-        ? "❚❚"
-        : "▶";
-
-    }
-  );
-
-
-  /* =========================================
-     START
-  ========================================= */
-
-  function startApp() {
-
-    renderAll();
-    renderHabits();
-
-  }
-
-
-  startApp();
+/* =========================
+   START
+========================= */
+
+renderHabits();
 
 </script>
 
