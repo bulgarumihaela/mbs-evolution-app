@@ -292,6 +292,7 @@
       display:flex;
       gap:8px;
       margin-top:15px;
+      flex-wrap:wrap;
     }
 
     .action-btn{
@@ -329,6 +330,68 @@
     .status.error{
       background:#f5e7e2;
       color:#8f574a;
+    }
+
+    /* PLAYER AUDIO */
+
+    .audio-player{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-top:16px;
+      background:var(--surface2);
+      padding:12px;
+      border-radius:20px;
+    }
+
+    .play-button{
+      width:48px;
+      height:48px;
+      flex:none;
+      border:0;
+      border-radius:50%;
+      background:var(--accent);
+      color:white;
+      font-size:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .play-button.loading{
+      opacity:.65;
+    }
+
+    .player-info{
+      flex:1;
+      min-width:0;
+    }
+
+    .player-label{
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .player-status{
+      color:var(--muted);
+      font-size:11px;
+      margin-top:3px;
+    }
+
+    .player-progress{
+      width:100%;
+      height:5px;
+      margin-top:8px;
+      border-radius:999px;
+      background:#e2d7d1;
+      overflow:hidden;
+    }
+
+    .player-progress-fill{
+      width:0%;
+      height:100%;
+      background:var(--accent);
+      border-radius:999px;
     }
 
     .form-card{
@@ -495,6 +558,7 @@
     }
 
     @media(max-width:375px){
+
       h1{
         font-size:32px;
       }
@@ -516,10 +580,7 @@
 
   <!-- ACASĂ -->
 
-  <section
-    id="home"
-    class="page active"
-  >
+  <section id="home" class="page active">
 
     <div class="topline">
       Bine ai venit ♡
@@ -539,10 +600,7 @@
 
     <div class="grid">
 
-      <button
-        class="tile"
-        data-page="audio"
-      >
+      <button class="tile" data-page="audio">
 
         <div class="tile-icon">
           ▶
@@ -563,10 +621,7 @@
       </button>
 
 
-      <button
-        class="tile"
-        data-page="meditations"
-      >
+      <button class="tile" data-page="meditations">
 
         <div class="tile-icon">
           ◌
@@ -587,10 +642,7 @@
       </button>
 
 
-      <button
-        class="tile"
-        data-page="practices"
-      >
+      <button class="tile" data-page="practices">
 
         <div class="tile-icon">
           ◎
@@ -635,10 +687,7 @@
       </button>
 
 
-      <button
-        class="tile"
-        data-page="nutrition"
-      >
+      <button class="tile" data-page="nutrition">
 
         <div class="tile-icon">
           ◇
@@ -659,10 +708,7 @@
       </button>
 
 
-      <button
-        class="tile"
-        data-page="sleep"
-      >
+      <button class="tile" data-page="sleep">
 
         <div class="tile-icon">
           ☾
@@ -683,10 +729,7 @@
       </button>
 
 
-      <button
-        class="tile"
-        data-page="movement"
-      >
+      <button class="tile" data-page="movement">
 
         <div class="tile-icon">
           ↗
@@ -707,10 +750,7 @@
       </button>
 
 
-      <button
-        class="tile"
-        data-page="emotional"
-      >
+      <button class="tile" data-page="emotional">
 
         <div class="tile-icon">
           ♡
@@ -731,10 +771,7 @@
       </button>
 
 
-      <button
-        class="tile"
-        data-page="answers"
-      >
+      <button class="tile" data-page="answers">
 
         <div class="tile-icon">
           ?
@@ -755,10 +792,7 @@
       </button>
 
 
-      <button
-        class="tile"
-        data-page="moment"
-      >
+      <button class="tile" data-page="moment">
 
         <div class="tile-icon">
           ✦
@@ -831,17 +865,11 @@
   </section>
 
 
-  <!-- AUDIO / TELEGRAM -->
+  <!-- AUDIO -->
 
-  <section
-    id="audio"
-    class="page"
-  >
+  <section id="audio" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -879,7 +907,7 @@
 
       <button
         class="tag active"
-        data-filter="all"
+        data-audio-filter="all"
       >
         Toate
       </button>
@@ -896,28 +924,22 @@
 
   <!-- PRACTICI -->
 
-  <section
-    id="practices"
-    class="page"
-  >
+  <section id="practices" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
-    <h2>
-      Practici
-    </h2>
+    <h2>Practici</h2>
 
     <p class="subtitle">
       Alege practica potrivită momentului tău.
     </p>
 
-    <div class="stack"
-         style="margin-top:20px;">
+    <div
+      class="stack"
+      style="margin-top:20px;"
+    >
 
       <div class="content-card">
 
@@ -964,21 +986,13 @@
 
   <!-- MEDITAȚII -->
 
-  <section
-    id="meditations"
-    class="page"
-  >
+  <section id="meditations" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
-    <h2>
-      Meditații
-    </h2>
+    <h2>Meditații</h2>
 
     <p class="subtitle">
       Alege în funcție de ce ai nevoie acum.
@@ -1034,15 +1048,9 @@
 
   <!-- ÎNTREBĂRI -->
 
-  <section
-    id="answers"
-    class="page"
-  >
+  <section id="answers" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1051,7 +1059,7 @@
     </h2>
 
     <p class="subtitle">
-      Răspunsurile publicate în Telegram pot fi găsite în Audio & Podcasturi după hashtag.
+      Răspunsurile publicate în Telegram pot fi găsite în bibliotecă după hashtag.
     </p>
 
     <button
@@ -1066,15 +1074,9 @@
 
   <!-- OBICEIURI -->
 
-  <section
-    id="habits"
-    class="page"
-  >
+  <section id="habits" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1157,15 +1159,9 @@
 
   <!-- ALIMENTAȚIE -->
 
-  <section
-    id="nutrition"
-    class="page"
-  >
+  <section id="nutrition" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1227,21 +1223,13 @@
 
   <!-- SOMN -->
 
-  <section
-    id="sleep"
-    class="page"
-  >
+  <section id="sleep" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
-    <h2>
-      Somn
-    </h2>
+    <h2>Somn</h2>
 
     <p class="subtitle">
       Observă ritmul și construiește o rutină sustenabilă.
@@ -1284,21 +1272,13 @@
 
   <!-- MIȘCARE -->
 
-  <section
-    id="movement"
-    class="page"
-  >
+  <section id="movement" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
-    <h2>
-      Mișcare
-    </h2>
+    <h2>Mișcare</h2>
 
     <p class="subtitle">
       Mișcare ca grijă pentru corp, nu ca pedeapsă.
@@ -1341,15 +1321,9 @@
 
   <!-- PSIHO-EMOȚIONAL -->
 
-  <section
-    id="emotional"
-    class="page"
-  >
+  <section id="emotional" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1366,99 +1340,34 @@
       style="margin-top:20px;"
     >
 
-      <button
-        class="tile"
-        data-page="audio"
-      >
-
-        <div class="tile-icon">
-          ◎
-        </div>
-
-        <div class="tile-title">
-          Reacții automate
-        </div>
-
+      <button class="tile" data-page="audio">
+        <div class="tile-icon">◎</div>
+        <div class="tile-title">Reacții automate</div>
       </button>
 
-
-      <button
-        class="tile"
-        data-page="audio"
-      >
-
-        <div class="tile-icon">
-          ♡
-        </div>
-
-        <div class="tile-title">
-          Emoții
-        </div>
-
+      <button class="tile" data-page="audio">
+        <div class="tile-icon">♡</div>
+        <div class="tile-title">Emoții</div>
       </button>
 
-
-      <button
-        class="tile"
-        data-page="audio"
-      >
-
-        <div class="tile-icon">
-          ↻
-        </div>
-
-        <div class="tile-title">
-          Tipare
-        </div>
-
+      <button class="tile" data-page="audio">
+        <div class="tile-icon">↻</div>
+        <div class="tile-title">Tipare</div>
       </button>
 
-
-      <button
-        class="tile"
-        data-page="audio"
-      >
-
-        <div class="tile-icon">
-          ○
-        </div>
-
-        <div class="tile-title">
-          Nevoi
-        </div>
-
+      <button class="tile" data-page="audio">
+        <div class="tile-icon">○</div>
+        <div class="tile-title">Nevoi</div>
       </button>
 
-
-      <button
-        class="tile"
-        data-page="audio"
-      >
-
-        <div class="tile-icon">
-          ⇄
-        </div>
-
-        <div class="tile-title">
-          Relații
-        </div>
-
+      <button class="tile" data-page="audio">
+        <div class="tile-icon">⇄</div>
+        <div class="tile-title">Relații</div>
       </button>
 
-
-      <button
-        class="tile"
-        data-page="audio"
-      >
-
-        <div class="tile-icon">
-          │
-        </div>
-
-        <div class="tile-title">
-          Limite
-        </div>
-
+      <button class="tile" data-page="audio">
+        <div class="tile-icon">│</div>
+        <div class="tile-title">Limite</div>
       </button>
 
     </div>
@@ -1468,15 +1377,9 @@
 
   <!-- MOMENT -->
 
-  <section
-    id="moment"
-    class="page"
-  >
+  <section id="moment" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1496,84 +1399,56 @@
       <button
         class="content-card"
         data-page="meditations"
-        style="
-          border:0;
-          text-align:left;
-          color:inherit;
-        "
+        style="border:0;text-align:left;color:inherit;"
       >
-
         <div class="content-title">
           Mă simt copleșită
         </div>
-
         <div class="meta">
           Vezi resursele →
         </div>
-
       </button>
 
 
       <button
         class="content-card"
         data-page="sleep"
-        style="
-          border:0;
-          text-align:left;
-          color:inherit;
-        "
+        style="border:0;text-align:left;color:inherit;"
       >
-
         <div class="content-title">
           Nu pot dormi
         </div>
-
         <div class="meta">
           Vezi resursele →
         </div>
-
       </button>
 
 
       <button
         class="content-card"
         data-page="nutrition"
-        style="
-          border:0;
-          text-align:left;
-          color:inherit;
-        "
+        style="border:0;text-align:left;color:inherit;"
       >
-
         <div class="content-title">
           Vreau să mănânc, dar nu îmi este foame
         </div>
-
         <div class="meta">
           Vezi resursele →
         </div>
-
       </button>
 
 
       <button
         class="content-card"
         data-page="emotional"
-        style="
-          border:0;
-          text-align:left;
-          color:inherit;
-        "
+        style="border:0;text-align:left;color:inherit;"
       >
-
         <div class="content-title">
           Am reacționat și acum regret
         </div>
-
         <div class="meta">
           Vezi resursele →
         </div>
-
       </button>
 
     </div>
@@ -1583,15 +1458,9 @@
 
   <!-- PROGRAME -->
 
-  <section
-    id="programs"
-    class="page"
-  >
+  <section id="programs" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1640,15 +1509,9 @@
 
   <!-- LUCRĂM ÎMPREUNĂ -->
 
-  <section
-    id="work"
-    class="page"
-  >
+  <section id="work" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1711,10 +1574,7 @@
 
   <!-- EVOLUȚIA -->
 
-  <section
-    id="evolution"
-    class="page"
-  >
+  <section id="evolution" class="page">
 
     <div class="topline">
       Spațiul tău
@@ -1787,10 +1647,7 @@
 
   <!-- FAVORITE -->
 
-  <section
-    id="favorites"
-    class="page"
-  >
+  <section id="favorites" class="page">
 
     <div class="topline">
       Biblioteca ta
@@ -1831,58 +1688,32 @@
     data-page="home"
   >
 
-    <span class="nav-icon">
-      ⌂
-    </span>
-
-    <span class="nav-text">
-      Acasă
-    </span>
+    <span class="nav-icon">⌂</span>
+    <span class="nav-text">Acasă</span>
 
   </button>
 
 
-  <button
-    data-page="practices"
-  >
+  <button data-page="practices">
 
-    <span class="nav-icon">
-      ◎
-    </span>
-
-    <span class="nav-text">
-      Practici
-    </span>
+    <span class="nav-icon">◎</span>
+    <span class="nav-text">Practici</span>
 
   </button>
 
 
-  <button
-    data-page="evolution"
-  >
+  <button data-page="evolution">
 
-    <span class="nav-icon">
-      ◌
-    </span>
-
-    <span class="nav-text">
-      Evoluția mea
-    </span>
+    <span class="nav-icon">◌</span>
+    <span class="nav-text">Evoluția mea</span>
 
   </button>
 
 
-  <button
-    data-page="favorites"
-  >
+  <button data-page="favorites">
 
-    <span class="nav-icon">
-      ♡
-    </span>
-
-    <span class="nav-text">
-      Favorite
-    </span>
+    <span class="nav-icon">♡</span>
+    <span class="nav-text">Favorite</span>
 
   </button>
 
@@ -1892,7 +1723,7 @@
 <script>
 
   /* =========================================================
-     SUPABASE
+     CONFIG
   ========================================================= */
 
   const SUPABASE_URL =
@@ -1901,6 +1732,13 @@
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_AKBoN-KjVCj9lNABwwy4tQ_a7BeddTH";
 
+  const SWIFT_API_URL =
+    "https://njthqqnebvmcubvwfrzz.supabase.co/functions/v1/swift-api";
+
+
+  /* =========================================================
+     SUPABASE
+  ========================================================= */
 
   const supabaseClient =
     window.supabase.createClient(
@@ -1916,11 +1754,82 @@
   const tg =
     window.Telegram?.WebApp;
 
-
   if (tg) {
 
     tg.ready();
     tg.expand();
+
+  }
+
+
+  /* =========================================================
+     AUDIO GLOBAL
+  ========================================================= */
+
+  let currentAudio = null;
+  let currentAudioButton = null;
+  let currentProgress = null;
+  let currentPlayerStatus = null;
+  let currentAudioId = null;
+
+
+  function resetCurrentAudioUI() {
+
+    if (currentAudioButton) {
+
+      currentAudioButton.textContent =
+        "▶";
+
+      currentAudioButton.classList.remove(
+        "loading"
+      );
+
+    }
+
+    if (currentProgress) {
+
+      currentProgress.style.width =
+        "0%";
+
+    }
+
+    if (currentPlayerStatus) {
+
+      currentPlayerStatus.textContent =
+        "Apasă pentru a asculta";
+
+    }
+
+  }
+
+
+  function stopCurrentAudio() {
+
+    if (currentAudio) {
+
+      currentAudio.pause();
+
+      currentAudio.currentTime =
+        0;
+
+    }
+
+    resetCurrentAudioUI();
+
+    currentAudio =
+      null;
+
+    currentAudioButton =
+      null;
+
+    currentProgress =
+      null;
+
+    currentPlayerStatus =
+      null;
+
+    currentAudioId =
+      null;
 
   }
 
@@ -1933,7 +1842,6 @@
     document.querySelectorAll(
       ".page"
     );
-
 
   const navButtons =
     document.querySelectorAll(
@@ -2022,22 +1930,27 @@
   function escapeHTML(value = "") {
 
     return String(value)
+
       .replace(
         /&/g,
         "&amp;"
       )
+
       .replace(
         /</g,
         "&lt;"
       )
+
       .replace(
         />/g,
         "&gt;"
       )
+
       .replace(
         /"/g,
         "&quot;"
       )
+
       .replace(
         /'/g,
         "&#039;"
@@ -2049,9 +1962,13 @@
   function normalizeTag(value = "") {
 
     return value
+
       .replace(/^#/,"")
+
       .toLowerCase()
+
       .normalize("NFD")
+
       .replace(
         /[\u0300-\u036f]/g,
         ""
@@ -2065,14 +1982,17 @@
   ) {
 
     return text
+
       .replace(
         /#[\p{L}\p{N}_]+/gu,
         ""
       )
+
       .replace(
         /\n{3,}/g,
         "\n\n"
       )
+
       .trim();
 
   }
@@ -2081,7 +2001,9 @@
   function formatDate(value) {
 
     if (!value) {
+
       return "";
+
     }
 
 
@@ -2135,47 +2057,90 @@
     }
 
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
+    try {
 
-        .from(
-          "telegram_content"
-        )
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
 
-        .select(
-          `
-            id,
-            telegram_message_id,
-            telegram_chat_id,
-            telegram_chat_title,
-            telegram_chat_username,
-            title,
-            text,
-            content_type,
-            hashtags,
-            telegram_file_id,
-            telegram_date,
-            is_published
-          `
-        )
+          .from(
+            "telegram_content"
+          )
 
-        .eq(
-          "is_published",
-          true
-        )
+          .select(
+            `
+              id,
+              telegram_message_id,
+              telegram_chat_id,
+              telegram_chat_title,
+              telegram_chat_username,
+              title,
+              text,
+              content_type,
+              hashtags,
+              telegram_file_id,
+              telegram_date,
+              is_published
+            `
+          )
 
-        .order(
-          "telegram_date",
-          {
-            ascending:false
-          }
-        );
+          .eq(
+            "is_published",
+            true
+          )
+
+          .order(
+            "telegram_date",
+            {
+              ascending:false
+            }
+          );
 
 
-    if (error) {
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      telegramItems =
+        data || [];
+
+
+      if (status) {
+
+        status.className =
+          "status";
+
+
+        if (
+          telegramItems.length
+        ) {
+
+          status.textContent =
+            `${telegramItems.length} materiale disponibile`;
+
+        } else {
+
+          status.textContent =
+            "Nu există încă materiale publicate.";
+
+        }
+
+      }
+
+
+      buildAudioTags();
+
+      renderAudio();
+
+      renderFavorites();
+
+
+    } catch (error) {
 
       console.error(
         "Supabase:",
@@ -2199,49 +2164,13 @@
 
       renderAudio();
 
-      return;
-
     }
-
-
-    telegramItems =
-      data || [];
-
-
-    if (status) {
-
-      status.className =
-        "status";
-
-
-      if (
-        telegramItems.length
-      ) {
-
-        status.textContent =
-          `${telegramItems.length} materiale disponibile`;
-
-      } else {
-
-        status.textContent =
-          "Nu există încă materiale publicate.";
-
-      }
-
-    }
-
-
-    buildAudioTags();
-
-    renderAudio();
-
-    renderFavorites();
 
   }
 
 
   /* =========================================================
-     HASHTAGURI DIN TELEGRAM
+     HASHTAGURI
   ========================================================= */
 
   function buildAudioTags() {
@@ -2259,8 +2188,8 @@
       new Map();
 
 
-    telegramItems
-      .forEach(item => {
+    telegramItems.forEach(
+      item => {
 
         const hashtags =
           Array.isArray(
@@ -2270,29 +2199,32 @@
           : [];
 
 
-        hashtags.forEach(tag => {
+        hashtags.forEach(
+          tag => {
 
-          const normalized =
-            normalizeTag(tag);
+            const normalized =
+              normalizeTag(tag);
 
 
-          if (
-            normalized &&
-            !map.has(normalized)
-          ) {
+            if (
+              normalized &&
+              !map.has(normalized)
+            ) {
 
-            map.set(
-              normalized,
-              tag.startsWith("#")
-                ? tag
-                : "#" + tag
-            );
+              map.set(
+                normalized,
+                tag.startsWith("#")
+                  ? tag
+                  : "#" + tag
+              );
+
+            }
 
           }
+        );
 
-        });
-
-      });
+      }
+    );
 
 
     container.innerHTML =
@@ -2300,8 +2232,8 @@
         <button
           class="tag ${
             audioFilter === "all"
-            ? "active"
-            : ""
+              ? "active"
+              : ""
           }"
           data-audio-filter="all"
         >
@@ -2311,14 +2243,15 @@
       +
 
       [...map.entries()]
+
         .map(
           ([normalized,label]) =>
           `
             <button
               class="tag ${
                 audioFilter === normalized
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
               }"
               data-audio-filter="${escapeHTML(normalized)}"
             >
@@ -2326,32 +2259,36 @@
             </button>
           `
         )
+
         .join("");
 
 
     container
+
       .querySelectorAll(
         "[data-audio-filter]"
       )
-      .forEach(button => {
 
-        button.addEventListener(
-          "click",
-          () => {
+      .forEach(
+        button => {
 
-            audioFilter =
-              button.dataset
-                .audioFilter;
+          button.addEventListener(
+            "click",
+            () => {
+
+              audioFilter =
+                button.dataset.audioFilter;
 
 
-            buildAudioTags();
+              buildAudioTags();
 
-            renderAudio();
+              renderAudio();
 
-          }
-        );
+            }
+          );
 
-      });
+        }
+      );
 
   }
 
@@ -2433,6 +2370,380 @@
 
 
   /* =========================================================
+     TELEGRAM FILE URL
+  ========================================================= */
+
+  async function getAudioUrl(
+    fileId
+  ) {
+
+    const endpoint =
+      SWIFT_API_URL
+      +
+      "?file_id="
+      +
+      encodeURIComponent(
+        fileId
+      );
+
+
+    const response =
+      await fetch(
+        endpoint,
+        {
+          method:"GET"
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Nu am putut încărca fișierul audio."
+      );
+
+    }
+
+
+    const result =
+      await response.json();
+
+
+    if (
+      !result.ok ||
+      !result.url
+    ) {
+
+      throw new Error(
+        result.error ||
+        "Fișier audio indisponibil."
+      );
+
+    }
+
+
+    return result.url;
+
+  }
+
+
+  /* =========================================================
+     PLAY AUDIO
+  ========================================================= */
+
+  async function playTelegramAudio(
+    button
+  ) {
+
+    const fileId =
+      button.dataset.fileId;
+
+    const itemId =
+      button.dataset.itemId;
+
+
+    if (!fileId) {
+
+      return;
+
+    }
+
+
+    const player =
+      button.closest(
+        ".audio-player"
+      );
+
+
+    const progress =
+      player?.querySelector(
+        ".player-progress-fill"
+      );
+
+
+    const status =
+      player?.querySelector(
+        ".player-status"
+      );
+
+
+    /*
+      Același audio:
+      PLAY / PAUSE
+    */
+
+    if (
+      currentAudio &&
+      currentAudioId === itemId
+    ) {
+
+      if (
+        currentAudio.paused
+      ) {
+
+        try {
+
+          await currentAudio.play();
+
+          button.textContent =
+            "❚❚";
+
+          if (status) {
+
+            status.textContent =
+              "Se redă...";
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+        }
+
+      } else {
+
+        currentAudio.pause();
+
+        button.textContent =
+          "▶";
+
+        if (status) {
+
+          status.textContent =
+            "Pauză";
+
+        }
+
+      }
+
+
+      return;
+
+    }
+
+
+    /*
+      Oprim audio precedent
+    */
+
+    stopCurrentAudio();
+
+
+    button.classList.add(
+      "loading"
+    );
+
+    button.textContent =
+      "…";
+
+
+    if (status) {
+
+      status.textContent =
+        "Se încarcă...";
+
+    }
+
+
+    try {
+
+      const audioUrl =
+        await getAudioUrl(
+          fileId
+        );
+
+
+      const audio =
+        new Audio();
+
+
+      audio.preload =
+        "metadata";
+
+      audio.src =
+        audioUrl;
+
+
+      currentAudio =
+        audio;
+
+      currentAudioButton =
+        button;
+
+      currentProgress =
+        progress;
+
+      currentPlayerStatus =
+        status;
+
+      currentAudioId =
+        itemId;
+
+
+      audio.addEventListener(
+        "timeupdate",
+        () => {
+
+          if (
+            !audio.duration ||
+            !progress
+          ) {
+
+            return;
+
+          }
+
+
+          const percent =
+            (
+              audio.currentTime /
+              audio.duration
+            )
+            *
+            100;
+
+
+          progress.style.width =
+            `${percent}%`;
+
+        }
+      );
+
+
+      audio.addEventListener(
+        "ended",
+        () => {
+
+          if (button) {
+
+            button.textContent =
+              "▶";
+
+          }
+
+
+          if (progress) {
+
+            progress.style.width =
+              "0%";
+
+          }
+
+
+          if (status) {
+
+            status.textContent =
+              "Finalizat";
+
+          }
+
+
+          currentAudio =
+            null;
+
+          currentAudioButton =
+            null;
+
+          currentProgress =
+            null;
+
+          currentPlayerStatus =
+            null;
+
+          currentAudioId =
+            null;
+
+        }
+      );
+
+
+      audio.addEventListener(
+        "error",
+        () => {
+
+          button.textContent =
+            "▶";
+
+          button.classList.remove(
+            "loading"
+          );
+
+
+          if (status) {
+
+            status.textContent =
+              "Audio indisponibil";
+
+          }
+
+        }
+      );
+
+
+      await audio.play();
+
+
+      button.classList.remove(
+        "loading"
+      );
+
+      button.textContent =
+        "❚❚";
+
+
+      if (status) {
+
+        status.textContent =
+          "Se redă...";
+
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "Audio error:",
+        error
+      );
+
+
+      button.classList.remove(
+        "loading"
+      );
+
+      button.textContent =
+        "▶";
+
+
+      if (status) {
+
+        status.textContent =
+          "Nu am putut reda audio-ul.";
+
+      }
+
+
+      if (tg) {
+
+        try {
+
+          tg.showAlert(
+            "Nu am putut reda acest material audio."
+          );
+
+        } catch {}
+
+      }
+
+    }
+
+  }
+
+
+  /* =========================================================
      CARD TELEGRAM
   ========================================================= */
 
@@ -2474,6 +2785,15 @@
       );
 
 
+    const playable =
+      (
+        type === "audio" ||
+        type === "voice"
+      )
+      &&
+      item.telegram_file_id;
+
+
     return `
       <div class="content-card">
 
@@ -2487,8 +2807,8 @@
 
           ${
             date
-            ? " • " + escapeHTML(date)
-            : ""
+              ? " • " + escapeHTML(date)
+              : ""
           }
 
         </div>
@@ -2498,71 +2818,116 @@
           cleanedText &&
           cleanedText !== title
 
-          ? `
-              <div class="content-text">
-                ${escapeHTML(cleanedText)}
-              </div>
-            `
+            ? `
+                <div class="content-text">
+                  ${escapeHTML(cleanedText)}
+                </div>
+              `
 
-          : ""
+            : ""
         }
 
 
         ${
           hashtags.length
 
-          ? `
-              <div class="mini-tags">
+            ? `
+                <div class="mini-tags">
 
-                ${hashtags
-                  .map(tag => {
+                  ${hashtags
+                    .map(
+                      tag => {
 
-                    const label =
-                      tag.startsWith("#")
-                      ? tag
-                      : "#" + tag;
+                        const label =
+                          tag.startsWith("#")
+                            ? tag
+                            : "#" + tag;
 
 
-                    return `
-                      <span class="mini-tag">
-                        ${escapeHTML(label)}
-                      </span>
-                    `;
+                        return `
+                          <span class="mini-tag">
+                            ${escapeHTML(label)}
+                          </span>
+                        `;
 
-                  })
-                  .join("")}
+                      }
+                    )
+                    .join("")}
 
-              </div>
-            `
+                </div>
+              `
 
-          : ""
+            : ""
         }
 
 
         ${
-          item.telegram_file_id
+          playable
 
-          ? `
-              <span class="telegram-type">
-                ${
-                  type === "audio"
-                  ? "🎧 Audio"
-                  :
-                  type === "voice"
-                  ? "🎙 Mesaj vocal"
-                  :
-                  type === "video"
-                  ? "▶ Video"
-                  :
-                  type === "photo"
-                  ? "▧ Imagine"
-                  :
-                  "Fișier Telegram"
-                }
-              </span>
-            `
+            ? `
+                <div class="audio-player">
 
-          : ""
+                  <button
+                    class="play-button"
+                    data-play-audio="1"
+                    data-file-id="${escapeHTML(item.telegram_file_id)}"
+                    data-item-id="${escapeHTML(item.id)}"
+                    aria-label="Redă audio"
+                  >
+                    ▶
+                  </button>
+
+                  <div class="player-info">
+
+                    <div class="player-label">
+
+                      ${
+                        type === "voice"
+                          ? "Mesaj vocal"
+                          : "Audio"
+                      }
+
+                    </div>
+
+                    <div class="player-status">
+                      Apasă pentru a asculta
+                    </div>
+
+                    <div class="player-progress">
+
+                      <div
+                        class="player-progress-fill"
+                      ></div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              `
+
+            : item.telegram_file_id
+
+              ? `
+                  <span class="telegram-type">
+
+                    ${
+                      type === "video"
+                        ? "▶ Video"
+                        :
+                      type === "photo"
+                        ? "▧ Imagine"
+                        :
+                      type === "document"
+                        ? "Document"
+                        :
+                        "Fișier Telegram"
+                    }
+
+                  </span>
+                `
+
+              : ""
         }
 
 
@@ -2571,16 +2936,16 @@
           <button
             class="action-btn ${
               favorite
-              ? "liked"
-              : ""
+                ? "liked"
+                : ""
             }"
             data-favorite-id="${escapeHTML(item.id)}"
           >
 
             ${
               favorite
-              ? "♥ Salvat"
-              : "♡ Salvează"
+                ? "♥ Salvat"
+                : "♡ Salvează"
             }
 
           </button>
@@ -2589,6 +2954,59 @@
 
       </div>
     `;
+
+  }
+
+
+  /* =========================================================
+     BIND CARD BUTTONS
+  ========================================================= */
+
+  function bindTelegramButtons(
+    container
+  ) {
+
+    if (!container) return;
+
+
+    container
+      .querySelectorAll(
+        "[data-favorite-id]"
+      )
+      .forEach(
+        button => {
+
+          button.onclick =
+            () => {
+
+              toggleFavorite(
+                button.dataset.favoriteId
+              );
+
+            };
+
+        }
+      );
+
+
+    container
+      .querySelectorAll(
+        "[data-play-audio]"
+      )
+      .forEach(
+        button => {
+
+          button.onclick =
+            () => {
+
+              playTelegramAudio(
+                button
+              );
+
+            };
+
+        }
+      );
 
   }
 
@@ -2621,15 +3039,15 @@
 
 
     const filtered =
-      telegramItems
-        .filter(item => {
+      telegramItems.filter(
+        item => {
 
           const hashtags =
             Array.isArray(
               item.hashtags
             )
-            ? item.hashtags
-            : [];
+              ? item.hashtags
+              : [];
 
 
           const normalizedTags =
@@ -2669,7 +3087,8 @@
             searchMatch
           );
 
-        });
+        }
+      );
 
 
     if (
@@ -2696,30 +3115,9 @@
         .join("");
 
 
-    bindFavoriteButtons();
-
-  }
-
-
-  function bindFavoriteButtons() {
-
-    document
-      .querySelectorAll(
-        "[data-favorite-id]"
-      )
-      .forEach(button => {
-
-        button.onclick =
-          () => {
-
-            toggleFavorite(
-              button.dataset
-                .favoriteId
-            );
-
-          };
-
-      });
+    bindTelegramButtons(
+      container
+    );
 
   }
 
@@ -2768,8 +3166,8 @@
 
 
     const selected =
-      telegramItems
-        .filter(item => {
+      telegramItems.filter(
+        item => {
 
           if (
             !isFavorite(
@@ -2782,14 +3180,21 @@
           }
 
 
-          const haystack =
-            (
-              (item.title || "")
-              +
-              " "
-              +
-              (item.text || "")
+          const hashtags =
+            Array.isArray(
+              item.hashtags
             )
+              ? item.hashtags
+              : [];
+
+
+          const haystack =
+            [
+              item.title || "",
+              item.text || "",
+              hashtags.join(" ")
+            ]
+            .join(" ")
             .toLowerCase();
 
 
@@ -2800,7 +3205,8 @@
             )
           );
 
-        });
+        }
+      );
 
 
     if (
@@ -2829,7 +3235,9 @@
         .join("");
 
 
-    bindFavoriteButtons();
+    bindTelegramButtons(
+      container
+    );
 
   }
 
@@ -2911,8 +3319,8 @@
             <div
               class="habit ${
                 habit.done
-                ? "done"
-                : ""
+                  ? "done"
+                  : ""
               }"
             >
 
@@ -2932,8 +3340,8 @@
 
                   ${
                     habit.done
-                    ? "Completat astăzi"
-                    : "De făcut astăzi"
+                      ? "Completat astăzi"
+                      : "De făcut astăzi"
                   }
 
                 </div>
@@ -2950,43 +3358,45 @@
       .querySelectorAll(
         "[data-habit]"
       )
-      .forEach(button => {
+      .forEach(
+        button => {
 
-        button.addEventListener(
-          "click",
-          () => {
+          button.addEventListener(
+            "click",
+            () => {
 
-            const id =
-              Number(
-                button.dataset.habit
-              );
-
-
-            habits =
-              habits.map(
-                habit =>
-
-                  habit.id === id
-
-                  ? {
-                      ...habit,
-                      done:
-                        !habit.done
-                    }
-
-                  : habit
-
-              );
+              const id =
+                Number(
+                  button.dataset.habit
+                );
 
 
-            saveHabits();
+              habits =
+                habits.map(
+                  habit =>
 
-            renderHabits();
+                    habit.id === id
 
-          }
-        );
+                      ? {
+                          ...habit,
+                          done:
+                            !habit.done
+                        }
 
-      });
+                      : habit
+
+                );
+
+
+              saveHabits();
+
+              renderHabits();
+
+            }
+          );
+
+        }
+      );
 
 
     const done =
@@ -3002,10 +3412,10 @@
 
     const percent =
       total
-      ? Math.round(
-          done / total * 100
-        )
-      : 0;
+        ? Math.round(
+            done / total * 100
+          )
+        : 0;
 
 
     document
@@ -3106,9 +3516,19 @@
 
         if (tg) {
 
-          tg.showAlert(
-            message
-          );
+          try {
+
+            tg.showAlert(
+              message
+            );
+
+          } catch {
+
+            alert(
+              message
+            );
+
+          }
 
         } else {
 
