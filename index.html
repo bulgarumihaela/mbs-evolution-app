@@ -680,7 +680,6 @@
   </div>
 </section>
 
-
 <section id="practices" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <h2>Practici</h2>
@@ -703,7 +702,6 @@
   <div class="stack" id="practiceList"></div>
 </section>
 
-
 <section id="audio" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <h2>Audio & Podcasturi</h2>
@@ -724,7 +722,6 @@
 
   <div class="stack" id="audioList"></div>
 </section>
-
 
 <section id="meditations" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
@@ -764,7 +761,6 @@
   </div>
 </section>
 
-
 <section id="answers" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <h2>Răspund la întrebări</h2>
@@ -786,7 +782,6 @@
 
   <div class="stack" id="answerList"></div>
 </section>
-
 
 <section id="habits" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
@@ -817,7 +812,6 @@
     <button class="primary" id="addHabit">Adaugă</button>
   </div>
 </section>
-
 
 <section id="checkin" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
@@ -875,7 +869,6 @@
   </div>
 </section>
 
-
 <section id="nutrition" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <h2>Alimentație</h2>
@@ -899,7 +892,6 @@
   </div>
 </section>
 
-
 <section id="sleep" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <h2>Somn</h2>
@@ -918,7 +910,6 @@
   </div>
 </section>
 
-
 <section id="movement" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <h2>Mișcare</h2>
@@ -936,7 +927,6 @@
     </div>
   </div>
 </section>
-
 
 <section id="emotional" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
@@ -975,7 +965,6 @@
     </button>
   </div>
 </section>
-
 
 <section id="moment" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
@@ -1023,7 +1012,6 @@
   </div>
 </section>
 
-
 <section id="programs" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <h2>Programele MBS</h2>
@@ -1048,7 +1036,6 @@
 
   </div>
 </section>
-
 
 <section id="work" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
@@ -1075,7 +1062,6 @@
 
   </div>
 </section>
-
 
 <section id="evolution" class="page">
   <div class="topline">Spațiul tău personal</div>
@@ -1119,7 +1105,6 @@
   </div>
 </section>
 
-
 <section id="favorites" class="page">
   <div class="topline">Biblioteca ta</div>
   <h2>Favorite</h2>
@@ -1131,7 +1116,6 @@
 
   <div class="stack" id="favoriteList"></div>
 </section>
-
 
 <section id="profile" class="page">
   <div class="topline">MBS Evolution</div>
@@ -1165,7 +1149,6 @@
 
 </main>
 
-
 <nav class="nav">
 
   <button class="active" data-page="home">
@@ -1190,39 +1173,28 @@
 
 </nav>
 
-
 <script>
 
   /* ==========================================================
-     SUPABASE
-     IMPORTANT:
-     Folosește numai cheia publică anon/publishable.
-     NU introduce service_role / secret key în acest fișier.
+     CONFIGURARE SUPABASE
+     Cheia din browser trebuie să fie DOAR publishable/anon.
   ========================================================== */
 
-  const SUPABASE_URL = "https://njthqqnebvmcubvwfrzz.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_AKBoN-KjVCj9lNABwwy4tQ_a7BeddTH";
+  const SUPABASE_URL =
+    "https://njthqqnebvmcubvwfrzz.supabase.co";
 
-  /*
-    TEMPORAR:
-    UUID-ul rândului tău din public.users.
-    După test îl vom înlocui cu identificarea automată Telegram.
-  */
-  const TEST_USER_ID = "e7833ecb-5550-419a-9c7d-b4e176adf9b2";
+  const SUPABASE_ANON_KEY =
+    "sb_publishable_AKBoN-KjVCj9lNABwwy4tQ_a7BeddTH";
 
-  let db = null;
+  const TELEGRAM_AUTH_FUNCTION_URL =
+    SUPABASE_URL + "/functions/v1/quick-service";
 
-  if (
-    SUPABASE_URL &&
-    SUPABASE_ANON_KEY &&
-    !SUPABASE_URL.includes("PUNE_AICI") &&
-    !SUPABASE_ANON_KEY.includes("PUNE_AICI")
-  ) {
-    db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
-  }
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  let currentUser = null;
 
 
   /* ==========================================================
@@ -1232,37 +1204,154 @@
   const tg = window.Telegram?.WebApp;
 
   if (tg) {
-
     tg.ready();
     tg.expand();
+  }
 
-    const user = tg.initDataUnsafe?.user;
 
-    if (user) {
+  function updateTelegramProfile(telegramUser) {
+
+    if (!telegramUser) return;
+
+    const fullName = [
+      telegramUser.first_name,
+      telegramUser.last_name
+    ]
+    .filter(Boolean)
+    .join(" ");
+
+    if (telegramUser.first_name) {
+
+      document.getElementById("welcome").textContent =
+        "Bine ai venit, " +
+        telegramUser.first_name +
+        " ♡";
+
+      document.getElementById("avatarLetter").textContent =
+        telegramUser.first_name
+          .charAt(0)
+          .toUpperCase();
+    }
+
+    if (fullName) {
+      document.getElementById("profileName").textContent =
+        fullName;
+    }
+
+    if (telegramUser.username) {
+      document.getElementById("profileUsername").textContent =
+        "@" + telegramUser.username;
+    }
+  }
+
+
+  if (tg?.initDataUnsafe?.user) {
+    updateTelegramProfile(
+      tg.initDataUnsafe.user
+    );
+  }
+
+
+  /* ==========================================================
+     AUTENTIFICARE TELEGRAM -> EDGE FUNCTION -> USERS
+  ========================================================== */
+
+  async function authenticateTelegramUser() {
+
+    if (!tg) {
+      console.warn(
+        "Telegram WebApp nu este disponibil. Deschide aplicația din Telegram."
+      );
+      return null;
+    }
+
+    const initData = tg.initData;
+
+    if (!initData) {
+      console.warn(
+        "Telegram initData lipsește. Mini App-ul trebuie deschis din Telegram."
+      );
+      return null;
+    }
+
+    try {
+
+      const response = await fetch(
+        TELEGRAM_AUTH_FUNCTION_URL,
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":"application/json",
+            "apikey":SUPABASE_ANON_KEY,
+            "Authorization":
+              "Bearer " + SUPABASE_ANON_KEY
+          },
+
+          body:JSON.stringify({
+            initData:initData
+          })
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result?.error ||
+          "Autentificarea Telegram a eșuat."
+        );
+      }
+
+      currentUser = result.user;
+
+      console.log(
+        "Utilizator MBS autentificat:",
+        currentUser
+      );
+
+      if (currentUser?.first_name) {
+
+        document.getElementById("welcome").textContent =
+          "Bine ai venit, " +
+          currentUser.first_name +
+          " ♡";
+
+        document.getElementById("avatarLetter").textContent =
+          currentUser.first_name
+            .charAt(0)
+            .toUpperCase();
+      }
 
       const fullName = [
-        user.first_name,
-        user.last_name
+        currentUser?.first_name,
+        currentUser?.last_name
       ]
       .filter(Boolean)
       .join(" ");
 
       if (fullName) {
-
-        document.getElementById("welcome").textContent =
-          "Bine ai venit, " + user.first_name + " ♡";
-
         document.getElementById("profileName").textContent =
           fullName;
-
-        document.getElementById("avatarLetter").textContent =
-          user.first_name?.charAt(0)?.toUpperCase() || "M";
       }
 
-      if (user.username) {
+      if (currentUser?.telegram_username) {
         document.getElementById("profileUsername").textContent =
-          "@" + user.username;
+          "@" + currentUser.telegram_username;
       }
+
+      return currentUser;
+
+    } catch (error) {
+
+      console.error(
+        "Eroare autentificare Telegram:",
+        error
+      );
+
+      currentUser = null;
+
+      return null;
     }
   }
 
@@ -1279,6 +1368,7 @@
 
   const pageButtons =
     document.querySelectorAll("[data-page]");
+
 
   function openPage(id) {
 
@@ -1304,6 +1394,7 @@
 
     window.scrollTo(0,0);
   }
+
 
   pageButtons.forEach(button => {
 
@@ -1445,6 +1536,7 @@
       localStorage.getItem("mbsFavorites") || "[]"
     );
 
+
   function saveFavorites() {
 
     localStorage.setItem(
@@ -1463,7 +1555,9 @@
     if (favorites.includes(key)) {
 
       favorites =
-        favorites.filter(item => item !== key);
+        favorites.filter(
+          item => item !== key
+        );
 
     } else {
 
@@ -1586,6 +1680,7 @@
 
       });
 
+
     if (!filtered.length) {
 
       container.innerHTML =
@@ -1595,6 +1690,7 @@
 
       return;
     }
+
 
     container.innerHTML =
       filtered
@@ -1606,6 +1702,7 @@
           )
         )
         .join("");
+
 
     container
       .querySelectorAll("[data-favorite]")
@@ -1743,6 +1840,7 @@
         ?.value
         .toLowerCase() || "";
 
+
     const allContent = [
 
       ...practices.map(item => ({
@@ -1762,6 +1860,7 @@
 
     ];
 
+
     const selected =
       allContent.filter(item =>
 
@@ -1775,6 +1874,7 @@
 
       );
 
+
     if (!selected.length) {
 
       container.innerHTML =
@@ -1787,6 +1887,7 @@
       return;
     }
 
+
     container.innerHTML =
       selected
         .map(item =>
@@ -1797,6 +1898,7 @@
           )
         )
         .join("");
+
 
     container
       .querySelectorAll("[data-favorite]")
@@ -1826,7 +1928,7 @@
 
   /* ==========================================================
      OBICEIURI
-     Momentan rămân local.
+     Momentan sunt salvate local.
   ========================================================== */
 
   let habits =
@@ -1867,6 +1969,7 @@
     const list =
       document.getElementById("habitList");
 
+
     list.innerHTML =
       habits
         .map(habit => `
@@ -1901,6 +2004,7 @@
 
         `)
         .join("");
+
 
     list
       .querySelectorAll("[data-habit]")
@@ -1979,11 +2083,13 @@
 
       if (!title) return;
 
+
       habits.push({
         id:Date.now(),
         title:title,
         done:false
       });
+
 
       input.value="";
 
@@ -2010,11 +2116,6 @@
 
   });
 
-
-  /*
-    Păstrăm și copia locală doar pentru compatibilitate
-    cu versiunea veche.
-  */
 
   let checkins =
     JSON.parse(
@@ -2080,27 +2181,16 @@
 
 
         /*
-          Verificăm conexiunea înainte de salvare.
+          Nu mai folosim TEST_USER_ID.
+
+          currentUser.id este UUID-ul real din public.users,
+          primit de la Edge Function după verificarea Telegram.
         */
 
-        if (!db) {
+        if (!currentUser?.id) {
 
           errorBox.textContent =
-            "Conexiunea cu baza de date nu este configurată.";
-
-          errorBox.style.display="block";
-
-          return;
-        }
-
-
-        if (
-          !TEST_USER_ID ||
-          TEST_USER_ID.includes("PUNE_AICI")
-        ) {
-
-          errorBox.textContent =
-            "Lipsește ID-ul utilizatorului de test.";
+            "Nu am putut identifica utilizatorul Telegram. Închide și redeschide aplicația din Telegram.";
 
           errorBox.style.display="block";
 
@@ -2112,23 +2202,10 @@
         button.textContent="Se salvează...";
 
 
-        /*
-          Maparea formularului actual către public.check_ins:
-
-          mood        -> emotion
-          intensity   -> intensity
-          body        -> body_sensation
-          pain        -> situation
-          wish        -> desired_direction
-
-          awareness_point este NULL pentru acest check-in simplu.
-          mission_id este NULL.
-        */
-
         const record = {
 
           user_id:
-            TEST_USER_ID,
+            currentUser.id,
 
           emotion:
             mood || null,
@@ -2166,14 +2243,10 @@
           }
 
 
-          /*
-            După confirmarea Supabase,
-            păstrăm și copia locală.
-          */
-
           checkins.unshift({
 
-            id:data?.id || null,
+            id:
+              data?.id || null,
 
             date:
               data?.created_at ||
@@ -2206,10 +2279,6 @@
 
           success.style.display="block";
 
-
-          /*
-            Curățăm formularul numai după salvarea reușită.
-          */
 
           document.getElementById(
             "bodyFeeling"
@@ -2256,6 +2325,7 @@
 
           errorBox.style.display="block";
 
+
         } finally {
 
           button.disabled=false;
@@ -2298,29 +2368,54 @@
      PLAY BUTTONS
   ========================================================== */
 
-  document
-    .querySelectorAll(".play")
-    .forEach(button => {
+  function bindPlayButtons() {
 
-      button.addEventListener("click", () => {
+    document
+      .querySelectorAll(".play")
+      .forEach(button => {
 
-        button.textContent =
-          button.textContent === "▶"
-          ? "❚❚"
-          : "▶";
+        if (button.dataset.bound === "1") {
+          return;
+        }
+
+        button.dataset.bound="1";
+
+        button.addEventListener("click", () => {
+
+          button.textContent =
+            button.textContent === "▶"
+            ? "❚❚"
+            : "▶";
+
+        });
 
       });
 
-    });
+  }
 
 
   /* ==========================================================
      START
   ========================================================== */
 
-  renderAll();
-  renderHabits();
-  updateCheckinCount();
+  async function startApp() {
+
+    renderAll();
+    renderHabits();
+    updateCheckinCount();
+    bindPlayButtons();
+
+    /*
+      Autentificarea se face automat când Mini App-ul
+      este deschis din Telegram.
+    */
+
+    await authenticateTelegramUser();
+
+  }
+
+
+  startApp();
 
 </script>
 
