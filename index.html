@@ -8,9 +8,9 @@
     content="width=device-width, initial-scale=1.0, viewport-fit=cover"
   >
 
-  <meta name="theme-color" content="#A889A0">
+  <meta name="theme-color" content="#f8f3f8">
 
-  <title>MBS Evolution</title>
+  <title>MBS Podcasturi</title>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -18,41 +18,40 @@
   <style>
 
     :root{
-      --bg:#F7F2F6;
+      --bg:#f8f3f8;
+      --surface:#ffffff;
+      --card:#f1e7ef;
+      --player:#fffafd;
 
-      --surface:#FFFFFF;
-      --surface2:#EFE5EC;
+      --text:#211d21;
+      --muted:#8b8188;
 
-      --card:#F0E7ED;
-      --player:#FCF9FB;
+      --accent:#ad87a5;
+      --accent-dark:#8f6a87;
+      --accent-soft:#ddcad9;
 
-      --text:#211D20;
-      --muted:#80747C;
-
-      --accent:#A889A0;
-      --accent2:#8F7087;
-      --accent-soft:#E5D7E1;
-
-      --border:#DED1DA;
+      --border:#decfda;
 
       --shadow:
-        0 3px 16px rgba(82,55,75,.06);
+        0 5px 22px rgba(80,50,75,.045);
     }
+
 
     *{
       box-sizing:border-box;
       -webkit-tap-highlight-color:transparent;
     }
 
+
     html{
       scroll-behavior:smooth;
       background:var(--bg);
     }
 
+
     body{
       margin:0;
       min-height:100vh;
-      min-height:100dvh;
 
       background:var(--bg);
       color:var(--text);
@@ -65,294 +64,160 @@
 
       padding-bottom:
         calc(
-          105px +
+          110px +
           env(safe-area-inset-bottom)
         );
     }
+
 
     button,
     input{
       font:inherit;
     }
 
+
     button{
       cursor:pointer;
     }
 
+
+    /* =========================
+       APP
+    ========================= */
+
     .app{
       width:100%;
-      min-height:100vh;
-      min-height:100dvh;
+      max-width:900px;
 
       margin:0 auto;
 
       padding:
-        calc(22px + env(safe-area-inset-top))
-        18px
+        max(24px, env(safe-area-inset-top))
+        20px
         50px;
     }
 
+
     .page{
       display:none;
-      width:100%;
     }
+
 
     .page.active{
       display:block;
-      animation:fade .18s ease;
+
+      animation:
+        fade .18s ease;
     }
 
+
     @keyframes fade{
+
       from{
-        opacity:.45;
-        transform:translateY(4px);
+        opacity:.5;
+        transform:translateY(3px);
       }
 
       to{
         opacity:1;
         transform:none;
       }
+
     }
 
 
-    /* =============================
+    /* =========================
        TYPOGRAPHY
-    ============================= */
-
-    .topline{
-      color:var(--muted);
-      font-size:15px;
-      margin-bottom:5px;
-    }
+    ========================= */
 
     h1{
       margin:0;
+
       font-size:36px;
-      line-height:1.04;
+      line-height:1.05;
+
       letter-spacing:-1px;
     }
 
+
     h2{
       margin:0;
-      font-size:30px;
-      letter-spacing:-.7px;
+
+      font-size:34px;
+      line-height:1.1;
+
+      letter-spacing:-.8px;
     }
 
-    h3{
-      margin:0;
-    }
 
     .subtitle{
-      margin:8px 0 0;
+      margin:
+        7px
+        0
+        0;
 
       color:var(--muted);
 
       font-size:16px;
-      line-height:1.45;
-    }
-
-    .section-head{
-      display:flex;
-
-      justify-content:space-between;
-      align-items:end;
-
-      gap:15px;
-
-      margin:28px 0 14px;
-    }
-
-    .section-head h3{
-      font-size:21px;
     }
 
 
-    /* =============================
-       HOME
-    ============================= */
+    /* =========================
+       HEADER
+    ========================= */
 
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:13px;
-    }
-
-    .tile{
-      position:relative;
-
-      border:0;
-
-      min-height:180px;
-
-      padding:18px;
-
-      border-radius:26px;
-
-      background:var(--surface);
-
-      color:var(--text);
-
-      text-align:left;
-
-      overflow:hidden;
-
-      box-shadow:var(--shadow);
-
-      display:flex;
-
-      flex-direction:column;
-
-      justify-content:space-between;
-
-      transition:
-        transform .12s ease,
-        box-shadow .12s ease;
-    }
-
-    .tile:active{
-      transform:scale(.985);
-    }
-
-    .tile-icon{
-      width:42px;
-      height:42px;
-
-      border-radius:14px;
-
-      background:var(--surface2);
-
-      display:flex;
-
-      align-items:center;
-      justify-content:center;
-
-      font-size:22px;
-
-      color:var(--accent2);
-    }
-
-    .tile-title{
-      font-size:19px;
-      font-weight:650;
-    }
-
-    .tile-sub{
-      margin-top:5px;
-
-      color:var(--muted);
-
-      font-size:13px;
-      line-height:1.35;
-    }
-
-    .accent-tile{
-      background:
-        linear-gradient(
-          145deg,
-          #B79BAF,
-          #96768E
-        );
-
-      color:white;
-    }
-
-    .accent-tile .tile-icon{
-      background:
-        rgba(255,255,255,.17);
-
-      color:white;
-    }
-
-    .accent-tile .tile-sub{
-      color:
-        rgba(255,255,255,.80);
-    }
-
-    .wide-tile{
-      grid-column:1/-1;
-      min-height:135px;
-    }
-
-
-    /* =============================
-       GENERIC
-    ============================= */
-
-    .back{
-      border:0;
-
-      background:var(--surface2);
-
-      border-radius:999px;
-
-      padding:9px 14px;
-
+    .header{
       margin-bottom:22px;
-
-      color:var(--text);
     }
 
-    .stack{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
 
-    .content-card{
-      background:var(--surface);
-
-      border-radius:25px;
-
-      padding:18px;
-
-      box-shadow:var(--shadow);
-    }
-
-    .content-title{
-      font-size:19px;
-
-      font-weight:650;
-
-      line-height:1.25;
-    }
-
-    .meta{
-      margin-top:5px;
-
+    .eyebrow{
       color:var(--muted);
 
-      font-size:13px;
+      font-size:14px;
+
+      margin-bottom:6px;
     }
 
 
-    /* =============================
+    /* =========================
        SEARCH
-    ============================= */
+    ========================= */
 
     .search{
-      margin:18px 0 13px;
+      width:100%;
 
-      min-height:54px;
+      min-height:58px;
+
+      margin:
+        22px
+        0
+        14px;
 
       background:var(--surface);
 
-      border-radius:22px;
+      border-radius:23px;
 
       display:flex;
 
       align-items:center;
 
-      gap:6px;
+      gap:8px;
 
-      padding:0 16px;
+      padding:
+        0
+        17px;
 
       box-shadow:var(--shadow);
     }
 
+
     .search-icon{
-      color:var(--accent2);
+      color:var(--accent-dark);
+
       font-size:22px;
     }
+
 
     .search input{
       width:100%;
@@ -360,116 +225,179 @@
       border:0;
       outline:none;
 
-      padding:15px 7px;
-
       background:transparent;
 
       color:var(--text);
 
+      padding:
+        16px
+        5px;
+
       font-size:16px;
     }
 
+
     .search input::placeholder{
-      color:#A3959E;
+      color:#aaa0a7;
     }
 
 
-    /* =============================
-       FILTER
-    ============================= */
+    /* =========================
+       FILTER BUTTON
+    ========================= */
 
     .filter-button{
       width:100%;
 
+      min-height:60px;
+
       border:0;
+
+      border-radius:23px;
 
       background:var(--surface);
 
       color:var(--text);
 
-      border-radius:22px;
-
-      padding:15px 16px;
+      padding:
+        0
+        18px;
 
       display:flex;
 
+      justify-content:
+        space-between;
+
       align-items:center;
 
-      justify-content:space-between;
-
-      margin-bottom:12px;
-
-      font-weight:600;
-
       box-shadow:var(--shadow);
+
+      font-weight:650;
+
+      font-size:16px;
     }
+
 
     .filter-left{
       display:flex;
 
-      gap:10px;
-
       align-items:center;
+
+      gap:11px;
     }
 
-    .tags{
-      display:flex;
+
+    .filter-symbol{
+      color:var(--accent-dark);
+
+      font-size:19px;
+    }
+
+
+    .filter-arrow{
+      font-size:24px;
+
+      font-weight:300;
+    }
+
+
+    /* =========================
+       ACTIVE FILTER
+    ========================= */
+
+    .active-filter{
+      display:none;
+
+      margin-top:13px;
+
+      align-items:center;
 
       gap:8px;
 
-      overflow-x:auto;
-
-      padding:2px 0 14px;
-
-      scrollbar-width:none;
+      flex-wrap:wrap;
     }
 
-    .tags::-webkit-scrollbar{
-      display:none;
+
+    .active-filter.visible{
+      display:flex;
     }
 
-    .tag{
-      flex:none;
 
-      border:
-        1px solid
-        var(--border);
+    .active-filter-label{
+      color:var(--muted);
 
-      background:transparent;
+      font-size:13px;
+    }
 
-      color:var(--text);
+
+    .active-filter-pill{
+      border:0;
+
+      background:var(--accent);
+
+      color:white;
+
+      padding:
+        8px
+        13px;
 
       border-radius:999px;
 
-      padding:9px 14px;
+      font-weight:600;
 
       font-size:13px;
-
-      font-weight:600;
-    }
-
-    .tag.active{
-      background:var(--accent);
-
-      border-color:var(--accent);
-
-      color:white;
     }
 
 
-    /* =============================
+    /* =========================
+       STATUS
+    ========================= */
+
+    .status{
+      margin:
+        17px
+        2px;
+
+      color:var(--muted);
+
+      font-size:13px;
+    }
+
+
+    .status.error{
+      color:#9b5e72;
+    }
+
+
+    /* =========================
+       PODCAST LIST
+    ========================= */
+
+    .podcast-list{
+      margin-top:22px;
+
+      display:grid;
+
+      grid-template-columns:1fr;
+
+      gap:17px;
+    }
+
+
+    /* =========================
        PODCAST CARD
-    ============================= */
+    ========================= */
 
     .podcast-card{
       background:var(--card);
 
-      border-radius:27px;
+      border-radius:28px;
 
-      padding:17px;
+      padding:20px;
 
-      margin-bottom:15px;
+      box-shadow:var(--shadow);
     }
+
 
     .podcast-tags{
       display:flex;
@@ -481,66 +409,63 @@
       margin-bottom:14px;
     }
 
+
     .podcast-tag{
       border:
         1px solid
         var(--border);
 
+      background:
+        rgba(255,255,255,.62);
+
       border-radius:999px;
 
-      padding:5px 9px;
+      padding:
+        6px
+        10px;
 
-      background:
-        rgba(255,255,255,.55);
+      color:var(--accent-dark);
 
       font-size:12px;
 
-      font-weight:600;
-
-      color:var(--accent2);
+      font-weight:650;
     }
+
 
     .podcast-title{
       font-size:21px;
 
-      font-weight:700;
-
       line-height:1.25;
 
-      margin-bottom:14px;
-    }
+      font-weight:750;
 
-    .podcast-description{
-      font-size:13px;
-
-      line-height:1.45;
-
-      color:var(--muted);
-
-      margin:-6px 0 13px;
+      margin-bottom:16px;
     }
 
 
-    /* =============================
+    /* =========================
        AUDIO PLAYER
-    ============================= */
+    ========================= */
 
     .audio-player{
       background:var(--player);
 
       border-radius:23px;
 
-      padding:13px;
+      padding:14px;
 
       display:grid;
 
       grid-template-columns:
-        58px 1fr 55px;
+        58px
+        minmax(0,1fr)
+        55px;
 
-      gap:12px;
+      gap:13px;
 
       align-items:center;
     }
+
 
     .play-button{
       width:56px;
@@ -556,28 +481,33 @@
 
       display:flex;
 
-      justify-content:center;
       align-items:center;
+      justify-content:center;
 
-      font-size:20px;
+      font-size:19px;
 
       padding-left:3px;
 
       transition:
-        transform .12s ease;
+        transform .12s ease,
+        opacity .12s ease;
     }
+
 
     .play-button:active{
       transform:scale(.94);
     }
 
+
     .play-button.loading{
       opacity:.65;
     }
 
+
     .player-main{
       min-width:0;
     }
+
 
     .waveform{
       height:38px;
@@ -593,327 +523,312 @@
       cursor:pointer;
     }
 
+
     .wave-bar{
       width:3px;
-
       min-width:3px;
 
       border-radius:999px;
 
-      background:#DCCAD6;
+      background:var(--accent-soft);
 
       transition:
-        background .12s;
+        background .12s ease;
     }
+
 
     .wave-bar.active{
       background:var(--accent);
     }
 
+
     .player-time{
-      margin-top:6px;
+      margin-top:5px;
 
       color:var(--muted);
 
       font-size:13px;
     }
 
+
     .speed-button{
+      min-width:52px;
+
       border:
         1px solid
-        var(--accent2);
+        var(--accent-dark);
 
       background:transparent;
 
-      color:var(--accent2);
+      color:var(--accent-dark);
 
       border-radius:999px;
 
-      padding:8px 10px;
-
-      min-width:52px;
+      padding:
+        8px
+        9px;
     }
+
 
     .player-error{
-      margin-top:8px;
+      display:none;
 
-      color:#8D526F;
+      margin-top:7px;
+
+      color:#9a5c70;
 
       font-size:12px;
-
-      display:none;
     }
 
 
-    /* =============================
-       POST FOOTER
-    ============================= */
+    /* =========================
+       CARD FOOTER
+    ========================= */
+
+    .podcast-footer{
+      margin-top:15px;
+
+      display:flex;
+
+      justify-content:
+        space-between;
+
+      align-items:center;
+
+      gap:12px;
+    }
+
 
     .podcast-date{
-      margin:14px 0 10px;
+      color:var(--muted);
 
       font-size:13px;
-
-      color:var(--muted);
     }
 
-    .podcast-actions{
-      display:grid;
 
-      grid-template-columns:
-        1fr auto;
-
-      gap:9px;
-    }
-
-    .open-button,
     .save-button{
       border:0;
 
-      min-height:48px;
+      min-height:45px;
 
-      border-radius:17px;
+      padding:
+        0
+        15px;
+
+      border-radius:16px;
 
       background:
-        rgba(255,255,255,.65);
+        rgba(255,255,255,.68);
 
       color:var(--text);
-    }
-
-    .open-button{
-      color:var(--accent2);
-
-      font-weight:700;
-    }
-
-    .save-button{
-      min-width:58px;
-
-      font-size:21px;
-    }
-
-    .save-button.saved{
-      color:var(--accent);
-    }
-
-
-    /* =============================
-       HABITS
-    ============================= */
-
-    .progress-wrap{
-      background:var(--surface);
-
-      border-radius:25px;
-
-      padding:20px;
-
-      margin-bottom:15px;
-
-      box-shadow:var(--shadow);
-    }
-
-    .progress-head{
-      display:flex;
-
-      justify-content:space-between;
-
-      margin-bottom:11px;
-    }
-
-    .progress-track{
-      width:100%;
-
-      height:10px;
-
-      border-radius:999px;
-
-      background:#EADFE6;
-
-      overflow:hidden;
-    }
-
-    .progress-fill{
-      height:100%;
-
-      width:0;
-
-      background:var(--accent);
-
-      border-radius:999px;
-
-      transition:.3s;
-    }
-
-    .habits{
-      display:flex;
-
-      flex-direction:column;
-
-      gap:10px;
-    }
-
-    .habit{
-      background:var(--surface);
-
-      border-radius:20px;
-
-      padding:16px;
 
       display:flex;
 
       align-items:center;
 
-      gap:13px;
+      gap:7px;
 
-      box-shadow:var(--shadow);
+      font-size:14px;
+
+      font-weight:650;
     }
 
-    .habit-check{
-      width:27px;
-      height:27px;
 
-      border-radius:50%;
+    .save-heart{
+      font-size:20px;
 
-      border:
-        2px solid
-        #CBB8C5;
-
-      background:white;
-
-      flex:none;
+      line-height:1;
     }
 
-    .habit.done .habit-check{
-      background:var(--accent);
 
-      border-color:var(--accent);
+    .save-button.saved{
+      color:var(--accent-dark);
     }
 
-    .habit.done .habit-check::after{
-      content:"✓";
 
-      color:white;
+    /* =========================
+       FILTER PAGE
+    ========================= */
 
-      display:block;
+    .back{
+      border:0;
 
-      text-align:center;
-
-      line-height:23px;
-    }
-
-    .habit-info{
-      flex:1;
-    }
-
-    .habit-title{
-      font-weight:600;
-    }
-
-    .habit-meta{
-      margin-top:3px;
-
-      color:var(--muted);
-
-      font-size:12px;
-    }
-
-    .form-card{
-      background:var(--surface);
-
-      border-radius:26px;
-
-      padding:20px;
-
-      margin-top:15px;
-
-      box-shadow:var(--shadow);
-    }
-
-    label{
-      display:block;
-
-      font-weight:600;
-
-      margin-bottom:7px;
-    }
-
-    input[type=text]{
-      width:100%;
-
-      border:
-        1px solid
-        var(--border);
-
-      border-radius:17px;
-
-      background:#fff;
-
-      padding:13px 14px;
-
-      outline:none;
+      background:
+        rgba(255,255,255,.58);
 
       color:var(--text);
+
+      border-radius:999px;
+
+      padding:
+        10px
+        15px;
+
+      margin-bottom:24px;
     }
 
-    input[type=text]:focus{
-      border-color:var(--accent);
+
+    .filter-list{
+      display:flex;
+
+      flex-direction:column;
+
+      gap:10px;
+
+      margin-top:25px;
     }
 
-    .primary{
+
+    .filter-item{
       width:100%;
 
       border:0;
 
-      border-radius:18px;
+      background:var(--surface);
 
-      padding:14px 18px;
+      color:var(--text);
+
+      border-radius:20px;
+
+      min-height:60px;
+
+      padding:
+        0
+        17px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:
+        space-between;
+
+      text-align:left;
+
+      box-shadow:var(--shadow);
+    }
+
+
+    .filter-item-left{
+      display:flex;
+
+      align-items:center;
+
+      gap:12px;
+    }
+
+
+    .filter-item-name{
+      font-weight:650;
+    }
+
+
+    .filter-count{
+      min-width:30px;
+
+      padding:
+        5px
+        9px;
+
+      text-align:center;
+
+      border-radius:999px;
+
+      background:var(--card);
+
+      color:var(--accent-dark);
+
+      font-size:12px;
+
+      font-weight:650;
+    }
+
+
+    .filter-item.selected{
+      background:var(--accent);
+
+      color:white;
+    }
+
+
+    .filter-item.selected .filter-count{
+      background:
+        rgba(255,255,255,.22);
+
+      color:white;
+    }
+
+
+    .all-filter{
+      margin-top:18px;
+
+      width:100%;
+
+      border:0;
+
+      min-height:56px;
+
+      border-radius:20px;
 
       background:var(--accent);
 
       color:white;
 
-      margin-top:20px;
-
-      font-weight:600;
-    }
-
-    .primary:active{
-      background:var(--accent2);
+      font-weight:650;
     }
 
 
-    /* =============================
-       STATES
-    ============================= */
-
-    .status{
-      margin:14px 0;
-
-      color:var(--muted);
-
-      font-size:13px;
-    }
-
-    .status.error{
-      color:#8D526F;
-    }
+    /* =========================
+       EMPTY
+    ========================= */
 
     .empty{
-      text-align:center;
+      padding:
+        65px
+        20px;
 
-      padding:45px 15px;
+      text-align:center;
 
       color:var(--muted);
     }
 
 
-    /* =============================
+    .empty-heart{
+      font-size:42px;
+
+      color:var(--accent);
+
+      margin-bottom:14px;
+    }
+
+
+    .empty-title{
+      color:var(--text);
+
+      font-size:19px;
+
+      font-weight:700;
+
+      margin-bottom:7px;
+    }
+
+
+    .empty-text{
+      font-size:14px;
+
+      line-height:1.5;
+    }
+
+
+    /* =========================
        NAVIGATION
-    ============================= */
+    ========================= */
 
     .nav{
       position:fixed;
+
+      left:16px;
+      right:16px;
 
       bottom:
         calc(
@@ -921,184 +836,136 @@
           env(safe-area-inset-bottom)
         );
 
-      left:16px;
-      right:16px;
-
-      max-width:620px;
+      max-width:700px;
 
       margin:auto;
 
       z-index:100;
 
-      padding:8px 7px;
-
-      background:#090909;
+      background:#080808;
 
       border-radius:31px;
+
+      padding:
+        8px;
 
       display:grid;
 
       grid-template-columns:
-        repeat(4,1fr);
+        1fr 1fr;
+
+      gap:5px;
 
       box-shadow:
-        0 10px 35px
-        rgba(0,0,0,.18);
+        0 12px 35px
+        rgba(0,0,0,.2);
     }
+
 
     .nav button{
       border:0;
 
       background:transparent;
 
-      color:#ccc;
+      color:#c8c8c8;
 
-      border-radius:25px;
+      border-radius:24px;
 
-      padding:8px 2px;
-
-      font-size:11px;
-    }
-
-    .nav button.active{
-      background:#292929;
-
-      color:#C5A8BC;
-    }
-
-    .nav-icon{
-      display:block;
-
-      font-size:23px;
-
-      margin-bottom:4px;
-    }
-
-    .nav-text{
-      display:block;
-    }
-
-
-    /* =============================
-       SPLASH
-    ============================= */
-
-    #splash{
-      position:fixed;
-
-      inset:0;
-
-      z-index:9999;
-
-      background:#A889A0;
+      min-height:60px;
 
       display:flex;
 
       flex-direction:column;
 
       align-items:center;
+
       justify-content:center;
 
-      transition:
-        opacity .45s ease,
-        visibility .45s ease;
-    }
-
-    #splash.hidden{
-      opacity:0;
-      visibility:hidden;
-      pointer-events:none;
-    }
-
-    .splash-logo{
-      width:74px;
-      height:74px;
-
-      border-radius:20px;
-
-      background:white;
-
-      display:flex;
-
-      align-items:center;
-      justify-content:center;
-
-      color:var(--accent2);
-
-      font-family:Georgia,serif;
-
-      font-size:18px;
-
-      text-align:center;
-
-      line-height:1.05;
-
-      box-shadow:
-        0 8px 30px
-        rgba(65,42,58,.13);
-    }
-
-    .splash-spinner{
-      width:25px;
-      height:25px;
-
-      margin-top:24px;
-
-      border-radius:50%;
-
-      border:
-        2px solid
-        rgba(255,255,255,.30);
-
-      border-top-color:white;
-
-      animation:
-        spin .8s linear infinite;
-    }
-
-    @keyframes spin{
-      to{
-        transform:rotate(360deg);
-      }
+      gap:3px;
     }
 
 
-    @media(min-width:700px){
+    .nav button.active{
+      background:#292929;
+
+      color:var(--accent);
+    }
+
+
+    .nav-icon{
+      font-size:23px;
+    }
+
+
+    .nav-text{
+      font-size:11px;
+    }
+
+
+    /* =========================
+       TABLET
+    ========================= */
+
+    @media(min-width:760px){
 
       .app{
-        max-width:720px;
+        padding-left:40px;
+        padding-right:40px;
       }
 
-      .nav{
-        max-width:680px;
+
+      .podcast-list{
+        grid-template-columns:
+          1fr
+          1fr;
+      }
+
+
+      .podcast-card{
+        min-width:0;
       }
 
     }
 
 
-    @media(max-width:375px){
+    @media(max-width:420px){
 
-      h1{
-        font-size:32px;
+      .app{
+        padding-left:16px;
+        padding-right:16px;
       }
 
-      .tile{
-        min-height:165px;
+
+      h1,
+      h2{
+        font-size:31px;
       }
 
-      .tile-title{
-        font-size:17px;
-      }
 
       .audio-player{
         grid-template-columns:
-          50px 1fr 50px;
+          52px
+          minmax(0,1fr)
+          48px;
+
+        gap:9px;
       }
+
 
       .play-button{
         width:50px;
         height:50px;
       }
+
+
+      .speed-button{
+        min-width:46px;
+
+        padding:
+          7px
+          6px;
+      }
+
     }
 
   </style>
@@ -1108,367 +975,32 @@
 <body>
 
 
-<!-- SPLASH -->
-
-<div id="splash">
-
-  <div class="splash-logo">
-    MBS<br>♡
-  </div>
-
-  <div class="splash-spinner"></div>
-
-</div>
-
-
 <main class="app">
 
 
-  <!-- HOME -->
+  <!-- =====================================
+       PODCASTS
+  ====================================== -->
 
   <section
-    id="home"
+    id="podcasts"
     class="page active"
   >
 
-    <div class="topline">
-      Bine ai venit ♡
-    </div>
+    <div class="header">
 
-    <h1>
-      MBS Evolution
-    </h1>
+      <div class="eyebrow">
+        MBS
+      </div>
 
-    <p class="subtitle">
-      Mind • Body • Soul
-    </p>
+      <h1>
+        Podcasturi
+      </h1>
 
+      <p class="subtitle">
+        Biblioteca audio MBS
+      </p>
 
-    <div class="section-head">
-      <h3>Explorează</h3>
-    </div>
-
-
-    <div class="grid">
-
-
-      <button
-        class="tile"
-        data-page="audio"
-      >
-
-        <div class="tile-icon">
-          ▶
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Audio & Podcasturi
-          </div>
-
-          <div class="tile-sub">
-            Biblioteca audio MBS
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile"
-        data-page="meditations"
-      >
-
-        <div class="tile-icon">
-          ◌
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Meditații
-          </div>
-
-          <div class="tile-sub">
-            Calm și conectare
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile"
-        data-page="practices"
-      >
-
-        <div class="tile-icon">
-          ◎
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Practici
-          </div>
-
-          <div class="tile-sub">
-            Exerciții ghidate
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile accent-tile"
-        data-page="habits"
-      >
-
-        <div class="tile-icon">
-          ✓
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Obiceiurile mele
-          </div>
-
-          <div class="tile-sub">
-            Construiește și urmărește
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile"
-        data-page="nutrition"
-      >
-
-        <div class="tile-icon">
-          ◇
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Alimentație
-          </div>
-
-          <div class="tile-sub">
-            Comportamente alimentare
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile"
-        data-page="sleep"
-      >
-
-        <div class="tile-icon">
-          ☾
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Somn
-          </div>
-
-          <div class="tile-sub">
-            Rutine pentru odihnă
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile"
-        data-page="movement"
-      >
-
-        <div class="tile-icon">
-          ↗
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Mișcare
-          </div>
-
-          <div class="tile-sub">
-            Corpul în mișcare
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile"
-        data-page="emotional"
-      >
-
-        <div class="tile-icon">
-          ♡
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Psiho-emoțional
-          </div>
-
-          <div class="tile-sub">
-            Emoții și reacții
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile"
-        data-page="answers"
-      >
-
-        <div class="tile-icon">
-          ?
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Răspund la întrebări
-          </div>
-
-          <div class="tile-sub">
-            Caută după hashtag
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile"
-        data-page="moment"
-      >
-
-        <div class="tile-icon">
-          ✦
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Pentru momentul în care...
-          </div>
-
-          <div class="tile-sub">
-            Resursa potrivită acum
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile wide-tile"
-        data-page="programs"
-      >
-
-        <div class="tile-icon">
-          ▦
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Programele MBS
-          </div>
-
-          <div class="tile-sub">
-            Descoperă programele
-          </div>
-
-        </div>
-
-      </button>
-
-
-      <button
-        class="tile wide-tile"
-        data-page="work"
-      >
-
-        <div class="tile-icon">
-          ○
-        </div>
-
-        <div>
-
-          <div class="tile-title">
-            Cum putem lucra împreună
-          </div>
-
-          <div class="tile-sub">
-            Sesiuni 1:1 și colaborare
-          </div>
-
-        </div>
-
-      </button>
-
-
-    </div>
-
-  </section>
-
-
-
-  <!-- AUDIO -->
-
-  <section
-    id="audio"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Podcasturi
-    </h2>
-
-    <div
-      class="topline"
-      style="margin-top:5px;"
-    >
-      Acasă
     </div>
 
 
@@ -1479,7 +1011,7 @@
       </span>
 
       <input
-        id="audioSearch"
+        id="podcastSearch"
         type="text"
         placeholder="Caută..."
       >
@@ -1488,13 +1020,16 @@
 
 
     <button
+      id="openFilters"
       class="filter-button"
       type="button"
     >
 
       <span class="filter-left">
 
-        <span>◇</span>
+        <span class="filter-symbol">
+          ◇
+        </span>
 
         <span>
           Filtru după teme
@@ -1502,15 +1037,28 @@
 
       </span>
 
-      <span>›</span>
+      <span class="filter-arrow">
+        ›
+      </span>
 
     </button>
 
 
     <div
-      id="audioTags"
-      class="tags"
-    ></div>
+      id="activeFilterBox"
+      class="active-filter"
+    >
+
+      <span class="active-filter-label">
+        Filtru:
+      </span>
+
+      <button
+        id="activeFilterPill"
+        class="active-filter-pill"
+      ></button>
+
+    </div>
 
 
     <div
@@ -1521,514 +1069,90 @@
     </div>
 
 
-    <div id="audioList"></div>
-
-  </section>
-
-
-
-  <!-- PRACTICI -->
-
-  <section
-    id="practices"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>Practici</h2>
-
-    <p class="subtitle">
-      Exerciții și procese ghidate.
-    </p>
-
-
     <div
-      class="stack"
-      style="margin-top:20px;"
-    >
-
-      <div class="content-card">
-
-        <div class="content-title">
-          Observarea reacției automate
-        </div>
-
-        <div class="meta">
-          Practică ghidată
-        </div>
-
-      </div>
-
-
-      <div class="content-card">
-
-        <div class="content-title">
-          Întoarcerea în corp
-        </div>
-
-        <div class="meta">
-          Conștientizare
-        </div>
-
-      </div>
-
-
-      <div class="content-card">
-
-        <div class="content-title">
-          Pauza dintre impuls și alegere
-        </div>
-
-        <div class="meta">
-          Practică
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- MEDITATII -->
-
-  <section
-    id="meditations"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Meditații
-    </h2>
-
-    <p class="subtitle">
-      Alege în funcție de ce ai nevoie.
-    </p>
-
-
-    <div
-      class="stack"
-      style="margin-top:20px;"
-    >
-
-      <div class="content-card">
-
-        <div class="content-title">
-          Întoarcerea în corp
-        </div>
-
-        <div class="meta">
-          Conectare
-        </div>
-
-      </div>
-
-
-      <div class="content-card">
-
-        <div class="content-title">
-          Înainte de somn
-        </div>
-
-        <div class="meta">
-          Relaxare
-        </div>
-
-      </div>
-
-
-      <div class="content-card">
-
-        <div class="content-title">
-          Când simți că e prea mult
-        </div>
-
-        <div class="meta">
-          Reglare
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- ANSWERS -->
-
-  <section
-    id="answers"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Răspund la întrebări
-    </h2>
-
-    <p class="subtitle">
-      Găsește răspunsurile după temă sau hashtag.
-    </p>
-
-    <button
-      class="primary"
-      data-page="audio"
-    >
-      Deschide biblioteca
-    </button>
-
-  </section>
-
-
-
-  <!-- HABITS -->
-
-  <section
-    id="habits"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Obiceiurile mele
-    </h2>
-
-    <p class="subtitle">
-      Consecvență, nu perfecțiune.
-    </p>
-
-
-    <div class="section-head">
-
-      <h3>
-        Astăzi
-      </h3>
-
-      <span
-        id="habitCount"
-        class="meta"
-      >
-        0/0
-      </span>
-
-    </div>
-
-
-    <div class="progress-wrap">
-
-      <div class="progress-head">
-
-        <strong>
-          Progresul zilei
-        </strong>
-
-        <span id="habitPercent">
-          0%
-        </span>
-
-      </div>
-
-
-      <div class="progress-track">
-
-        <div
-          id="habitProgress"
-          class="progress-fill"
-        ></div>
-
-      </div>
-
-    </div>
-
-
-    <div
-      id="habitList"
-      class="habits"
+      id="podcastList"
+      class="podcast-list"
     ></div>
 
+  </section>
 
-    <div class="form-card">
 
-      <label for="newHabit">
-        Adaugă un obicei
-      </label>
 
-      <input
-        id="newHabit"
-        type="text"
-        placeholder="Ex: 10 minute de mișcare"
-      >
+  <!-- =====================================
+       FILTERS
+  ====================================== -->
 
-      <button
-        id="addHabit"
-        class="primary"
-      >
-        Adaugă
-      </button>
+  <section
+    id="filters"
+    class="page"
+  >
+
+    <button
+      id="filterBack"
+      class="back"
+    >
+      ‹ Înapoi
+    </button>
+
+
+    <div class="header">
+
+      <div class="eyebrow">
+        Podcasturi
+      </div>
+
+      <h2>
+        Filtre
+      </h2>
+
+      <p class="subtitle">
+        Alege tema pe care vrei să o explorezi.
+      </p>
 
     </div>
 
-  </section>
-
-
-
-  <!-- SIMPLE SECTIONS -->
-
-  <section
-    id="nutrition"
-    class="page"
-  >
 
     <button
-      class="back"
-      data-page="home"
+      id="showAll"
+      class="all-filter"
     >
-      ‹ Înapoi
+      Toate podcasturile
     </button>
-
-    <h2>
-      Alimentație
-    </h2>
-
-    <p class="subtitle">
-      Relația cu mâncarea și comportamentele alimentare.
-    </p>
-
-  </section>
-
-
-  <section
-    id="sleep"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Somn
-    </h2>
-
-    <p class="subtitle">
-      Rutine și resurse pentru odihnă.
-    </p>
-
-  </section>
-
-
-  <section
-    id="movement"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Mișcare
-    </h2>
-
-    <p class="subtitle">
-      Mișcare ca grijă pentru corp.
-    </p>
-
-  </section>
-
-
-  <section
-    id="emotional"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Psiho-emoțional
-    </h2>
-
-    <p class="subtitle">
-      Emoții, reacții, nevoi și tipare.
-    </p>
-
-    <button
-      class="primary"
-      data-page="audio"
-    >
-      Vezi materialele
-    </button>
-
-  </section>
-
-
-  <section
-    id="moment"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Pentru momentul în care...
-    </h2>
-
-    <p class="subtitle">
-      Găsește rapid resursa potrivită.
-    </p>
-
-  </section>
-
-
-  <section
-    id="programs"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Programele MBS
-    </h2>
-
-  </section>
-
-
-  <section
-    id="work"
-    class="page"
-  >
-
-    <button
-      class="back"
-      data-page="home"
-    >
-      ‹ Înapoi
-    </button>
-
-    <h2>
-      Cum putem lucra împreună
-    </h2>
 
 
     <div
-      class="content-card"
-      style="margin-top:20px;"
-    >
-
-      <div class="content-title">
-        Sesiune individuală 1:1
-      </div>
-
-      <div class="meta">
-        Spațiu individual de explorare și lucru
-      </div>
-
-      <button
-        id="bookSession"
-        class="primary"
-      >
-        Programează o sesiune
-      </button>
-
-    </div>
+      id="filterList"
+      class="filter-list"
+    ></div>
 
   </section>
 
 
 
-  <!-- EVOLUTION -->
+  <!-- =====================================
+       SAVED
+  ====================================== -->
 
   <section
-    id="evolution"
+    id="saved"
     class="page"
   >
 
-    <div class="topline">
-      Spațiul tău
+    <div class="header">
+
+      <div class="eyebrow">
+        Biblioteca ta
+      </div>
+
+      <h2>
+        Salvate
+      </h2>
+
+      <p class="subtitle">
+        Podcasturile pe care vrei să le păstrezi.
+      </p>
+
     </div>
-
-    <h2>
-      Evoluția mea
-    </h2>
-
-    <p class="subtitle">
-      Obiceiuri și progres.
-    </p>
-
-    <button
-      class="primary"
-      data-page="habits"
-    >
-      Obiceiurile mele
-    </button>
-
-  </section>
-
-
-
-  <!-- FAVORITES -->
-
-  <section
-    id="favorites"
-    class="page"
-  >
-
-    <div class="topline">
-      Biblioteca ta
-    </div>
-
-    <h2>
-      Favorite
-    </h2>
 
 
     <div class="search">
@@ -2038,15 +1162,18 @@
       </span>
 
       <input
-        id="favoriteSearch"
+        id="savedSearch"
         type="text"
-        placeholder="Caută..."
+        placeholder="Caută în salvate..."
       >
 
     </div>
 
 
-    <div id="favoriteList"></div>
+    <div
+      id="savedList"
+      class="podcast-list"
+    ></div>
 
   </section>
 
@@ -2055,58 +1182,30 @@
 
 
 
-<!-- NAVIGATION -->
+<!-- =====================================
+     NAVIGATION
+====================================== -->
 
 <nav class="nav">
 
   <button
     class="active"
-    data-page="home"
+    data-page="podcasts"
   >
 
     <span class="nav-icon">
-      ⌂
+      ◉
     </span>
 
     <span class="nav-text">
-      Acasă
+      Podcasturi
     </span>
 
   </button>
 
 
   <button
-    data-page="practices"
-  >
-
-    <span class="nav-icon">
-      ◎
-    </span>
-
-    <span class="nav-text">
-      Practici
-    </span>
-
-  </button>
-
-
-  <button
-    data-page="evolution"
-  >
-
-    <span class="nav-icon">
-      ◌
-    </span>
-
-    <span class="nav-text">
-      Evoluția mea
-    </span>
-
-  </button>
-
-
-  <button
-    data-page="favorites"
+    data-page="saved"
   >
 
     <span class="nav-icon">
@@ -2114,7 +1213,7 @@
     </span>
 
     <span class="nav-text">
-      Favorite
+      Salvate
     </span>
 
   </button>
@@ -2132,8 +1231,10 @@
   const SUPABASE_URL =
     "https://njthqqnebvmcubvwfrzz.supabase.co";
 
+
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_AKBoN-KjVCj9lNABwwy4tQ_a7BeddTH";
+
 
   const SWIFT_API_URL =
     "https://njthqqnebvmcubvwfrzz.supabase.co/functions/v1/swift-api";
@@ -2158,45 +1259,24 @@
     window.Telegram?.WebApp;
 
 
-  if (tg) {
+  if(tg){
 
     tg.ready();
 
     tg.expand();
 
 
-    /*
-      Cerem Telegram să deschidă Mini App-ul
-      cât mai mare posibil.
-    */
-
-    try {
-
-      if (tg.requestFullscreen) {
-        tg.requestFullscreen();
-      }
-
-    } catch(error) {
-
-      console.log(
-        "Fullscreen indisponibil:",
-        error
-      );
-
-    }
-
-
-    try {
+    try{
 
       tg.setHeaderColor(
-        "#A889A0"
+        "#f8f3f8"
       );
 
       tg.setBackgroundColor(
-        "#F7F2F6"
+        "#f8f3f8"
       );
 
-    } catch(error) {
+    }catch(error){
 
       console.log(
         "Telegram colors:",
@@ -2206,6 +1286,43 @@
     }
 
   }
+
+
+  /* =========================================================
+     DATA
+  ========================================================= */
+
+  let telegramItems = [];
+
+  let selectedFilter =
+    "all";
+
+
+  let favorites =
+    JSON.parse(
+      localStorage.getItem(
+        "mbsPodcastFavorites"
+      )
+      ||
+      "[]"
+    );
+
+
+  let activeAudio =
+    null;
+
+
+  let activePlayer =
+    null;
+
+
+  const playbackSpeeds =
+    [
+      1,
+      1.25,
+      1.5,
+      2
+    ];
 
 
   /* =========================================================
@@ -2224,19 +1341,16 @@
     );
 
 
-  function openPage(id) {
+  function openPage(id){
 
     stopActiveAudio();
 
 
     pages.forEach(
-      page => {
-
+      page =>
         page.classList.remove(
           "active"
-        );
-
-      }
+        )
     );
 
 
@@ -2246,7 +1360,7 @@
       );
 
 
-    if (target) {
+    if(target){
 
       target.classList.add(
         "active"
@@ -2273,49 +1387,71 @@
     );
 
 
-    if (
-      id === "audio"
-    ) {
+    if(
+      id === "podcasts"
+    ){
 
-      renderAudio();
+      renderPodcasts();
 
     }
 
 
-    if (
-      id === "favorites"
-    ) {
+    if(
+      id === "saved"
+    ){
 
-      renderFavorites();
+      renderSaved();
+
+    }
+
+
+    if(
+      id === "filters"
+    ){
+
+      renderFilters();
 
     }
 
   }
 
 
-  document.addEventListener(
-    "click",
-    event => {
+  navButtons.forEach(
+    button => {
 
-      const button =
-        event.target.closest(
-          "[data-page]"
-        );
+      button.onclick =
+        () => {
 
+          openPage(
+            button.dataset.page
+          );
 
-      if (!button) {
-
-        return;
-
-      }
-
-
-      openPage(
-        button.dataset.page
-      );
+        };
 
     }
   );
+
+
+  document
+    .getElementById(
+      "openFilters"
+    )
+    .onclick =
+      () =>
+        openPage(
+          "filters"
+        );
+
+
+  document
+    .getElementById(
+      "filterBack"
+    )
+    .onclick =
+      () =>
+        openPage(
+          "podcasts"
+        );
 
 
   /* =========================================================
@@ -2324,7 +1460,7 @@
 
   function escapeHTML(
     value = ""
-  ) {
+  ){
 
     return String(value)
 
@@ -2358,9 +1494,9 @@
 
   function normalizeTag(
     value = ""
-  ) {
+  ){
 
-    return value
+    return String(value)
 
       .replace(
         /^#/,
@@ -2369,7 +1505,9 @@
 
       .toLowerCase()
 
-      .normalize("NFD")
+      .normalize(
+        "NFD"
+      )
 
       .replace(
         /[\u0300-\u036f]/g,
@@ -2381,16 +1519,16 @@
 
   function formatDate(
     value
-  ) {
+  ){
 
-    if (!value) {
+    if(!value){
 
       return "";
 
     }
 
 
-    try {
+    try{
 
       return new Date(value)
         .toLocaleDateString(
@@ -2402,7 +1540,7 @@
           }
         );
 
-    } catch {
+    }catch{
 
       return "";
 
@@ -2413,11 +1551,13 @@
 
   function formatTime(
     seconds
-  ) {
+  ){
 
-    if (
-      !Number.isFinite(seconds)
-    ) {
+    if(
+      !Number.isFinite(
+        seconds
+      )
+    ){
 
       return "0:00";
 
@@ -2427,7 +1567,9 @@
     seconds =
       Math.max(
         0,
-        Math.floor(seconds)
+        Math.floor(
+          seconds
+        )
       );
 
 
@@ -2446,26 +1588,23 @@
       +
       ":"
       +
-      String(secs)
-        .padStart(
-          2,
-          "0"
-        )
+      String(
+        secs
+      )
+      .padStart(
+        2,
+        "0"
+      )
     );
 
   }
 
 
   /* =========================================================
-     TELEGRAM DATA
+     LOAD TELEGRAM CONTENT
   ========================================================= */
 
-  let telegramItems = [];
-
-  let audioFilter = "all";
-
-
-  async function loadTelegramContent() {
+  async function loadTelegramContent(){
 
     const status =
       document.getElementById(
@@ -2473,11 +1612,15 @@
       );
 
 
+    status.className =
+      "status";
+
+
     status.textContent =
       "Se încarcă...";
 
 
-    try {
+    try{
 
       const {
         data,
@@ -2515,32 +1658,49 @@
           );
 
 
-      if (error) {
+      if(error){
 
         throw error;
 
       }
 
 
+      /*
+        Pentru moment păstrăm în bibliotecă
+        doar materialele audio.
+      */
+
       telegramItems =
-        data || [];
-
-
-      buildTags();
-
-      renderAudio();
-
-      renderFavorites();
+        (data || [])
+        .filter(
+          item =>
+            (
+              item.content_type ===
+              "audio"
+              ||
+              item.content_type ===
+              "voice"
+            )
+            &&
+            item.telegram_file_id
+        );
 
 
       status.textContent =
-        telegramItems.length
-          ? ""
-          : "Nu există materiale.";
+        "";
 
-    } catch (error) {
+
+      renderPodcasts();
+
+      renderFilters();
+
+      renderSaved();
+
+
+    }catch(error){
 
       console.error(
+        "Load error:",
         error
       );
 
@@ -2550,126 +1710,9 @@
 
 
       status.textContent =
-        "Nu am putut încărca materialele.";
+        "Nu am putut încărca podcasturile.";
 
     }
-
-  }
-
-
-  /* =========================================================
-     TAGS
-  ========================================================= */
-
-  function buildTags() {
-
-    const container =
-      document.getElementById(
-        "audioTags"
-      );
-
-
-    const tags =
-      new Map();
-
-
-    telegramItems.forEach(
-      item => {
-
-        (
-          Array.isArray(
-            item.hashtags
-          )
-            ? item.hashtags
-            : []
-        )
-        .forEach(
-          tag => {
-
-            const normalized =
-              normalizeTag(
-                tag
-              );
-
-
-            if (
-              normalized &&
-              !tags.has(
-                normalized
-              )
-            ) {
-
-              tags.set(
-                normalized,
-                tag.startsWith("#")
-                  ? tag
-                  : "#" + tag
-              );
-
-            }
-
-          }
-        );
-
-      }
-    );
-
-
-    container.innerHTML =
-      `
-        <button
-          class="tag ${
-            audioFilter === "all"
-              ? "active"
-              : ""
-          }"
-          data-filter="all"
-        >
-          Toate
-        </button>
-      `
-      +
-
-      [...tags.entries()]
-        .map(
-          ([key,label]) => `
-            <button
-              class="tag ${
-                audioFilter === key
-                  ? "active"
-                  : ""
-              }"
-              data-filter="${escapeHTML(key)}"
-            >
-              ${escapeHTML(label)}
-            </button>
-          `
-        )
-        .join("");
-
-
-    container
-      .querySelectorAll(
-        "[data-filter]"
-      )
-      .forEach(
-        button => {
-
-          button.onclick =
-            () => {
-
-              audioFilter =
-                button.dataset.filter;
-
-
-              buildTags();
-
-              renderAudio();
-
-            };
-
-        }
-      );
 
   }
 
@@ -2678,22 +1721,13 @@
      FAVORITES
   ========================================================= */
 
-  let favorites =
-    JSON.parse(
-      localStorage.getItem(
-        "mbsFavorites"
-      )
-      ||
-      "[]"
-    );
-
-
   function favoriteKey(
     id
-  ) {
+  ){
 
     return (
-      "telegram:" + id
+      "telegram:" +
+      id
     );
 
   }
@@ -2701,7 +1735,7 @@
 
   function isFavorite(
     id
-  ) {
+  ){
 
     return favorites.includes(
       favoriteKey(
@@ -2714,7 +1748,7 @@
 
   function toggleFavorite(
     id
-  ) {
+  ){
 
     const key =
       favoriteKey(
@@ -2722,19 +1756,19 @@
       );
 
 
-    if (
+    if(
       favorites.includes(
         key
       )
-    ) {
+    ){
 
       favorites =
         favorites.filter(
-          x =>
-            x !== key
+          item =>
+            item !== key
         );
 
-    } else {
+    }else{
 
       favorites.push(
         key
@@ -2744,41 +1778,27 @@
 
 
     localStorage.setItem(
-      "mbsFavorites",
+      "mbsPodcastFavorites",
       JSON.stringify(
         favorites
       )
     );
 
 
-    renderAudio();
+    renderPodcasts();
 
-    renderFavorites();
+    renderSaved();
 
   }
 
 
   /* =========================================================
-     AUDIO ENGINE
+     STREAM URL
   ========================================================= */
-
-  let activeAudio = null;
-
-  let activePlayer = null;
-
-
-  const playbackSpeeds =
-    [
-      1,
-      1.25,
-      1.5,
-      2
-    ];
-
 
   function getStreamUrl(
     fileId
-  ) {
+  ){
 
     return (
       SWIFT_API_URL
@@ -2793,26 +1813,47 @@
   }
 
 
+  /* =========================================================
+     WAVEFORM
+  ========================================================= */
+
   function createWaveform(
     itemId
-  ) {
+  ){
 
     let html = "";
 
 
-    for (
+    const numericSeed =
+      String(
+        itemId || "1"
+      )
+      .split("")
+      .reduce(
+        (
+          total,
+          char
+        ) =>
+          total +
+          char.charCodeAt(0),
+        0
+      );
+
+
+    for(
       let i = 0;
-      i < 56;
+      i < 60;
       i++
-    ) {
+    ){
 
       const height =
         8
         +
         (
           (
-            i * 17 +
-            Number(itemId || 1) * 11
+            i * 17
+            +
+            numericSeed * 11
           )
           %
           27
@@ -2834,65 +1875,10 @@
   }
 
 
-  function resetPlayerUI(
-    player
-  ) {
-
-    if (!player) {
-
-      return;
-
-    }
-
-
-    const play =
-      player.querySelector(
-        ".play-button"
-      );
-
-
-    if (play) {
-
-      play.textContent =
-        "▶";
-
-
-      play.classList.remove(
-        "loading"
-      );
-
-    }
-
-  }
-
-
-  function stopActiveAudio() {
-
-    if (
-      activeAudio
-    ) {
-
-      activeAudio.pause();
-
-    }
-
-
-    resetPlayerUI(
-      activePlayer
-    );
-
-
-    activeAudio = null;
-
-    activePlayer = null;
-
-  }
-
-
   function updateWaveform(
     player,
     percent
-  ) {
+  ){
 
     const bars =
       player.querySelectorAll(
@@ -2908,7 +1894,10 @@
 
 
     bars.forEach(
-      (bar,index) => {
+      (
+        bar,
+        index
+      ) => {
 
         bar.classList.toggle(
           "active",
@@ -2921,10 +1910,70 @@
   }
 
 
+  /* =========================================================
+     AUDIO ENGINE
+  ========================================================= */
+
+  function resetPlayerUI(
+    player
+  ){
+
+    if(!player){
+
+      return;
+
+    }
+
+
+    const play =
+      player.querySelector(
+        ".play-button"
+      );
+
+
+    if(play){
+
+      play.textContent =
+        "▶";
+
+
+      play.classList.remove(
+        "loading"
+      );
+
+    }
+
+  }
+
+
+  function stopActiveAudio(){
+
+    if(activeAudio){
+
+      activeAudio.pause();
+
+    }
+
+
+    resetPlayerUI(
+      activePlayer
+    );
+
+
+    activeAudio =
+      null;
+
+
+    activePlayer =
+      null;
+
+  }
+
+
   function updateTime(
     player,
     audio
-  ) {
+  ){
 
     const time =
       player.querySelector(
@@ -2932,11 +1981,21 @@
       );
 
 
-    if (!time) {
+    if(!time){
 
       return;
 
     }
+
+
+    const duration =
+      Number.isFinite(
+        audio.duration
+      )
+        ? formatTime(
+            audio.duration
+          )
+        : "--:--";
 
 
     time.textContent =
@@ -2946,16 +2005,14 @@
       +
       " / "
       +
-      formatTime(
-        audio.duration
-      );
+      duration;
 
   }
 
 
   async function toggleAudio(
     button
-  ) {
+  ){
 
     const player =
       button.closest(
@@ -2967,30 +2024,35 @@
       button.dataset.fileId;
 
 
-    if (!fileId) {
+    if(!fileId){
 
       return;
 
     }
 
 
-    if (
-      activePlayer === player &&
+    /*
+      SAME PLAYER
+    */
+
+    if(
+      activePlayer === player
+      &&
       activeAudio
-    ) {
+    ){
 
-      if (
+      if(
         activeAudio.paused
-      ) {
+      ){
 
-        try {
+        try{
 
           await activeAudio.play();
 
           button.textContent =
             "❚❚";
 
-        } catch (error) {
+        }catch(error){
 
           console.error(
             error
@@ -2998,7 +2060,7 @@
 
         }
 
-      } else {
+      }else{
 
         activeAudio.pause();
 
@@ -3012,6 +2074,10 @@
 
     }
 
+
+    /*
+      NEW PLAYER
+    */
 
     stopActiveAudio();
 
@@ -3075,6 +2141,19 @@
 
 
     audio.addEventListener(
+      "durationchange",
+      () => {
+
+        updateTime(
+          player,
+          audio
+        );
+
+      }
+    );
+
+
+    audio.addEventListener(
       "timeupdate",
       () => {
 
@@ -3120,9 +2199,9 @@
       "pause",
       () => {
 
-        if (
+        if(
           !audio.ended
-        ) {
+        ){
 
           button.textContent =
             "▶";
@@ -3182,7 +2261,7 @@
 
 
         console.error(
-          "HTML Audio error:",
+          "Audio error:",
           audio.error
         );
 
@@ -3190,11 +2269,11 @@
     );
 
 
-    try {
+    try{
 
       await audio.play();
 
-    } catch (error) {
+    }catch(error){
 
       console.error(
         "Play error:",
@@ -3223,9 +2302,13 @@
   }
 
 
+  /* =========================================================
+     SPEED
+  ========================================================= */
+
   function cycleSpeed(
     button
-  ) {
+  ){
 
     const player =
       button.closest(
@@ -3233,10 +2316,11 @@
       );
 
 
-    if (
-      player !== activePlayer ||
+    if(
+      player !== activePlayer
+      ||
       !activeAudio
-    ) {
+    ){
 
       return;
 
@@ -3277,10 +2361,14 @@
   }
 
 
+  /* =========================================================
+     SEEK
+  ========================================================= */
+
   function seekWaveform(
     waveform,
     event
-  ) {
+  ){
 
     const player =
       waveform.closest(
@@ -3288,11 +2376,13 @@
       );
 
 
-    if (
-      player !== activePlayer ||
-      !activeAudio ||
+    if(
+      player !== activePlayer
+      ||
+      !activeAudio
+      ||
       !activeAudio.duration
-    ) {
+    ){
 
       return;
 
@@ -3300,7 +2390,8 @@
 
 
     const rect =
-      waveform.getBoundingClientRect();
+      waveform
+        .getBoundingClientRect();
 
 
     const x =
@@ -3313,7 +2404,8 @@
         1,
         Math.max(
           0,
-          x / rect.width
+          x /
+          rect.width
         )
       );
 
@@ -3326,12 +2418,12 @@
 
 
   /* =========================================================
-     PODCAST CARD
+     CARD
   ========================================================= */
 
   function cardHTML(
     item
-  ) {
+  ){
 
     const tags =
       Array.isArray(
@@ -3341,26 +2433,12 @@
         : [];
 
 
-    const type =
-      item.content_type ||
-      "post";
-
-
-    const playable =
-      (
-        type === "audio" ||
-        type === "voice"
-      )
-      &&
-      item.telegram_file_id;
-
-
     const title =
       item.title ||
-      "Material MBS";
+      "Podcast MBS";
 
 
-    const favorite =
+    const saved =
       isFavorite(
         item.id
       );
@@ -3373,109 +2451,133 @@
 
 
     return `
+
       <article
         class="podcast-card"
       >
 
+
         ${
           tags.length
             ? `
-              <div class="podcast-tags">
 
-                ${tags
-                  .map(
-                    tag => `
-                      <span class="podcast-tag">
-                        ${escapeHTML(
-                          tag.startsWith("#")
+              <div
+                class="podcast-tags"
+              >
+
+                ${
+
+                  tags
+                    .map(
+                      tag => {
+
+                        const label =
+                          String(tag)
+                            .startsWith("#")
                             ? tag
-                            : "#" + tag
-                        )}
-                      </span>
-                    `
-                  )
-                  .join("")}
+                            : "#" + tag;
+
+
+                        return `
+
+                          <span
+                            class="podcast-tag"
+                          >
+                            ${escapeHTML(label)}
+                          </span>
+
+                        `;
+
+                      }
+                    )
+                    .join("")
+
+                }
 
               </div>
+
             `
             : ""
         }
 
 
-        <div class="podcast-title">
+        <div
+          class="podcast-title"
+        >
           ${escapeHTML(title)}
         </div>
 
 
-        ${
-          playable
-            ? `
-              <div
-                class="audio-player"
-                data-player-id="${escapeHTML(item.id)}"
-              >
-
-                <button
-                  class="play-button"
-                  data-file-id="${escapeHTML(item.telegram_file_id)}"
-                >
-                  ▶
-                </button>
+        <div
+          class="audio-player"
+          data-player-id="${escapeHTML(item.id)}"
+        >
 
 
-                <div class="player-main">
-
-                  <div class="waveform">
-
-                    ${createWaveform(
-                      item.id
-                    )}
-
-                  </div>
+          <button
+            class="play-button"
+            data-file-id="${escapeHTML(item.telegram_file_id)}"
+            type="button"
+          >
+            ▶
+          </button>
 
 
-                  <div class="player-time">
-                    0:00 / --:--
-                  </div>
+          <div
+            class="player-main"
+          >
+
+            <div
+              class="waveform"
+            >
+
+              ${createWaveform(
+                item.id
+              )}
+
+            </div>
 
 
-                  <div class="player-error">
-                  </div>
-
-                </div>
-
-
-                <button
-                  class="speed-button"
-                  type="button"
-                >
-                  1x
-                </button>
-
-              </div>
-            `
-            : ""
-        }
+            <div
+              class="player-time"
+            >
+              0:00 / --:--
+            </div>
 
 
-        <div class="podcast-date">
-          ${escapeHTML(date)}
+            <div
+              class="player-error"
+            ></div>
+
+          </div>
+
+
+          <button
+            class="speed-button"
+            type="button"
+          >
+            1x
+          </button>
+
+
         </div>
 
 
-        <div class="podcast-actions">
+        <div
+          class="podcast-footer"
+        >
 
-          <button
-            class="open-button"
-            type="button"
+
+          <div
+            class="podcast-date"
           >
-            Deschide
-          </button>
+            ${escapeHTML(date)}
+          </div>
 
 
           <button
             class="save-button ${
-              favorite
+              saved
                 ? "saved"
                 : ""
             }"
@@ -3483,29 +2585,44 @@
             type="button"
           >
 
-            ${
-              favorite
-                ? "♥"
-                : "♡"
-            }
+            <span
+              class="save-heart"
+            >
+              ${
+                saved
+                  ? "♥"
+                  : "♡"
+              }
+            </span>
+
+            <span>
+              ${
+                saved
+                  ? "Salvat"
+                  : "Salvează"
+              }
+            </span>
 
           </button>
 
+
         </div>
 
+
       </article>
+
     `;
 
   }
 
 
   /* =========================================================
-     BIND PLAYERS
+     BIND CARDS
   ========================================================= */
 
   function bindCards(
     container
-  ) {
+  ){
 
     container
       .querySelectorAll(
@@ -3567,10 +2684,13 @@
         button => {
 
           button.onclick =
-            () =>
+            () => {
+
               toggleFavorite(
                 button.dataset.saveId
               );
+
+            };
 
         }
       );
@@ -3579,14 +2699,76 @@
 
 
   /* =========================================================
-     RENDER AUDIO
+     FILTER STATE
   ========================================================= */
 
-  function renderAudio() {
+  function updateActiveFilterUI(){
+
+    const box =
+      document.getElementById(
+        "activeFilterBox"
+      );
+
+
+    const pill =
+      document.getElementById(
+        "activeFilterPill"
+      );
+
+
+    if(
+      selectedFilter === "all"
+    ){
+
+      box.classList.remove(
+        "visible"
+      );
+
+
+      return;
+
+    }
+
+
+    box.classList.add(
+      "visible"
+    );
+
+
+    pill.textContent =
+      "#" + selectedFilter +
+      " ×";
+
+  }
+
+
+  document
+    .getElementById(
+      "activeFilterPill"
+    )
+    .onclick =
+      () => {
+
+        selectedFilter =
+          "all";
+
+
+        updateActiveFilterUI();
+
+        renderPodcasts();
+
+      };
+
+
+  /* =========================================================
+     RENDER PODCASTS
+  ========================================================= */
+
+  function renderPodcasts(){
 
     const container =
       document.getElementById(
-        "audioList"
+        "podcastList"
       );
 
 
@@ -3594,7 +2776,7 @@
       (
         document
           .getElementById(
-            "audioSearch"
+            "podcastSearch"
           )
           ?.value
         ||
@@ -3616,17 +2798,17 @@
               : [];
 
 
-          const normalized =
+          const normalizedTags =
             tags.map(
               normalizeTag
             );
 
 
           const filterOK =
-            audioFilter === "all"
+            selectedFilter === "all"
             ||
-            normalized.includes(
-              audioFilter
+            normalizedTags.includes(
+              selectedFilter
             );
 
 
@@ -3640,31 +2822,53 @@
             .toLowerCase();
 
 
+          const searchOK =
+            !search
+            ||
+            haystack.includes(
+              search
+            );
+
+
           return (
             filterOK
             &&
-            (
-              !search
-              ||
-              haystack.includes(
-                search
-              )
-            )
+            searchOK
           );
 
         }
       );
 
 
-    if (
+    updateActiveFilterUI();
+
+
+    if(
       !filtered.length
-    ) {
+    ){
 
       container.innerHTML =
         `
-          <div class="empty">
-            Nu am găsit materiale.
+
+          <div
+            class="empty"
+            style="grid-column:1/-1;"
+          >
+
+            <div
+              class="empty-title"
+            >
+              Nu am găsit podcasturi
+            </div>
+
+            <div
+              class="empty-text"
+            >
+              Încearcă o altă căutare sau elimină filtrul.
+            </div>
+
           </div>
+
         `;
 
 
@@ -3690,23 +2894,251 @@
 
   document
     .getElementById(
-      "audioSearch"
+      "podcastSearch"
     )
     .addEventListener(
       "input",
-      renderAudio
+      renderPodcasts
     );
 
 
   /* =========================================================
-     FAVORITES
+     FILTER PAGE
   ========================================================= */
 
-  function renderFavorites() {
+  function getAvailableFilters(){
+
+    const map =
+      new Map();
+
+
+    telegramItems.forEach(
+      item => {
+
+        const tags =
+          Array.isArray(
+            item.hashtags
+          )
+            ? item.hashtags
+            : [];
+
+
+        tags.forEach(
+          rawTag => {
+
+            const normalized =
+              normalizeTag(
+                rawTag
+              );
+
+
+            if(!normalized){
+
+              return;
+
+            }
+
+
+            if(
+              !map.has(
+                normalized
+              )
+            ){
+
+              map.set(
+                normalized,
+                {
+                  key:normalized,
+                  label:
+                    String(rawTag)
+                      .startsWith("#")
+                      ? String(rawTag)
+                      : "#" + rawTag,
+
+                  count:0
+                }
+              );
+
+            }
+
+
+            map.get(
+              normalized
+            ).count++;
+
+          }
+        );
+
+      }
+    );
+
+
+    return [...map.values()]
+      .sort(
+        (
+          a,
+          b
+        ) => {
+
+          if(
+            b.count !== a.count
+          ){
+
+            return (
+              b.count -
+              a.count
+            );
+
+          }
+
+
+          return a.label.localeCompare(
+            b.label,
+            "ro"
+          );
+
+        }
+      );
+
+  }
+
+
+  function renderFilters(){
 
     const container =
       document.getElementById(
-        "favoriteList"
+        "filterList"
+      );
+
+
+    const filters =
+      getAvailableFilters();
+
+
+    if(
+      !filters.length
+    ){
+
+      container.innerHTML =
+        `
+
+          <div class="empty">
+
+            Nu există încă hashtaguri.
+
+          </div>
+
+        `;
+
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      filters
+        .map(
+          filter => `
+
+            <button
+              class="filter-item ${
+                selectedFilter ===
+                filter.key
+                  ? "selected"
+                  : ""
+              }"
+              data-filter="${escapeHTML(filter.key)}"
+            >
+
+              <span
+                class="filter-item-left"
+              >
+
+                <span>
+                  #
+                </span>
+
+                <span
+                  class="filter-item-name"
+                >
+                  ${escapeHTML(
+                    filter.label.replace(
+                      /^#/,
+                      ""
+                    )
+                  )}
+                </span>
+
+              </span>
+
+
+              <span
+                class="filter-count"
+              >
+                ${filter.count}
+              </span>
+
+            </button>
+
+          `
+        )
+        .join("");
+
+
+    container
+      .querySelectorAll(
+        "[data-filter]"
+      )
+      .forEach(
+        button => {
+
+          button.onclick =
+            () => {
+
+              selectedFilter =
+                button.dataset.filter;
+
+
+              openPage(
+                "podcasts"
+              );
+
+            };
+
+        }
+      );
+
+  }
+
+
+  document
+    .getElementById(
+      "showAll"
+    )
+    .onclick =
+      () => {
+
+        selectedFilter =
+          "all";
+
+
+        openPage(
+          "podcasts"
+        );
+
+      };
+
+
+  /* =========================================================
+     SAVED
+  ========================================================= */
+
+  function renderSaved(){
+
+    const container =
+      document.getElementById(
+        "savedList"
       );
 
 
@@ -3714,12 +3146,13 @@
       (
         document
           .getElementById(
-            "favoriteSearch"
+            "savedSearch"
           )
           ?.value
         ||
         ""
       )
+      .trim()
       .toLowerCase();
 
 
@@ -3727,49 +3160,82 @@
       telegramItems.filter(
         item => {
 
-          return (
-            isFavorite(
+          if(
+            !isFavorite(
               item.id
             )
-            &&
-            (
-              !query
-              ||
-              (
-                (
-                  item.title ||
-                  ""
-                )
-                +
-                " "
-                +
-                (
-                  item.text ||
-                  ""
-                )
-              )
-              .toLowerCase()
-              .includes(
-                query
-              )
+          ){
+
+            return false;
+
+          }
+
+
+          if(!query){
+
+            return true;
+
+          }
+
+
+          const tags =
+            Array.isArray(
+              item.hashtags
             )
+              ? item.hashtags
+              : [];
+
+
+          const haystack =
+            [
+              item.title || "",
+              item.text || "",
+              tags.join(" ")
+            ]
+            .join(" ")
+            .toLowerCase();
+
+
+          return haystack.includes(
+            query
           );
 
         }
       );
 
 
-    if (
+    if(
       !selected.length
-    ) {
+    ){
 
       container.innerHTML =
         `
-          <div class="empty">
-            ♡
-            <br><br>
-            Materialele salvate apar aici.
+
+          <div
+            class="empty"
+            style="grid-column:1/-1;"
+          >
+
+            <div
+              class="empty-heart"
+            >
+              ♡
+            </div>
+
+            <div
+              class="empty-title"
+            >
+              Încă nu ai podcasturi salvate
+            </div>
+
+            <div
+              class="empty-text"
+            >
+              Apasă „Salvează” la un podcast și îl vei găsi aici.
+            </div>
+
           </div>
+
         `;
 
 
@@ -3795,333 +3261,21 @@
 
   document
     .getElementById(
-      "favoriteSearch"
+      "savedSearch"
     )
     .addEventListener(
       "input",
-      renderFavorites
+      renderSaved
     );
-
-
-  /* =========================================================
-     HABITS
-  ========================================================= */
-
-  let habits =
-    JSON.parse(
-      localStorage.getItem(
-        "mbsHabits"
-      )
-      ||
-      JSON.stringify([
-        {
-          id:1,
-          title:"Apă dimineața",
-          done:false
-        },
-        {
-          id:2,
-          title:"10 minute de mișcare",
-          done:false
-        },
-        {
-          id:3,
-          title:"Pauză conștientă",
-          done:false
-        }
-      ])
-    );
-
-
-  function saveHabits() {
-
-    localStorage.setItem(
-      "mbsHabits",
-      JSON.stringify(
-        habits
-      )
-    );
-
-  }
-
-
-  function renderHabits() {
-
-    const list =
-      document.getElementById(
-        "habitList"
-      );
-
-
-    list.innerHTML =
-      habits.map(
-        habit => `
-          <div
-            class="habit ${
-              habit.done
-                ? "done"
-                : ""
-            }"
-          >
-
-            <button
-              class="habit-check"
-              data-habit="${habit.id}"
-            ></button>
-
-            <div class="habit-info">
-
-              <div class="habit-title">
-                ${escapeHTML(habit.title)}
-              </div>
-
-              <div class="habit-meta">
-
-                ${
-                  habit.done
-                    ? "Completat"
-                    : "De făcut"
-                }
-
-              </div>
-
-            </div>
-
-          </div>
-        `
-      )
-      .join("");
-
-
-    list
-      .querySelectorAll(
-        "[data-habit]"
-      )
-      .forEach(
-        button => {
-
-          button.onclick =
-            () => {
-
-              const id =
-                Number(
-                  button.dataset.habit
-                );
-
-
-              habits =
-                habits.map(
-                  habit =>
-                    habit.id === id
-                      ? {
-                          ...habit,
-                          done:
-                            !habit.done
-                        }
-                      : habit
-                );
-
-
-              saveHabits();
-
-              renderHabits();
-
-            };
-
-        }
-      );
-
-
-    const done =
-      habits.filter(
-        habit =>
-          habit.done
-      ).length;
-
-
-    const total =
-      habits.length;
-
-
-    const percent =
-      total
-        ? Math.round(
-            done /
-            total *
-            100
-          )
-        : 0;
-
-
-    document
-      .getElementById(
-        "habitCount"
-      )
-      .textContent =
-        `${done}/${total}`;
-
-
-    document
-      .getElementById(
-        "habitPercent"
-      )
-      .textContent =
-        `${percent}%`;
-
-
-    document
-      .getElementById(
-        "habitProgress"
-      )
-      .style.width =
-        `${percent}%`;
-
-  }
-
-
-  document
-    .getElementById(
-      "addHabit"
-    )
-    .onclick =
-      () => {
-
-        const input =
-          document.getElementById(
-            "newHabit"
-          );
-
-
-        const title =
-          input.value.trim();
-
-
-        if (!title) {
-
-          return;
-
-        }
-
-
-        habits.push(
-          {
-            id:
-              Date.now(),
-
-            title,
-
-            done:false
-          }
-        );
-
-
-        input.value =
-          "";
-
-
-        saveHabits();
-
-        renderHabits();
-
-      };
-
-
-  /* =========================================================
-     BOOKING
-  ========================================================= */
-
-  document
-    .getElementById(
-      "bookSession"
-    )
-    ?.addEventListener(
-      "click",
-      () => {
-
-        const text =
-          "Aici conectăm linkul de programare 1:1.";
-
-
-        if (tg) {
-
-          tg.showAlert(
-            text
-          );
-
-        } else {
-
-          alert(
-            text
-          );
-
-        }
-
-      }
-    );
-
-
-  /* =========================================================
-     SPLASH
-  ========================================================= */
-
-  function hideSplash() {
-
-    const splash =
-      document.getElementById(
-        "splash"
-      );
-
-
-    if (!splash) {
-
-      return;
-
-    }
-
-
-    splash.classList.add(
-      "hidden"
-    );
-
-
-    setTimeout(
-      () => {
-
-        splash.remove();
-
-      },
-      500
-    );
-
-  }
 
 
   /* =========================================================
      START
   ========================================================= */
 
-  async function startApp() {
+  async function startApp(){
 
-    renderHabits();
-
-
-    try {
-
-      await loadTelegramContent();
-
-    } catch(error) {
-
-      console.error(
-        error
-      );
-
-    }
-
-
-    setTimeout(
-      hideSplash,
-      500
-    );
+    await loadTelegramContent();
 
   }
 
@@ -4129,6 +3283,7 @@
   startApp();
 
 </script>
+
 
 </body>
 </html>
