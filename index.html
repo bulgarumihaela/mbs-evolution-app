@@ -1,44 +1,93 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>MBS Evolution</title>
 
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <style>
+    :root {
+      --bg: #f7f4f1;
+      --card: #ffffff;
+      --text: #1f1f1f;
+      --muted: #7a7a7a;
+      --dark: #171717;
+      --accent: #b98aad;
+      --soft: #eee7ec;
+      --radius: 24px;
+    }
+
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f7f5f2;
-      color: #222;
-      padding-bottom: 100px;
     }
 
-    .container {
-      max-width: 600px;
-      margin: auto;
-      padding: 24px 18px;
+    body {
+      min-height: 100vh;
+      padding-bottom: 110px;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 20px 18px 40px;
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 6px;
     }
 
     h1 {
-      margin-bottom: 5px;
+      font-size: 34px;
+      line-height: 1.05;
+      margin: 0 0 8px;
     }
 
     .subtitle {
-      color: #777;
-      margin-top: 0;
-      margin-bottom: 25px;
+      color: var(--muted);
+      margin: 0;
+      font-size: 16px;
     }
 
-    .welcome {
-      background: white;
-      border-radius: 24px;
-      padding: 25px;
+    .hero {
+      background: linear-gradient(135deg, #fff, #f3edf1);
+      border-radius: 28px;
+      padding: 24px;
       margin-bottom: 18px;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero h2 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #555;
+      line-height: 1.45;
     }
 
     .grid {
@@ -48,109 +97,438 @@
     }
 
     .card {
-      background: white;
-      border-radius: 24px;
-      min-height: 150px;
-      padding: 20px;
+      border: none;
+      background: var(--card);
+      border-radius: var(--radius);
+      min-height: 170px;
+      padding: 18px;
+      text-align: left;
       display: flex;
-      align-items: flex-end;
-      font-size: 18px;
+      flex-direction: column;
+      justify-content: space-between;
+      color: var(--text);
+      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    }
+
+    .card:active {
+      transform: scale(.985);
+    }
+
+    .card-icon {
+      font-size: 28px;
+    }
+
+    .card-title {
+      font-size: 19px;
       font-weight: 600;
+      margin-top: 20px;
     }
 
-    .menu {
-      position: fixed;
-      bottom: 15px;
-      left: 15px;
-      right: 15px;
-      max-width: 570px;
-      margin: auto;
-      background: #181818;
-      color: white;
-      border-radius: 28px;
-      padding: 16px 10px;
+    .card-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 5px;
+      line-height: 1.35;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 28px;
+      margin: 0 0 8px;
+    }
+
+    .section-text {
+      color: var(--muted);
+      margin: 0 0 20px;
+      line-height: 1.5;
+    }
+
+    .list {
       display: flex;
-      justify-content: space-around;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .menu-item {
-      text-align: center;
+    .list-item {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .list-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .list-item span {
+      color: var(--muted);
       font-size: 13px;
     }
 
-    .icon {
-      display: block;
-      font-size: 21px;
+    .pill {
+      background: var(--soft);
+      color: #5f4d5b;
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .profile-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: 600;
       margin-bottom: 4px;
+    }
+
+    .profile-meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      max-width: 590px;
+      margin: auto;
+      background: var(--dark);
+      border-radius: 30px;
+      padding: 12px 8px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      z-index: 50;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: #cfcfcf;
+      padding: 7px 2px;
+      font-size: 12px;
+    }
+
+    .nav button.active {
+      color: #fff;
+    }
+
+    .nav-icon {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 3px;
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 30px;
+      }
+
+      .card {
+        min-height: 155px;
+      }
+
+      .card-title {
+        font-size: 17px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <main class="app">
 
-    <h1>MBS Evolution</h1>
-    <p class="subtitle">Mind • Body • Soul</p>
-
-    <div class="welcome">
-      <h2>Bine ai venit ♡</h2>
-      <p>Un spațiu pentru evoluție, practici și resurse pentru tine.</p>
-    </div>
-
-    <div class="grid">
-
-      <div class="card">
-        Practici
+    <section id="home" class="section active">
+      <div class="header">
+        <div class="eyebrow" id="welcomeName">Bine ai venit</div>
+        <h1>MBS Evolution</h1>
+        <p class="subtitle">Mind • Body • Soul</p>
       </div>
 
-      <div class="card">
-        Audio
+      <div class="hero">
+        <h2>Evoluția începe cu ceea ce observi.</h2>
+        <p>Un spațiu pentru practici, resurse și procese care te ajută să înțelegi mai bine ce se întâmplă în tine.</p>
       </div>
 
-      <div class="card">
-        Sesiuni 1:1
+      <div class="grid">
+
+        <button class="card" data-page="practices">
+          <div class="card-icon">◎</div>
+          <div>
+            <div class="card-title">Practici</div>
+            <div class="card-subtitle">Exerciții și procese ghidate</div>
+          </div>
+        </button>
+
+        <button class="card" data-page="audio">
+          <div class="card-icon">▶</div>
+          <div>
+            <div class="card-title">Audio</div>
+            <div class="card-subtitle">Materiale audio și reflecții</div>
+          </div>
+        </button>
+
+        <button class="card" data-page="sessions">
+          <div class="card-icon">◌</div>
+          <div>
+            <div class="card-title">Sesiuni 1:1</div>
+            <div class="card-subtitle">Spațiul pentru lucru individual</div>
+          </div>
+        </button>
+
+        <button class="card" data-page="programs">
+          <div class="card-icon">▦</div>
+          <div>
+            <div class="card-title">Programele mele</div>
+            <div class="card-subtitle">Acces la materialele tale</div>
+          </div>
+        </button>
+
+        <button class="card" data-page="about">
+          <div class="card-icon">♡</div>
+          <div>
+            <div class="card-title">Despre mine</div>
+            <div class="card-subtitle">Cine sunt și cum lucrez</div>
+          </div>
+        </button>
+
+        <button class="card" data-page="questions">
+          <div class="card-icon">?</div>
+          <div>
+            <div class="card-title">Întrebări</div>
+            <div class="card-subtitle">Răspunsuri la întrebări frecvente</div>
+          </div>
+        </button>
+
+      </div>
+    </section>
+
+    <section id="practices" class="section">
+      <h2 class="section-title">Practici</h2>
+      <p class="section-text">Aici vor apărea exercițiile și practicile MBS.</p>
+
+      <div class="list">
+        <div class="list-item">
+          <div>
+            <strong>Observarea reacției</strong>
+            <span>Practică ghidată</span>
+          </div>
+          <div class="pill">5 min</div>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <strong>Întoarcerea în corp</strong>
+            <span>Practică de conștientizare</span>
+          </div>
+          <div class="pill">7 min</div>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <strong>Pauza conștientă</strong>
+            <span>Practică scurtă</span>
+          </div>
+          <div class="pill">3 min</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="audio" class="section">
+      <h2 class="section-title">Audio</h2>
+      <p class="section-text">Aici vom adăuga audio-urile tale.</p>
+
+      <div class="list">
+        <div class="list-item">
+          <div>
+            <strong>Audio de bun venit</strong>
+            <span>Introducere în spațiul MBS</span>
+          </div>
+          <div class="pill">În curând</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sessions" class="section">
+      <h2 class="section-title">Sesiuni 1:1</h2>
+      <p class="section-text">Aici vom pune informațiile despre sesiuni și ulterior butonul de programare.</p>
+
+      <div class="profile-card">
+        <strong>Sesiune individuală MBS</strong>
+        <p class="section-text" style="margin-top:10px;margin-bottom:0;">
+          Un spațiu individual pentru explorarea reacțiilor automate, tiparelor și proceselor personale.
+        </p>
+      </div>
+    </section>
+
+    <section id="programs" class="section">
+      <h2 class="section-title">Programele mele</h2>
+      <p class="section-text">Mai târziu, fiecare utilizator va vedea aici doar programele la care are acces.</p>
+
+      <div class="list">
+        <div class="list-item">
+          <div>
+            <strong>MBS Evolution</strong>
+            <span>Program demonstrativ</span>
+          </div>
+          <div class="pill">Activ</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2 class="section-title">Despre mine</h2>
+      <p class="section-text">
+        Aici vom construi pagina ta personală: poveste, abordare, pregătire și modul în care lucrezi.
+      </p>
+    </section>
+
+    <section id="questions" class="section">
+      <h2 class="section-title">Întrebări</h2>
+      <p class="section-text">Aici vom adăuga întrebările frecvente.</p>
+
+      <div class="list">
+        <div class="list-item">
+          <div>
+            <strong>Cum funcționează o sesiune?</strong>
+            <span>Vom adăuga răspunsul aici</span>
+          </div>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <strong>Cum accesez programele?</strong>
+            <span>Vom adăuga răspunsul aici</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="favorites" class="section">
+      <h2 class="section-title">Favorite</h2>
+      <p class="section-text">Aici vor apărea practicile și materialele salvate de utilizator.</p>
+    </section>
+
+    <section id="profile" class="section">
+      <h2 class="section-title">Profil</h2>
+
+      <div class="profile-card">
+        <div class="profile-name" id="profileName">Utilizator MBS</div>
+        <div class="profile-meta" id="profileUsername">Telegram</div>
       </div>
 
-      <div class="card">
-        Programele mele
+      <div class="profile-card">
+        <strong>Progresul meu</strong>
+        <p class="section-text" style="margin-top:10px;margin-bottom:0;">
+          Ulterior vom afișa aici practicile completate, programele și progresul personal.
+        </p>
       </div>
+    </section>
 
-      <div class="card">
-        Despre mine
-      </div>
+  </main>
 
-      <div class="card">
-        Întrebări
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="menu">
-
-    <div class="menu-item">
-      <span class="icon">⌂</span>
+  <nav class="nav">
+    <button class="active" data-page="home">
+      <span class="nav-icon">⌂</span>
       Acasă
-    </div>
+    </button>
 
-    <div class="menu-item">
-      <span class="icon">◉</span>
+    <button data-page="practices">
+      <span class="nav-icon">◎</span>
       Practici
-    </div>
+    </button>
 
-    <div class="menu-item">
-      <span class="icon">♡</span>
+    <button data-page="favorites">
+      <span class="nav-icon">♡</span>
       Favorite
-    </div>
+    </button>
 
-    <div class="menu-item">
-      <span class="icon">○</span>
+    <button data-page="profile">
+      <span class="nav-icon">○</span>
       Profil
-    </div>
+    </button>
+  </nav>
 
-  </div>
+  <script>
+    const tg = window.Telegram?.WebApp;
+
+    if (tg) {
+      tg.ready();
+      tg.expand();
+
+      const user = tg.initDataUnsafe?.user;
+
+      if (user) {
+        const name =
+          [user.first_name, user.last_name]
+            .filter(Boolean)
+            .join(" ");
+
+        if (name) {
+          document.getElementById("welcomeName").textContent =
+            "Bine ai venit, " + name;
+
+          document.getElementById("profileName").textContent = name;
+        }
+
+        if (user.username) {
+          document.getElementById("profileUsername").textContent =
+            "@" + user.username;
+        }
+      }
+    }
+
+    const sections = document.querySelectorAll(".section");
+    const navButtons = document.querySelectorAll(".nav button");
+    const pageButtons = document.querySelectorAll("[data-page]");
+
+    function openPage(page) {
+      sections.forEach(section => {
+        section.classList.remove("active");
+      });
+
+      const target = document.getElementById(page);
+
+      if (target) {
+        target.classList.add("active");
+      }
+
+      navButtons.forEach(button => {
+        button.classList.toggle(
+          "active",
+          button.dataset.page === page
+        );
+      });
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    pageButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        openPage(button.dataset.page);
+      });
+    });
+  </script>
 
 </body>
 </html>
