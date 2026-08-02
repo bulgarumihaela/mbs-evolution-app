@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#f7f3ef">
+
   <title>MBS Evolution</title>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
@@ -17,7 +19,6 @@
       --muted:#817b78;
       --accent:#b77c6b;
       --accent-soft:#ead8d1;
-      --radius:25px;
       --shadow:0 2px 10px rgba(0,0,0,.035);
     }
 
@@ -39,9 +40,7 @@
     }
 
     button,
-    input,
-    textarea,
-    select{
+    input{
       font:inherit;
     }
 
@@ -70,6 +69,7 @@
         opacity:.5;
         transform:translateY(4px);
       }
+
       to{
         opacity:1;
         transform:none;
@@ -168,7 +168,11 @@
     }
 
     .accent-tile{
-      background:linear-gradient(145deg,#c98870,#9e6859);
+      background:linear-gradient(
+        145deg,
+        #c98870,
+        #9e6859
+      );
       color:white;
     }
 
@@ -249,17 +253,18 @@
       box-shadow:var(--shadow);
     }
 
-    .content-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:14px;
-    }
-
     .content-title{
       font-size:19px;
       font-weight:650;
       line-height:1.25;
+    }
+
+    .content-text{
+      margin-top:11px;
+      color:#514b48;
+      font-size:14px;
+      line-height:1.55;
+      white-space:pre-wrap;
     }
 
     .meta{
@@ -302,37 +307,28 @@
       color:#8f574a;
     }
 
-    .play-row{
-      margin-top:15px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .play{
-      width:52px;
-      height:52px;
-      border:0;
-      border-radius:50%;
-      background:var(--accent);
-      color:white;
-      font-size:19px;
-    }
-
-    .wave{
-      height:6px;
-      flex:1;
+    .telegram-type{
+      display:inline-block;
+      margin-top:12px;
+      padding:6px 9px;
       border-radius:999px;
-      background:linear-gradient(
-        90deg,
-        var(--accent) 38%,
-        #eadfd9 38%
-      );
+      background:#f5efec;
+      color:var(--muted);
+      font-size:11px;
     }
 
-    .duration{
+    .status{
+      background:var(--surface);
+      border-radius:18px;
+      padding:13px 15px;
+      margin:15px 0 0;
       color:var(--muted);
       font-size:13px;
+    }
+
+    .status.error{
+      background:#f5e7e2;
+      color:#8f574a;
     }
 
     .form-card{
@@ -346,10 +342,6 @@
       display:block;
       font-weight:600;
       margin:17px 0 7px;
-    }
-
-    label:first-child{
-      margin-top:0;
     }
 
     input[type=text]{
@@ -461,7 +453,9 @@
 
     .nav{
       position:fixed;
-      bottom:calc(13px + env(safe-area-inset-bottom));
+      bottom:calc(
+        13px + env(safe-area-inset-bottom)
+      );
       left:16px;
       right:16px;
       max-width:620px;
@@ -472,7 +466,8 @@
       border-radius:31px;
       display:grid;
       grid-template-columns:repeat(4,1fr);
-      box-shadow:0 10px 35px rgba(0,0,0,.14);
+      box-shadow:
+        0 10px 35px rgba(0,0,0,.14);
     }
 
     .nav button{
@@ -520,11 +515,19 @@
 <main class="app">
 
   <!-- ACASĂ -->
-  <section id="home" class="page active">
 
-    <div class="topline">Bine ai venit ♡</div>
+  <section
+    id="home"
+    class="page active"
+  >
 
-    <h1>MBS Evolution</h1>
+    <div class="topline">
+      Bine ai venit ♡
+    </div>
+
+    <h1>
+      MBS Evolution
+    </h1>
 
     <p class="subtitle">
       Mind • Body • Soul
@@ -536,10 +539,17 @@
 
     <div class="grid">
 
-      <button class="tile" data-page="audio">
-        <div class="tile-icon">▶</div>
+      <button
+        class="tile"
+        data-page="audio"
+      >
+
+        <div class="tile-icon">
+          ▶
+        </div>
 
         <div>
+
           <div class="tile-title">
             Audio & Podcasturi
           </div>
@@ -547,14 +557,23 @@
           <div class="tile-sub">
             Reflecții, episoade și materiale audio
           </div>
+
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="meditations">
-        <div class="tile-icon">◌</div>
+      <button
+        class="tile"
+        data-page="meditations"
+      >
+
+        <div class="tile-icon">
+          ◌
+        </div>
 
         <div>
+
           <div class="tile-title">
             Meditații
           </div>
@@ -562,14 +581,23 @@
           <div class="tile-sub">
             Spațiu pentru calm și conectare
           </div>
+
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="practices">
-        <div class="tile-icon">◎</div>
+      <button
+        class="tile"
+        data-page="practices"
+      >
+
+        <div class="tile-icon">
+          ◎
+        </div>
 
         <div>
+
           <div class="tile-title">
             Practici
           </div>
@@ -577,7 +605,9 @@
           <div class="tile-sub">
             Exerciții și procese ghidate
           </div>
+
         </div>
+
       </button>
 
 
@@ -585,9 +615,13 @@
         class="tile accent-tile"
         data-page="habits"
       >
-        <div class="tile-icon">✓</div>
+
+        <div class="tile-icon">
+          ✓
+        </div>
 
         <div>
+
           <div class="tile-title">
             Obiceiurile mele
           </div>
@@ -595,14 +629,23 @@
           <div class="tile-sub">
             Construiește, urmărește, continuă
           </div>
+
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="nutrition">
-        <div class="tile-icon">◇</div>
+      <button
+        class="tile"
+        data-page="nutrition"
+      >
+
+        <div class="tile-icon">
+          ◇
+        </div>
 
         <div>
+
           <div class="tile-title">
             Alimentație
           </div>
@@ -610,14 +653,23 @@
           <div class="tile-sub">
             Rutină și comportamente alimentare
           </div>
+
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="sleep">
-        <div class="tile-icon">☾</div>
+      <button
+        class="tile"
+        data-page="sleep"
+      >
+
+        <div class="tile-icon">
+          ☾
+        </div>
 
         <div>
+
           <div class="tile-title">
             Somn
           </div>
@@ -625,14 +677,23 @@
           <div class="tile-sub">
             Rutine și resurse pentru odihnă
           </div>
+
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="movement">
-        <div class="tile-icon">↗</div>
+      <button
+        class="tile"
+        data-page="movement"
+      >
+
+        <div class="tile-icon">
+          ↗
+        </div>
 
         <div>
+
           <div class="tile-title">
             Mișcare
           </div>
@@ -640,14 +701,23 @@
           <div class="tile-sub">
             Corpul în mișcare, fără perfecționism
           </div>
+
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="emotional">
-        <div class="tile-icon">♡</div>
+      <button
+        class="tile"
+        data-page="emotional"
+      >
+
+        <div class="tile-icon">
+          ♡
+        </div>
 
         <div>
+
           <div class="tile-title">
             Psiho-emoțional
           </div>
@@ -655,14 +725,23 @@
           <div class="tile-sub">
             Emoții, reacții, nevoi și tipare
           </div>
+
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="answers">
-        <div class="tile-icon">?</div>
+      <button
+        class="tile"
+        data-page="answers"
+      >
+
+        <div class="tile-icon">
+          ?
+        </div>
 
         <div>
+
           <div class="tile-title">
             Răspund la întrebări
           </div>
@@ -670,14 +749,23 @@
           <div class="tile-sub">
             Caută după subiect sau hashtag
           </div>
+
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="moment">
-        <div class="tile-icon">✦</div>
+      <button
+        class="tile"
+        data-page="moment"
+      >
+
+        <div class="tile-icon">
+          ✦
+        </div>
 
         <div>
+
           <div class="tile-title">
             Pentru momentul în care...
           </div>
@@ -685,7 +773,9 @@
           <div class="tile-sub">
             Găsește rapid o resursă potrivită
           </div>
+
         </div>
+
       </button>
 
 
@@ -693,9 +783,13 @@
         class="tile wide-tile"
         data-page="programs"
       >
-        <div class="tile-icon">▦</div>
+
+        <div class="tile-icon">
+          ▦
+        </div>
 
         <div>
+
           <div class="tile-title">
             Programele MBS
           </div>
@@ -703,7 +797,9 @@
           <div class="tile-sub">
             Descoperă programele disponibile
           </div>
+
         </div>
+
       </button>
 
 
@@ -711,9 +807,13 @@
         class="tile wide-tile"
         data-page="work"
       >
-        <div class="tile-icon">○</div>
+
+        <div class="tile-icon">
+          ○
+        </div>
 
         <div>
+
           <div class="tile-title">
             Cum putem lucra împreună
           </div>
@@ -721,7 +821,9 @@
           <div class="tile-sub">
             Sesiuni 1:1 și modalități de colaborare
           </div>
+
         </div>
+
       </button>
 
     </div>
@@ -729,114 +831,57 @@
   </section>
 
 
-  <!-- PRACTICI -->
-  <section id="practices" class="page">
+  <!-- AUDIO / TELEGRAM -->
 
-    <button class="back" data-page="home">
+  <section
+    id="audio"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Practici</h2>
+    <h2>
+      Audio & Podcasturi
+    </h2>
 
     <p class="subtitle">
-      Alege practica potrivită momentului tău.
+      Materialele publicate în Telegram apar automat aici.
     </p>
-
-    <div class="search">
-      <span>⌕</span>
-
-      <input
-        id="practiceSearch"
-        type="text"
-        placeholder="Caută o practică..."
-      >
-    </div>
-
-    <div class="tags" id="practiceTags">
-
-      <button
-        class="tag active"
-        data-filter="all"
-      >
-        Toate
-      </button>
-
-      <button class="tag" data-filter="corp">
-        #corp
-      </button>
-
-      <button class="tag" data-filter="emotii">
-        #emoții
-      </button>
-
-      <button class="tag" data-filter="reactii">
-        #reacții
-      </button>
-
-      <button class="tag" data-filter="somn">
-        #somn
-      </button>
-
-      <button class="tag" data-filter="relatii">
-        #relații
-      </button>
-
-    </div>
 
     <div
-      class="stack"
-      id="practiceList"
-    ></div>
-
-  </section>
-
-
-  <!-- AUDIO -->
-  <section id="audio" class="page">
-
-    <button class="back" data-page="home">
-      ‹ Înapoi
-    </button>
-
-    <h2>Audio & Podcasturi</h2>
-
-    <p class="subtitle">
-      Ascultă, salvează și revino când ai nevoie.
-    </p>
+      id="telegramStatus"
+      class="status"
+    >
+      Se încarcă materialele...
+    </div>
 
     <div class="search">
+
       <span>⌕</span>
 
       <input
         id="audioSearch"
         type="text"
-        placeholder="Caută audio..."
+        placeholder="Caută după titlu, text sau hashtag..."
       >
+
     </div>
 
-    <div class="tags" id="audioTags">
+    <div
+      class="tags"
+      id="audioTags"
+    >
 
       <button
         class="tag active"
         data-filter="all"
       >
         Toate
-      </button>
-
-      <button class="tag" data-filter="obiceiuri">
-        #obiceiuri
-      </button>
-
-      <button class="tag" data-filter="emotii">
-        #emoții
-      </button>
-
-      <button class="tag" data-filter="corp">
-        #corp
-      </button>
-
-      <button class="tag" data-filter="relatii">
-        #relații
       </button>
 
     </div>
@@ -849,14 +894,91 @@
   </section>
 
 
-  <!-- MEDITAȚII -->
-  <section id="meditations" class="page">
+  <!-- PRACTICI -->
 
-    <button class="back" data-page="home">
+  <section
+    id="practices"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Meditații</h2>
+    <h2>
+      Practici
+    </h2>
+
+    <p class="subtitle">
+      Alege practica potrivită momentului tău.
+    </p>
+
+    <div class="stack"
+         style="margin-top:20px;">
+
+      <div class="content-card">
+
+        <div class="content-title">
+          Observarea reacției automate
+        </div>
+
+        <div class="meta">
+          Practică ghidată
+        </div>
+
+      </div>
+
+
+      <div class="content-card">
+
+        <div class="content-title">
+          Întoarcerea în corp
+        </div>
+
+        <div class="meta">
+          Conștientizare
+        </div>
+
+      </div>
+
+
+      <div class="content-card">
+
+        <div class="content-title">
+          Pauza dintre impuls și alegere
+        </div>
+
+        <div class="meta">
+          Practică
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- MEDITAȚII -->
+
+  <section
+    id="meditations"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
+      ‹ Înapoi
+    </button>
+
+    <h2>
+      Meditații
+    </h2>
 
     <p class="subtitle">
       Alege în funcție de ce ai nevoie acum.
@@ -874,13 +996,7 @@
         </div>
 
         <div class="meta">
-          7 minute • conectare
-        </div>
-
-        <div class="play-row">
-          <button class="play">▶</button>
-          <div class="wave"></div>
-          <div class="duration">7:00</div>
+          Conectare
         </div>
 
       </div>
@@ -893,13 +1009,7 @@
         </div>
 
         <div class="meta">
-          10 minute • relaxare
-        </div>
-
-        <div class="play-row">
-          <button class="play">▶</button>
-          <div class="wave"></div>
-          <div class="duration">10:00</div>
+          Relaxare
         </div>
 
       </div>
@@ -912,13 +1022,7 @@
         </div>
 
         <div class="meta">
-          5 minute • reglare
-        </div>
-
-        <div class="play-row">
-          <button class="play">▶</button>
-          <div class="wave"></div>
-          <div class="duration">5:00</div>
+          Reglare
         </div>
 
       </div>
@@ -929,75 +1033,54 @@
 
 
   <!-- ÎNTREBĂRI -->
-  <section id="answers" class="page">
 
-    <button class="back" data-page="home">
+  <section
+    id="answers"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Răspund la întrebări</h2>
+    <h2>
+      Răspund la întrebări
+    </h2>
 
     <p class="subtitle">
-      Caută tema care te interesează.
+      Răspunsurile publicate în Telegram pot fi găsite în Audio & Podcasturi după hashtag.
     </p>
 
-    <div class="search">
-      <span>⌕</span>
-
-      <input
-        id="answerSearch"
-        type="text"
-        placeholder="Caută..."
-      >
-    </div>
-
-    <div class="tags" id="answerTags">
-
-      <button
-        class="tag active"
-        data-filter="all"
-      >
-        Toate
-      </button>
-
-      <button class="tag" data-filter="anxietate">
-        #anxietate
-      </button>
-
-      <button class="tag" data-filter="relatii">
-        #relații
-      </button>
-
-      <button class="tag" data-filter="corp">
-        #corp
-      </button>
-
-      <button class="tag" data-filter="obiceiuri">
-        #obiceiuri
-      </button>
-
-      <button class="tag" data-filter="somn">
-        #somn
-      </button>
-
-    </div>
-
-    <div
-      class="stack"
-      id="answerList"
-    ></div>
+    <button
+      class="primary"
+      data-page="audio"
+    >
+      Deschide biblioteca
+    </button>
 
   </section>
 
 
   <!-- OBICEIURI -->
-  <section id="habits" class="page">
 
-    <button class="back" data-page="home">
+  <section
+    id="habits"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Obiceiurile mele</h2>
+    <h2>
+      Obiceiurile mele
+    </h2>
 
     <p class="subtitle">
       Consecvență, nu perfecțiune.
@@ -1005,7 +1088,9 @@
 
     <div class="section-head">
 
-      <h3>Astăzi</h3>
+      <h3>
+        Astăzi
+      </h3>
 
       <span
         id="habitCount"
@@ -1033,8 +1118,8 @@
       <div class="progress-track">
 
         <div
-          class="progress-fill"
           id="habitProgress"
+          class="progress-fill"
         ></div>
 
       </div>
@@ -1042,8 +1127,8 @@
     </div>
 
     <div
-      class="habits"
       id="habitList"
+      class="habits"
     ></div>
 
     <div class="form-card">
@@ -1059,8 +1144,8 @@
       >
 
       <button
-        class="primary"
         id="addHabit"
+        class="primary"
       >
         Adaugă
       </button>
@@ -1071,13 +1156,22 @@
 
 
   <!-- ALIMENTAȚIE -->
-  <section id="nutrition" class="page">
 
-    <button class="back" data-page="home">
+  <section
+    id="nutrition"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Alimentație</h2>
+    <h2>
+      Alimentație
+    </h2>
 
     <p class="subtitle">
       Relația cu mâncarea, rutină și alegeri conștiente.
@@ -1089,28 +1183,33 @@
     >
 
       <div class="content-card">
+
         <div class="content-title">
           Foame sau nevoie de reglare?
         </div>
 
         <div class="meta">
-          Practică • 5 minute
+          Practică
         </div>
+
       </div>
 
 
       <div class="content-card">
+
         <div class="content-title">
           Mâncatul pe pilot automat
         </div>
 
         <div class="meta">
-          Audio • 8 minute
+          Audio
         </div>
+
       </div>
 
 
       <div class="content-card">
+
         <div class="content-title">
           Rutina meselor
         </div>
@@ -1118,6 +1217,7 @@
         <div class="meta">
           Ghid practic
         </div>
+
       </div>
 
     </div>
@@ -1126,13 +1226,22 @@
 
 
   <!-- SOMN -->
-  <section id="sleep" class="page">
 
-    <button class="back" data-page="home">
+  <section
+    id="sleep"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Somn</h2>
+    <h2>
+      Somn
+    </h2>
 
     <p class="subtitle">
       Observă ritmul și construiește o rutină sustenabilă.
@@ -1144,24 +1253,28 @@
     >
 
       <div class="content-card">
+
         <div class="content-title">
           Închiderea zilei
         </div>
 
         <div class="meta">
-          Practică de seară • 7 minute
+          Practică de seară
         </div>
+
       </div>
 
 
       <div class="content-card">
+
         <div class="content-title">
           Mintea care nu se oprește
         </div>
 
         <div class="meta">
-          Audio • 9 minute
+          Audio
         </div>
+
       </div>
 
     </div>
@@ -1170,13 +1283,22 @@
 
 
   <!-- MIȘCARE -->
-  <section id="movement" class="page">
 
-    <button class="back" data-page="home">
+  <section
+    id="movement"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Mișcare</h2>
+    <h2>
+      Mișcare
+    </h2>
 
     <p class="subtitle">
       Mișcare ca grijă pentru corp, nu ca pedeapsă.
@@ -1188,6 +1310,7 @@
     >
 
       <div class="content-card">
+
         <div class="content-title">
           10 minute contează
         </div>
@@ -1195,10 +1318,12 @@
         <div class="meta">
           Practică
         </div>
+
       </div>
 
 
       <div class="content-card">
+
         <div class="content-title">
           Totul sau nimic în mișcare
         </div>
@@ -1206,6 +1331,7 @@
         <div class="meta">
           Audio
         </div>
+
       </div>
 
     </div>
@@ -1214,16 +1340,25 @@
 
 
   <!-- PSIHO-EMOȚIONAL -->
-  <section id="emotional" class="page">
 
-    <button class="back" data-page="home">
+  <section
+    id="emotional"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Psiho-emoțional</h2>
+    <h2>
+      Psiho-emoțional
+    </h2>
 
     <p class="subtitle">
-      Înțelege mecanismul din spatele reacției.
+      Emoții, reacții, nevoi și tipare.
     </p>
 
     <div
@@ -1231,51 +1366,99 @@
       style="margin-top:20px;"
     >
 
-      <button class="tile" data-page="practices">
-        <div class="tile-icon">◎</div>
+      <button
+        class="tile"
+        data-page="audio"
+      >
+
+        <div class="tile-icon">
+          ◎
+        </div>
+
         <div class="tile-title">
           Reacții automate
         </div>
+
       </button>
 
 
-      <button class="tile" data-page="practices">
-        <div class="tile-icon">♡</div>
+      <button
+        class="tile"
+        data-page="audio"
+      >
+
+        <div class="tile-icon">
+          ♡
+        </div>
+
         <div class="tile-title">
           Emoții
         </div>
+
       </button>
 
 
-      <button class="tile">
-        <div class="tile-icon">↻</div>
+      <button
+        class="tile"
+        data-page="audio"
+      >
+
+        <div class="tile-icon">
+          ↻
+        </div>
+
         <div class="tile-title">
           Tipare
         </div>
+
       </button>
 
 
-      <button class="tile">
-        <div class="tile-icon">○</div>
+      <button
+        class="tile"
+        data-page="audio"
+      >
+
+        <div class="tile-icon">
+          ○
+        </div>
+
         <div class="tile-title">
           Nevoi
         </div>
+
       </button>
 
 
-      <button class="tile">
-        <div class="tile-icon">⇄</div>
+      <button
+        class="tile"
+        data-page="audio"
+      >
+
+        <div class="tile-icon">
+          ⇄
+        </div>
+
         <div class="tile-title">
           Relații
         </div>
+
       </button>
 
 
-      <button class="tile">
-        <div class="tile-icon">│</div>
+      <button
+        class="tile"
+        data-page="audio"
+      >
+
+        <div class="tile-icon">
+          │
+        </div>
+
         <div class="tile-title">
           Limite
         </div>
+
       </button>
 
     </div>
@@ -1283,10 +1466,17 @@
   </section>
 
 
-  <!-- PENTRU MOMENTUL ÎN CARE -->
-  <section id="moment" class="page">
+  <!-- MOMENT -->
 
-    <button class="back" data-page="home">
+  <section
+    id="moment"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
@@ -1306,90 +1496,84 @@
       <button
         class="content-card"
         data-page="meditations"
-        style="border:0;text-align:left;color:inherit;"
+        style="
+          border:0;
+          text-align:left;
+          color:inherit;
+        "
       >
+
         <div class="content-title">
           Mă simt copleșită
         </div>
 
         <div class="meta">
-          Vezi resursele recomandate →
+          Vezi resursele →
         </div>
+
       </button>
 
 
       <button
         class="content-card"
         data-page="sleep"
-        style="border:0;text-align:left;color:inherit;"
+        style="
+          border:0;
+          text-align:left;
+          color:inherit;
+        "
       >
+
         <div class="content-title">
           Nu pot dormi
         </div>
 
         <div class="meta">
-          Vezi resursele recomandate →
+          Vezi resursele →
         </div>
+
       </button>
 
 
       <button
         class="content-card"
         data-page="nutrition"
-        style="border:0;text-align:left;color:inherit;"
+        style="
+          border:0;
+          text-align:left;
+          color:inherit;
+        "
       >
+
         <div class="content-title">
           Vreau să mănânc, dar nu îmi este foame
         </div>
 
         <div class="meta">
-          Vezi resursele recomandate →
+          Vezi resursele →
         </div>
+
       </button>
 
 
       <button
         class="content-card"
         data-page="emotional"
-        style="border:0;text-align:left;color:inherit;"
+        style="
+          border:0;
+          text-align:left;
+          color:inherit;
+        "
       >
+
         <div class="content-title">
           Am reacționat și acum regret
         </div>
 
         <div class="meta">
-          Vezi resursele recomandate →
-        </div>
-      </button>
-
-
-      <button
-        class="content-card"
-        data-page="emotional"
-        style="border:0;text-align:left;color:inherit;"
-      >
-        <div class="content-title">
-          Nu știu ce simt
+          Vezi resursele →
         </div>
 
-        <div class="meta">
-          Vezi resursele recomandate →
-        </div>
-      </button>
-
-
-      <button
-        class="content-card"
-        data-page="movement"
-        style="border:0;text-align:left;color:inherit;"
-      >
-        <div class="content-title">
-          Nu am energie
-        </div>
-
-        <div class="meta">
-          Vezi resursele recomandate →
-        </div>
       </button>
 
     </div>
@@ -1398,13 +1582,22 @@
 
 
   <!-- PROGRAME -->
-  <section id="programs" class="page">
 
-    <button class="back" data-page="home">
+  <section
+    id="programs"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
-    <h2>Programele MBS</h2>
+    <h2>
+      Programele MBS
+    </h2>
 
     <p class="subtitle">
       Resurse și procese structurate pentru diferite etape.
@@ -1417,22 +1610,12 @@
 
       <div class="content-card">
 
-        <div class="content-top">
+        <div class="content-title">
+          MBS Evolution
+        </div>
 
-          <div>
-            <div class="content-title">
-              MBS Evolution
-            </div>
-
-            <div class="meta">
-              Program de evoluție integrativă
-            </div>
-          </div>
-
-          <span class="mini-tag">
-            MBS
-          </span>
-
+        <div class="meta">
+          Program de evoluție integrativă
         </div>
 
       </div>
@@ -1456,9 +1639,16 @@
 
 
   <!-- LUCRĂM ÎMPREUNĂ -->
-  <section id="work" class="page">
 
-    <button class="back" data-page="home">
+  <section
+    id="work"
+    class="page"
+  >
+
+    <button
+      class="back"
+      data-page="home"
+    >
       ‹ Înapoi
     </button>
 
@@ -1486,8 +1676,8 @@
         </div>
 
         <button
-          class="primary"
           id="bookSession"
+          class="primary"
         >
           Programează o sesiune
         </button>
@@ -1519,8 +1709,12 @@
   </section>
 
 
-  <!-- EVOLUȚIA MEA -->
-  <section id="evolution" class="page">
+  <!-- EVOLUȚIA -->
+
+  <section
+    id="evolution"
+    class="page"
+  >
 
     <div class="topline">
       Spațiul tău
@@ -1549,6 +1743,7 @@
         </div>
 
         <div>
+
           <div class="tile-title">
             Obiceiurile mele
           </div>
@@ -1556,6 +1751,7 @@
           <div class="tile-sub">
             Tracker zilnic
           </div>
+
         </div>
 
       </button>
@@ -1571,6 +1767,7 @@
         </div>
 
         <div>
+
           <div class="tile-title">
             Programele MBS
           </div>
@@ -1578,25 +1775,7 @@
           <div class="tile-sub">
             Programe și resurse
           </div>
-        </div>
 
-      </button>
-
-
-      <button class="tile">
-
-        <div class="tile-icon">
-          ↗
-        </div>
-
-        <div>
-          <div class="tile-title">
-            Progres
-          </div>
-
-          <div class="tile-sub">
-            În curând
-          </div>
         </div>
 
       </button>
@@ -1607,13 +1786,19 @@
 
 
   <!-- FAVORITE -->
-  <section id="favorites" class="page">
+
+  <section
+    id="favorites"
+    class="page"
+  >
 
     <div class="topline">
       Biblioteca ta
     </div>
 
-    <h2>Favorite</h2>
+    <h2>
+      Favorite
+    </h2>
 
     <div class="search">
 
@@ -1628,8 +1813,8 @@
     </div>
 
     <div
-      class="stack"
       id="favoriteList"
+      class="stack"
     ></div>
 
   </section>
@@ -1637,13 +1822,15 @@
 </main>
 
 
-<!-- NAVIGAȚIE -->
+<!-- NAV -->
+
 <nav class="nav">
 
   <button
     class="active"
     data-page="home"
   >
+
     <span class="nav-icon">
       ⌂
     </span>
@@ -1651,10 +1838,13 @@
     <span class="nav-text">
       Acasă
     </span>
+
   </button>
 
 
-  <button data-page="practices">
+  <button
+    data-page="practices"
+  >
 
     <span class="nav-icon">
       ◎
@@ -1667,7 +1857,9 @@
   </button>
 
 
-  <button data-page="evolution">
+  <button
+    data-page="evolution"
+  >
 
     <span class="nav-icon">
       ◌
@@ -1680,7 +1872,9 @@
   </button>
 
 
-  <button data-page="favorites">
+  <button
+    data-page="favorites"
+  >
 
     <span class="nav-icon">
       ♡
@@ -1697,44 +1891,79 @@
 
 <script>
 
-  /* ==========================================================
-     TELEGRAM
-  ========================================================== */
+  /* =========================================================
+     SUPABASE
+  ========================================================= */
 
-  const tg = window.Telegram?.WebApp;
+  const SUPABASE_URL =
+    "https://njthqqnebvmcubvwfrzz.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_AKBoN-KjVCj9lNABwwy4tQ_a7BeddTH";
+
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  /* =========================================================
+     TELEGRAM MINI APP
+  ========================================================= */
+
+  const tg =
+    window.Telegram?.WebApp;
+
 
   if (tg) {
+
     tg.ready();
     tg.expand();
+
   }
 
 
-  /* ==========================================================
+  /* =========================================================
      NAVIGARE
-  ========================================================== */
+  ========================================================= */
 
   const pages =
-    document.querySelectorAll(".page");
+    document.querySelectorAll(
+      ".page"
+    );
+
 
   const navButtons =
-    document.querySelectorAll(".nav button");
-
-  const pageButtons =
-    document.querySelectorAll("[data-page]");
+    document.querySelectorAll(
+      ".nav button"
+    );
 
 
   function openPage(id) {
 
     pages.forEach(page => {
-      page.classList.remove("active");
+
+      page.classList.remove(
+        "active"
+      );
+
     });
+
 
     const page =
       document.getElementById(id);
 
+
     if (page) {
-      page.classList.add("active");
+
+      page.classList.add(
+        "active"
+      );
+
     }
+
 
     navButtons.forEach(button => {
 
@@ -1745,148 +1974,399 @@
 
     });
 
+
     window.scrollTo(0,0);
+
+
+    if (id === "audio") {
+
+      loadTelegramContent();
+
+    }
+
+
+    if (id === "favorites") {
+
+      renderFavorites();
+
+    }
+
   }
 
 
-  pageButtons.forEach(button => {
+  document.addEventListener(
+    "click",
+    event => {
 
-    button.addEventListener("click", () => {
-      openPage(button.dataset.page);
-    });
+      const button =
+        event.target.closest(
+          "[data-page]"
+        );
 
-  });
+
+      if (!button) return;
 
 
-  /* ==========================================================
-     CONȚINUT
-  ========================================================== */
+      openPage(
+        button.dataset.page
+      );
 
-  const practices = [
+    }
+  );
 
-    {
-      id:"p1",
-      title:"Observarea reacției automate",
-      meta:"Practică ghidată • 5 min",
-      tags:["reactii","emotii"],
-      display:["#reacții","#emoții"]
-    },
 
-    {
-      id:"p2",
-      title:"Întoarcerea în corp",
-      meta:"Conștientizare • 7 min",
-      tags:["corp","emotii"],
-      display:["#corp","#emoții"]
-    },
+  /* =========================================================
+     UTILITARE
+  ========================================================= */
 
-    {
-      id:"p3",
-      title:"Pauza dintre impuls și alegere",
-      meta:"Practică • 3 min",
-      tags:["reactii"],
-      display:["#reacții"]
-    },
+  function escapeHTML(value = "") {
 
-    {
-      id:"p4",
-      title:"Închiderea zilei",
-      meta:"Practică de seară • 7 min",
-      tags:["somn","corp"],
-      display:["#somn","#corp"]
-    },
+    return String(value)
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
 
-    {
-      id:"p5",
-      title:"Ce se activează în relație?",
-      meta:"Autoexplorare • 10 min",
-      tags:["relatii","emotii"],
-      display:["#relații","#emoții"]
+  }
+
+
+  function normalizeTag(value = "") {
+
+    return value
+      .replace(/^#/,"")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(
+        /[\u0300-\u036f]/g,
+        ""
+      );
+
+  }
+
+
+  function cleanTelegramText(
+    text = ""
+  ) {
+
+    return text
+      .replace(
+        /#[\p{L}\p{N}_]+/gu,
+        ""
+      )
+      .replace(
+        /\n{3,}/g,
+        "\n\n"
+      )
+      .trim();
+
+  }
+
+
+  function formatDate(value) {
+
+    if (!value) {
+      return "";
     }
 
-  ];
 
+    try {
 
-  const audios = [
+      return new Date(value)
+        .toLocaleDateString(
+          "ro-RO",
+          {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+          }
+        );
 
-    {
-      id:"a1",
-      title:"De ce repetăm comportamente pe care vrem să le schimbăm?",
-      meta:"Podcast • 8:24",
-      duration:"8:24",
-      tags:["obiceiuri","emotii"],
-      display:["#obiceiuri","#emoții"]
-    },
+    } catch {
 
-    {
-      id:"a2",
-      title:"Când corpul spune primul că este prea mult",
-      meta:"Audio • 6:10",
-      duration:"6:10",
-      tags:["corp","emotii"],
-      display:["#corp","#emoții"]
-    },
+      return "";
 
-    {
-      id:"a3",
-      title:"De ce reacționezi diferit în relații?",
-      meta:"Podcast • 11:40",
-      duration:"11:40",
-      tags:["relatii","emotii"],
-      display:["#relații","#emoții"]
     }
 
-  ];
+  }
 
 
-  const answers = [
+  /* =========================================================
+     TELEGRAM CONTENT
+  ========================================================= */
 
-    {
-      id:"q1",
-      title:"De ce mă simt anxioasă chiar dacă nu s-a întâmplat nimic?",
-      meta:"Răspuns audio • 4 min",
-      duration:"4:00",
-      tags:["anxietate","corp"],
-      display:["#anxietate","#corp"]
-    },
+  let telegramItems = [];
 
-    {
-      id:"q2",
-      title:"De ce știu ce trebuie să fac, dar tot nu fac?",
-      meta:"Răspuns audio • 5 min",
-      duration:"5:00",
-      tags:["obiceiuri"],
-      display:["#obiceiuri"]
-    },
+  let audioFilter =
+    "all";
 
-    {
-      id:"q3",
-      title:"De ce mă activează atât de tare anumite persoane?",
-      meta:"Răspuns audio • 6 min",
-      duration:"6:00",
-      tags:["relatii"],
-      display:["#relații"]
-    },
 
-    {
-      id:"q4",
-      title:"De ce nu pot adormi când sunt obosită?",
-      meta:"Răspuns audio • 4 min",
-      duration:"4:00",
-      tags:["somn","anxietate"],
-      display:["#somn","#anxietate"]
+  async function loadTelegramContent() {
+
+    const status =
+      document.getElementById(
+        "telegramStatus"
+      );
+
+
+    if (status) {
+
+      status.className =
+        "status";
+
+      status.textContent =
+        "Se încarcă materialele...";
+
     }
 
-  ];
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+
+        .from(
+          "telegram_content"
+        )
+
+        .select(
+          `
+            id,
+            telegram_message_id,
+            telegram_chat_id,
+            telegram_chat_title,
+            telegram_chat_username,
+            title,
+            text,
+            content_type,
+            hashtags,
+            telegram_file_id,
+            telegram_date,
+            is_published
+          `
+        )
+
+        .eq(
+          "is_published",
+          true
+        )
+
+        .order(
+          "telegram_date",
+          {
+            ascending:false
+          }
+        );
 
 
-  /* ==========================================================
+    if (error) {
+
+      console.error(
+        "Supabase:",
+        error
+      );
+
+
+      telegramItems = [];
+
+
+      if (status) {
+
+        status.className =
+          "status error";
+
+        status.textContent =
+          "Nu am putut încărca materialele.";
+
+      }
+
+
+      renderAudio();
+
+      return;
+
+    }
+
+
+    telegramItems =
+      data || [];
+
+
+    if (status) {
+
+      status.className =
+        "status";
+
+
+      if (
+        telegramItems.length
+      ) {
+
+        status.textContent =
+          `${telegramItems.length} materiale disponibile`;
+
+      } else {
+
+        status.textContent =
+          "Nu există încă materiale publicate.";
+
+      }
+
+    }
+
+
+    buildAudioTags();
+
+    renderAudio();
+
+    renderFavorites();
+
+  }
+
+
+  /* =========================================================
+     HASHTAGURI DIN TELEGRAM
+  ========================================================= */
+
+  function buildAudioTags() {
+
+    const container =
+      document.getElementById(
+        "audioTags"
+      );
+
+
+    if (!container) return;
+
+
+    const map =
+      new Map();
+
+
+    telegramItems
+      .forEach(item => {
+
+        const hashtags =
+          Array.isArray(
+            item.hashtags
+          )
+          ? item.hashtags
+          : [];
+
+
+        hashtags.forEach(tag => {
+
+          const normalized =
+            normalizeTag(tag);
+
+
+          if (
+            normalized &&
+            !map.has(normalized)
+          ) {
+
+            map.set(
+              normalized,
+              tag.startsWith("#")
+                ? tag
+                : "#" + tag
+            );
+
+          }
+
+        });
+
+      });
+
+
+    container.innerHTML =
+      `
+        <button
+          class="tag ${
+            audioFilter === "all"
+            ? "active"
+            : ""
+          }"
+          data-audio-filter="all"
+        >
+          Toate
+        </button>
+      `
+      +
+
+      [...map.entries()]
+        .map(
+          ([normalized,label]) =>
+          `
+            <button
+              class="tag ${
+                audioFilter === normalized
+                ? "active"
+                : ""
+              }"
+              data-audio-filter="${escapeHTML(normalized)}"
+            >
+              ${escapeHTML(label)}
+            </button>
+          `
+        )
+        .join("");
+
+
+    container
+      .querySelectorAll(
+        "[data-audio-filter]"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            audioFilter =
+              button.dataset
+                .audioFilter;
+
+
+            buildAudioTags();
+
+            renderAudio();
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =========================================================
      FAVORITE
-  ========================================================== */
+  ========================================================= */
 
   let favorites =
     JSON.parse(
-      localStorage.getItem("mbsFavorites") || "[]"
+      localStorage.getItem(
+        "mbsFavorites"
+      )
+      ||
+      "[]"
     );
 
 
@@ -1894,22 +2374,46 @@
 
     localStorage.setItem(
       "mbsFavorites",
-      JSON.stringify(favorites)
+      JSON.stringify(
+        favorites
+      )
     );
 
   }
 
 
-  function toggleFavorite(id,type) {
+  function favoriteKey(id) {
+
+    return (
+      "telegram:" + id
+    );
+
+  }
+
+
+  function isFavorite(id) {
+
+    return favorites.includes(
+      favoriteKey(id)
+    );
+
+  }
+
+
+  function toggleFavorite(id) {
 
     const key =
-      type + ":" + id;
+      favoriteKey(id);
 
-    if (favorites.includes(key)) {
+
+    if (
+      favorites.includes(key)
+    ) {
 
       favorites =
         favorites.filter(
-          item => item !== key
+          item =>
+            item !== key
         );
 
     } else {
@@ -1918,92 +2422,163 @@
 
     }
 
+
     saveFavorites();
-    renderAll();
-  }
 
+    renderAudio();
 
-  function isFavorite(id,type) {
-
-    return favorites.includes(
-      type + ":" + id
-    );
+    renderFavorites();
 
   }
 
 
-  function cardHTML(
-    item,
-    type,
-    withPlayer=false
-  ) {
+  /* =========================================================
+     CARD TELEGRAM
+  ========================================================= */
+
+  function telegramCard(item) {
+
+    const hashtags =
+      Array.isArray(
+        item.hashtags
+      )
+      ? item.hashtags
+      : [];
+
+
+    const cleanedText =
+      cleanTelegramText(
+        item.text || ""
+      );
+
+
+    const title =
+      item.title ||
+      "Material MBS";
+
+
+    const date =
+      formatDate(
+        item.telegram_date
+      );
+
+
+    const type =
+      item.content_type ||
+      "post";
+
+
+    const favorite =
+      isFavorite(
+        item.id
+      );
+
 
     return `
       <div class="content-card">
 
-        <div class="content-top">
+        <div class="content-title">
+          ${escapeHTML(title)}
+        </div>
 
-          <div>
+        <div class="meta">
 
-            <div class="content-title">
-              ${item.title}
-            </div>
+          ${escapeHTML(type)}
 
-            <div class="meta">
-              ${item.meta}
-            </div>
-
-          </div>
+          ${
+            date
+            ? " • " + escapeHTML(date)
+            : ""
+          }
 
         </div>
 
-        <div class="mini-tags">
-
-          ${item.display
-            .map(tag =>
-              `<span class="mini-tag">${tag}</span>`
-            )
-            .join("")}
-
-        </div>
 
         ${
-          withPlayer
+          cleanedText &&
+          cleanedText !== title
+
           ? `
-            <div class="play-row">
-
-              <button
-                class="play"
-                type="button"
-              >
-                ▶
-              </button>
-
-              <div class="wave"></div>
-
-              <div class="duration">
-                ${item.duration}
+              <div class="content-text">
+                ${escapeHTML(cleanedText)}
               </div>
+            `
 
-            </div>
-          `
           : ""
         }
+
+
+        ${
+          hashtags.length
+
+          ? `
+              <div class="mini-tags">
+
+                ${hashtags
+                  .map(tag => {
+
+                    const label =
+                      tag.startsWith("#")
+                      ? tag
+                      : "#" + tag;
+
+
+                    return `
+                      <span class="mini-tag">
+                        ${escapeHTML(label)}
+                      </span>
+                    `;
+
+                  })
+                  .join("")}
+
+              </div>
+            `
+
+          : ""
+        }
+
+
+        ${
+          item.telegram_file_id
+
+          ? `
+              <span class="telegram-type">
+                ${
+                  type === "audio"
+                  ? "🎧 Audio"
+                  :
+                  type === "voice"
+                  ? "🎙 Mesaj vocal"
+                  :
+                  type === "video"
+                  ? "▶ Video"
+                  :
+                  type === "photo"
+                  ? "▧ Imagine"
+                  :
+                  "Fișier Telegram"
+                }
+              </span>
+            `
+
+          : ""
+        }
+
 
         <div class="actions">
 
           <button
             class="action-btn ${
-              isFavorite(item.id,type)
+              favorite
               ? "liked"
               : ""
             }"
-            data-favorite="${item.id}"
-            data-type="${type}"
+            data-favorite-id="${escapeHTML(item.id)}"
           >
 
             ${
-              isFavorite(item.id,type)
+              favorite
               ? "♥ Salvat"
               : "♡ Salvează"
             }
@@ -2018,46 +2593,88 @@
   }
 
 
-  function renderItems(
-    items,
-    containerId,
-    type,
-    searchId,
-    filter="all",
-    withPlayer=false
-  ) {
+  /* =========================================================
+     RENDER AUDIO
+  ========================================================= */
+
+  function renderAudio() {
 
     const container =
-      document.getElementById(containerId);
+      document.getElementById(
+        "audioList"
+      );
+
+
+    if (!container) return;
+
 
     const search =
       (
-        document.getElementById(searchId)?.value || ""
-      ).toLowerCase();
+        document
+          .getElementById(
+            "audioSearch"
+          )
+          ?.value || ""
+      )
+      .trim()
+      .toLowerCase();
+
 
     const filtered =
-      items.filter(item => {
+      telegramItems
+        .filter(item => {
 
-        const tagMatch =
-          filter === "all" ||
-          item.tags.includes(filter);
+          const hashtags =
+            Array.isArray(
+              item.hashtags
+            )
+            ? item.hashtags
+            : [];
 
-        const searchMatch =
-          item.title
-            .toLowerCase()
-            .includes(search)
-          ||
-          item.display
+
+          const normalizedTags =
+            hashtags.map(
+              normalizeTag
+            );
+
+
+          const tagMatch =
+            audioFilter === "all"
+            ||
+            normalizedTags.includes(
+              audioFilter
+            );
+
+
+          const haystack =
+            [
+              item.title || "",
+              item.text || "",
+              hashtags.join(" "),
+              item.content_type || ""
+            ]
             .join(" ")
-            .toLowerCase()
-            .includes(search);
-
-        return tagMatch && searchMatch;
-
-      });
+            .toLowerCase();
 
 
-    if (!filtered.length) {
+          const searchMatch =
+            !search ||
+            haystack.includes(
+              search
+            );
+
+
+          return (
+            tagMatch &&
+            searchMatch
+          );
+
+        });
+
+
+    if (
+      !filtered.length
+    ) {
 
       container.innerHTML =
         `
@@ -2067,211 +2684,128 @@
         `;
 
       return;
+
     }
 
 
     container.innerHTML =
       filtered
-        .map(item =>
-          cardHTML(
-            item,
-            type,
-            withPlayer
-          )
+        .map(
+          telegramCard
         )
         .join("");
 
 
-    container
-      .querySelectorAll("[data-favorite]")
+    bindFavoriteButtons();
+
+  }
+
+
+  function bindFavoriteButtons() {
+
+    document
+      .querySelectorAll(
+        "[data-favorite-id]"
+      )
       .forEach(button => {
 
-        button.addEventListener(
-          "click",
+        button.onclick =
           () => {
 
             toggleFavorite(
-              button.dataset.favorite,
-              button.dataset.type
+              button.dataset
+                .favoriteId
             );
 
-          }
-        );
-
-      });
-
-    bindPlayButtons();
-  }
-
-
-  let practiceFilter = "all";
-  let audioFilter = "all";
-  let answerFilter = "all";
-
-
-  function renderAll() {
-
-    renderItems(
-      practices,
-      "practiceList",
-      "practice",
-      "practiceSearch",
-      practiceFilter,
-      false
-    );
-
-    renderItems(
-      audios,
-      "audioList",
-      "audio",
-      "audioSearch",
-      audioFilter,
-      true
-    );
-
-    renderItems(
-      answers,
-      "answerList",
-      "answer",
-      "answerSearch",
-      answerFilter,
-      true
-    );
-
-    renderFavorites();
-
-  }
-
-
-  function bindTagGroup(id,setter) {
-
-    const group =
-      document.getElementById(id);
-
-    if (!group) return;
-
-    group
-      .querySelectorAll(".tag")
-      .forEach(button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            group
-              .querySelectorAll(".tag")
-              .forEach(item => {
-                item.classList.remove("active");
-              });
-
-            button.classList.add("active");
-
-            setter(
-              button.dataset.filter
-            );
-
-            renderAll();
-
-          }
-        );
+          };
 
       });
 
   }
 
 
-  bindTagGroup(
-    "practiceTags",
-    value => practiceFilter=value
-  );
-
-  bindTagGroup(
-    "audioTags",
-    value => audioFilter=value
-  );
-
-  bindTagGroup(
-    "answerTags",
-    value => answerFilter=value
-  );
+  const audioSearch =
+    document.getElementById(
+      "audioSearch"
+    );
 
 
-  [
-    "practiceSearch",
-    "audioSearch",
-    "answerSearch"
-  ].forEach(id => {
+  if (audioSearch) {
 
-    const input =
-      document.getElementById(id);
+    audioSearch.addEventListener(
+      "input",
+      renderAudio
+    );
 
-    if (input) {
-
-      input.addEventListener(
-        "input",
-        renderAll
-      );
-
-    }
-
-  });
+  }
 
 
-  /* ==========================================================
+  /* =========================================================
      FAVORITE PAGE
-  ========================================================== */
+  ========================================================= */
 
   function renderFavorites() {
 
     const container =
-      document.getElementById("favoriteList");
-
-    if (!container) return;
-
-    const search =
-      document
-        .getElementById("favoriteSearch")
-        ?.value
-        .toLowerCase() || "";
-
-
-    const allContent = [
-
-      ...practices.map(item => ({
-        ...item,
-        type:"practice"
-      })),
-
-      ...audios.map(item => ({
-        ...item,
-        type:"audio"
-      })),
-
-      ...answers.map(item => ({
-        ...item,
-        type:"answer"
-      }))
-
-    ];
-
-
-    const selected =
-      allContent.filter(item =>
-
-        favorites.includes(
-          item.type + ":" + item.id
-        )
-
-        &&
-
-        item.title
-          .toLowerCase()
-          .includes(search)
-
+      document.getElementById(
+        "favoriteList"
       );
 
 
-    if (!selected.length) {
+    if (!container) return;
+
+
+    const search =
+      (
+        document
+          .getElementById(
+            "favoriteSearch"
+          )
+          ?.value || ""
+      )
+      .trim()
+      .toLowerCase();
+
+
+    const selected =
+      telegramItems
+        .filter(item => {
+
+          if (
+            !isFavorite(
+              item.id
+            )
+          ) {
+
+            return false;
+
+          }
+
+
+          const haystack =
+            (
+              (item.title || "")
+              +
+              " "
+              +
+              (item.text || "")
+            )
+            .toLowerCase();
+
+
+          return (
+            !search ||
+            haystack.includes(
+              search
+            )
+          );
+
+        });
+
+
+    if (
+      !selected.length
+    ) {
 
       container.innerHTML =
         `
@@ -2283,40 +2817,20 @@
         `;
 
       return;
+
     }
 
 
     container.innerHTML =
       selected
-        .map(item =>
-          cardHTML(
-            item,
-            item.type,
-            item.type !== "practice"
-          )
+        .map(
+          telegramCard
         )
         .join("");
 
 
-    container
-      .querySelectorAll("[data-favorite]")
-      .forEach(button => {
+    bindFavoriteButtons();
 
-        button.addEventListener(
-          "click",
-          () => {
-
-            toggleFavorite(
-              button.dataset.favorite,
-              button.dataset.type
-            );
-
-          }
-        );
-
-      });
-
-    bindPlayButtons();
   }
 
 
@@ -2324,6 +2838,7 @@
     document.getElementById(
       "favoriteSearch"
     );
+
 
   if (favoriteSearch) {
 
@@ -2335,13 +2850,15 @@
   }
 
 
-  /* ==========================================================
+  /* =========================================================
      OBICEIURI
-  ========================================================== */
+  ========================================================= */
 
   let habits =
     JSON.parse(
-      localStorage.getItem("mbsHabits")
+      localStorage.getItem(
+        "mbsHabits"
+      )
       ||
       JSON.stringify([
         {
@@ -2367,7 +2884,9 @@
 
     localStorage.setItem(
       "mbsHabits",
-      JSON.stringify(habits)
+      JSON.stringify(
+        habits
+      )
     );
 
   }
@@ -2376,52 +2895,61 @@
   function renderHabits() {
 
     const list =
-      document.getElementById("habitList");
+      document.getElementById(
+        "habitList"
+      );
+
 
     if (!list) return;
 
 
     list.innerHTML =
       habits
-        .map(habit => `
-
-          <div class="habit ${
-            habit.done ? "done" : ""
-          }">
-
-            <button
-              class="habit-check"
-              data-habit="${habit.id}"
-              aria-label="Bifează obiceiul"
+        .map(
+          habit =>
+          `
+            <div
+              class="habit ${
+                habit.done
+                ? "done"
+                : ""
+              }"
             >
-            </button>
 
-            <div class="habit-info">
+              <button
+                class="habit-check"
+                data-habit="${habit.id}"
+                aria-label="Bifează obiceiul"
+              ></button>
 
-              <div class="habit-title">
-                ${habit.title}
-              </div>
+              <div class="habit-info">
 
-              <div class="habit-meta">
+                <div class="habit-title">
+                  ${escapeHTML(habit.title)}
+                </div>
 
-                ${
-                  habit.done
-                  ? "Completat astăzi"
-                  : "De făcut astăzi"
-                }
+                <div class="habit-meta">
+
+                  ${
+                    habit.done
+                    ? "Completat astăzi"
+                    : "De făcut astăzi"
+                  }
+
+                </div>
 
               </div>
 
             </div>
-
-          </div>
-
-        `)
+          `
+        )
         .join("");
 
 
     list
-      .querySelectorAll("[data-habit]")
+      .querySelectorAll(
+        "[data-habit]"
+      )
       .forEach(button => {
 
         button.addEventListener(
@@ -2433,19 +2961,26 @@
                 button.dataset.habit
               );
 
-            habits =
-              habits.map(habit =>
 
-                habit.id === id
-                ? {
-                    ...habit,
-                    done:!habit.done
-                  }
-                : habit
+            habits =
+              habits.map(
+                habit =>
+
+                  habit.id === id
+
+                  ? {
+                      ...habit,
+                      done:
+                        !habit.done
+                    }
+
+                  : habit
 
               );
 
+
             saveHabits();
+
             renderHabits();
 
           }
@@ -2456,11 +2991,14 @@
 
     const done =
       habits.filter(
-        habit => habit.done
+        habit =>
+          habit.done
       ).length;
+
 
     const total =
       habits.length;
+
 
     const percent =
       total
@@ -2470,28 +3008,36 @@
       : 0;
 
 
-    document.getElementById(
-      "habitCount"
-    ).textContent =
-      `${done}/${total}`;
+    document
+      .getElementById(
+        "habitCount"
+      )
+      .textContent =
+        `${done}/${total}`;
 
 
-    document.getElementById(
-      "habitPercent"
-    ).textContent =
-      `${percent}%`;
+    document
+      .getElementById(
+        "habitPercent"
+      )
+      .textContent =
+        `${percent}%`;
 
 
-    document.getElementById(
-      "habitProgress"
-    ).style.width =
-      `${percent}%`;
+    document
+      .getElementById(
+        "habitProgress"
+      )
+      .style.width =
+        `${percent}%`;
 
   }
 
 
   const addHabit =
-    document.getElementById("addHabit");
+    document.getElementById(
+      "addHabit"
+    );
 
 
   if (addHabit) {
@@ -2505,22 +3051,31 @@
             "newHabit"
           );
 
+
         const title =
           input.value.trim();
+
 
         if (!title) return;
 
 
         habits.push({
+
           id:Date.now(),
+
           title:title,
+
           done:false
+
         });
 
 
-        input.value="";
+        input.value =
+          "";
+
 
         saveHabits();
+
         renderHabits();
 
       }
@@ -2529,9 +3084,9 @@
   }
 
 
-  /* ==========================================================
+  /* =========================================================
      PROGRAMARE
-  ========================================================== */
+  ========================================================= */
 
   const bookSession =
     document.getElementById(
@@ -2545,16 +3100,20 @@
       "click",
       () => {
 
+        const message =
+          "Aici vom conecta linkul real de programare pentru sesiunile 1:1.";
+
+
         if (tg) {
 
           tg.showAlert(
-            "Aici vom conecta linkul real de programare pentru sesiunile 1:1."
+            message
           );
 
         } else {
 
           alert(
-            "Aici vom conecta linkul real de programare."
+            message
           );
 
         }
@@ -2565,51 +3124,15 @@
   }
 
 
-  /* ==========================================================
-     PLAY BUTTONS
-  ========================================================== */
-
-  function bindPlayButtons() {
-
-    document
-      .querySelectorAll(".play")
-      .forEach(button => {
-
-        if (
-          button.dataset.bound === "1"
-        ) {
-          return;
-        }
-
-        button.dataset.bound="1";
-
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            button.textContent =
-              button.textContent === "▶"
-              ? "❚❚"
-              : "▶";
-
-          }
-        );
-
-      });
-
-  }
-
-
-  /* ==========================================================
+  /* =========================================================
      START
-  ========================================================== */
+  ========================================================= */
 
-  function startApp() {
+  async function startApp() {
 
-    renderAll();
     renderHabits();
-    bindPlayButtons();
+
+    await loadTelegramContent();
 
   }
 
