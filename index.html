@@ -1,3289 +1,2271 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
-  <meta name="theme-color" content="#f8f3f8">
-
-  <title>MBS Podcasturi</title>
-
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-
-    :root{
-      --bg:#f8f3f8;
-      --surface:#ffffff;
-      --card:#f1e7ef;
-      --player:#fffafd;
-
-      --text:#211d21;
-      --muted:#8b8188;
-
-      --accent:#ad87a5;
-      --accent-dark:#8f6a87;
-      --accent-soft:#ddcad9;
-
-      --border:#decfda;
-
-      --shadow:
-        0 5px 22px rgba(80,50,75,.045);
-    }
-
-
-    *{
-      box-sizing:border-box;
-      -webkit-tap-highlight-color:transparent;
-    }
-
-
-    html{
-      scroll-behavior:smooth;
-      background:var(--bg);
-    }
-
-
-    body{
-      margin:0;
-      min-height:100vh;
-
-      background:var(--bg);
-      color:var(--text);
-
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-      padding-bottom:
-        calc(
-          110px +
-          env(safe-area-inset-bottom)
-        );
-    }
-
-
-    button,
-    input{
-      font:inherit;
-    }
-
-
-    button{
-      cursor:pointer;
-    }
-
-
-    /* =========================
-       APP
-    ========================= */
-
-    .app{
-      width:100%;
-      max-width:900px;
-
-      margin:0 auto;
-
-      padding:
-        max(24px, env(safe-area-inset-top))
-        20px
-        50px;
-    }
-
-
-    .page{
-      display:none;
-    }
-
-
-    .page.active{
-      display:block;
-
-      animation:
-        fade .18s ease;
-    }
-
-
-    @keyframes fade{
-
-      from{
-        opacity:.5;
-        transform:translateY(3px);
-      }
-
-      to{
-        opacity:1;
-        transform:none;
-      }
-
-    }
-
-
-    /* =========================
-       TYPOGRAPHY
-    ========================= */
-
-    h1{
-      margin:0;
-
-      font-size:36px;
-      line-height:1.05;
-
-      letter-spacing:-1px;
-    }
-
-
-    h2{
-      margin:0;
-
-      font-size:34px;
-      line-height:1.1;
-
-      letter-spacing:-.8px;
-    }
-
-
-    .subtitle{
-      margin:
-        7px
-        0
-        0;
-
-      color:var(--muted);
-
-      font-size:16px;
-    }
-
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    .header{
-      margin-bottom:22px;
-    }
-
-
-    .eyebrow{
-      color:var(--muted);
-
-      font-size:14px;
-
-      margin-bottom:6px;
-    }
-
-
-    /* =========================
-       SEARCH
-    ========================= */
-
-    .search{
-      width:100%;
-
-      min-height:58px;
-
-      margin:
-        22px
-        0
-        14px;
-
-      background:var(--surface);
-
-      border-radius:23px;
-
-      display:flex;
-
-      align-items:center;
-
-      gap:8px;
-
-      padding:
-        0
-        17px;
-
-      box-shadow:var(--shadow);
-    }
-
-
-    .search-icon{
-      color:var(--accent-dark);
-
-      font-size:22px;
-    }
-
-
-    .search input{
-      width:100%;
-
-      border:0;
-      outline:none;
-
-      background:transparent;
-
-      color:var(--text);
-
-      padding:
-        16px
-        5px;
-
-      font-size:16px;
-    }
-
-
-    .search input::placeholder{
-      color:#aaa0a7;
-    }
-
-
-    /* =========================
-       FILTER BUTTON
-    ========================= */
-
-    .filter-button{
-      width:100%;
-
-      min-height:60px;
-
-      border:0;
-
-      border-radius:23px;
-
-      background:var(--surface);
-
-      color:var(--text);
-
-      padding:
-        0
-        18px;
-
-      display:flex;
-
-      justify-content:
-        space-between;
-
-      align-items:center;
-
-      box-shadow:var(--shadow);
-
-      font-weight:650;
-
-      font-size:16px;
-    }
-
-
-    .filter-left{
-      display:flex;
-
-      align-items:center;
-
-      gap:11px;
-    }
-
-
-    .filter-symbol{
-      color:var(--accent-dark);
-
-      font-size:19px;
-    }
-
-
-    .filter-arrow{
-      font-size:24px;
-
-      font-weight:300;
-    }
-
-
-    /* =========================
-       ACTIVE FILTER
-    ========================= */
-
-    .active-filter{
-      display:none;
-
-      margin-top:13px;
-
-      align-items:center;
-
-      gap:8px;
-
-      flex-wrap:wrap;
-    }
-
-
-    .active-filter.visible{
-      display:flex;
-    }
-
-
-    .active-filter-label{
-      color:var(--muted);
-
-      font-size:13px;
-    }
-
-
-    .active-filter-pill{
-      border:0;
-
-      background:var(--accent);
-
-      color:white;
-
-      padding:
-        8px
-        13px;
-
-      border-radius:999px;
-
-      font-weight:600;
-
-      font-size:13px;
-    }
-
-
-    /* =========================
-       STATUS
-    ========================= */
-
-    .status{
-      margin:
-        17px
-        2px;
-
-      color:var(--muted);
-
-      font-size:13px;
-    }
-
-
-    .status.error{
-      color:#9b5e72;
-    }
-
-
-    /* =========================
-       PODCAST LIST
-    ========================= */
-
-    .podcast-list{
-      margin-top:22px;
-
-      display:grid;
-
-      grid-template-columns:1fr;
-
-      gap:17px;
-    }
-
-
-    /* =========================
-       PODCAST CARD
-    ========================= */
-
-    .podcast-card{
-      background:var(--card);
-
-      border-radius:28px;
-
-      padding:20px;
-
-      box-shadow:var(--shadow);
-    }
-
-
-    .podcast-tags{
-      display:flex;
-
-      flex-wrap:wrap;
-
-      gap:7px;
-
-      margin-bottom:14px;
-    }
-
-
-    .podcast-tag{
-      border:
-        1px solid
-        var(--border);
-
-      background:
-        rgba(255,255,255,.62);
-
-      border-radius:999px;
-
-      padding:
-        6px
-        10px;
-
-      color:var(--accent-dark);
-
-      font-size:12px;
-
-      font-weight:650;
-    }
-
-
-    .podcast-title{
-      font-size:21px;
-
-      line-height:1.25;
-
-      font-weight:750;
-
-      margin-bottom:16px;
-    }
-
-
-    /* =========================
-       AUDIO PLAYER
-    ========================= */
-
-    .audio-player{
-      background:var(--player);
-
-      border-radius:23px;
-
-      padding:14px;
-
-      display:grid;
-
-      grid-template-columns:
-        58px
-        minmax(0,1fr)
-        55px;
-
-      gap:13px;
-
-      align-items:center;
-    }
-
-
-    .play-button{
-      width:56px;
-      height:56px;
-
-      border:0;
-
-      border-radius:50%;
-
-      background:var(--accent);
-
-      color:white;
-
-      display:flex;
-
-      align-items:center;
-      justify-content:center;
-
-      font-size:19px;
-
-      padding-left:3px;
-
-      transition:
-        transform .12s ease,
-        opacity .12s ease;
-    }
-
-
-    .play-button:active{
-      transform:scale(.94);
-    }
-
-
-    .play-button.loading{
-      opacity:.65;
-    }
-
-
-    .player-main{
-      min-width:0;
-    }
-
-
-    .waveform{
-      height:38px;
-
-      display:flex;
-
-      align-items:center;
-
-      gap:3px;
-
-      overflow:hidden;
-
-      cursor:pointer;
-    }
-
-
-    .wave-bar{
-      width:3px;
-      min-width:3px;
-
-      border-radius:999px;
-
-      background:var(--accent-soft);
-
-      transition:
-        background .12s ease;
-    }
-
-
-    .wave-bar.active{
-      background:var(--accent);
-    }
-
-
-    .player-time{
-      margin-top:5px;
-
-      color:var(--muted);
-
-      font-size:13px;
-    }
-
-
-    .speed-button{
-      min-width:52px;
-
-      border:
-        1px solid
-        var(--accent-dark);
-
-      background:transparent;
-
-      color:var(--accent-dark);
-
-      border-radius:999px;
-
-      padding:
-        8px
-        9px;
-    }
-
-
-    .player-error{
-      display:none;
-
-      margin-top:7px;
-
-      color:#9a5c70;
-
-      font-size:12px;
-    }
-
-
-    /* =========================
-       CARD FOOTER
-    ========================= */
-
-    .podcast-footer{
-      margin-top:15px;
-
-      display:flex;
-
-      justify-content:
-        space-between;
-
-      align-items:center;
-
-      gap:12px;
-    }
-
-
-    .podcast-date{
-      color:var(--muted);
-
-      font-size:13px;
-    }
-
-
-    .save-button{
-      border:0;
-
-      min-height:45px;
-
-      padding:
-        0
-        15px;
-
-      border-radius:16px;
-
-      background:
-        rgba(255,255,255,.68);
-
-      color:var(--text);
-
-      display:flex;
-
-      align-items:center;
-
-      gap:7px;
-
-      font-size:14px;
-
-      font-weight:650;
-    }
-
-
-    .save-heart{
-      font-size:20px;
-
-      line-height:1;
-    }
-
-
-    .save-button.saved{
-      color:var(--accent-dark);
-    }
-
-
-    /* =========================
-       FILTER PAGE
-    ========================= */
-
-    .back{
-      border:0;
-
-      background:
-        rgba(255,255,255,.58);
-
-      color:var(--text);
-
-      border-radius:999px;
-
-      padding:
-        10px
-        15px;
-
-      margin-bottom:24px;
-    }
-
-
-    .filter-list{
-      display:flex;
-
-      flex-direction:column;
-
-      gap:10px;
-
-      margin-top:25px;
-    }
-
-
-    .filter-item{
-      width:100%;
-
-      border:0;
-
-      background:var(--surface);
-
-      color:var(--text);
-
-      border-radius:20px;
-
-      min-height:60px;
-
-      padding:
-        0
-        17px;
-
-      display:flex;
-
-      align-items:center;
-
-      justify-content:
-        space-between;
-
-      text-align:left;
-
-      box-shadow:var(--shadow);
-    }
-
-
-    .filter-item-left{
-      display:flex;
-
-      align-items:center;
-
-      gap:12px;
-    }
-
-
-    .filter-item-name{
-      font-weight:650;
-    }
-
-
-    .filter-count{
-      min-width:30px;
-
-      padding:
-        5px
-        9px;
-
-      text-align:center;
-
-      border-radius:999px;
-
-      background:var(--card);
-
-      color:var(--accent-dark);
-
-      font-size:12px;
-
-      font-weight:650;
-    }
-
-
-    .filter-item.selected{
-      background:var(--accent);
-
-      color:white;
-    }
-
-
-    .filter-item.selected .filter-count{
-      background:
-        rgba(255,255,255,.22);
-
-      color:white;
-    }
-
-
-    .all-filter{
-      margin-top:18px;
-
-      width:100%;
-
-      border:0;
-
-      min-height:56px;
-
-      border-radius:20px;
-
-      background:var(--accent);
-
-      color:white;
-
-      font-weight:650;
-    }
-
-
-    /* =========================
-       EMPTY
-    ========================= */
-
-    .empty{
-      padding:
-        65px
-        20px;
-
-      text-align:center;
-
-      color:var(--muted);
-    }
-
-
-    .empty-heart{
-      font-size:42px;
-
-      color:var(--accent);
-
-      margin-bottom:14px;
-    }
-
-
-    .empty-title{
-      color:var(--text);
-
-      font-size:19px;
-
-      font-weight:700;
-
-      margin-bottom:7px;
-    }
-
-
-    .empty-text{
-      font-size:14px;
-
-      line-height:1.5;
-    }
-
-
-    /* =========================
-       NAVIGATION
-    ========================= */
-
-    .nav{
-      position:fixed;
-
-      left:16px;
-      right:16px;
-
-      bottom:
-        calc(
-          13px +
-          env(safe-area-inset-bottom)
-        );
-
-      max-width:700px;
-
-      margin:auto;
-
-      z-index:100;
-
-      background:#080808;
-
-      border-radius:31px;
-
-      padding:
-        8px;
-
-      display:grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
-      gap:5px;
-
-      box-shadow:
-        0 12px 35px
-        rgba(0,0,0,.2);
-    }
-
-
-    .nav button{
-      border:0;
-
-      background:transparent;
-
-      color:#c8c8c8;
-
-      border-radius:24px;
-
-      min-height:60px;
-
-      display:flex;
-
-      flex-direction:column;
-
-      align-items:center;
-
-      justify-content:center;
-
-      gap:3px;
-    }
-
-
-    .nav button.active{
-      background:#292929;
-
-      color:var(--accent);
-    }
-
-
-    .nav-icon{
-      font-size:23px;
-    }
-
-
-    .nav-text{
-      font-size:11px;
-    }
-
-
-    /* =========================
-       TABLET
-    ========================= */
-
-    @media(min-width:760px){
-
-      .app{
-        padding-left:40px;
-        padding-right:40px;
-      }
-
-
-      .podcast-list{
-        grid-template-columns:
-          1fr
-          1fr;
-      }
-
-
-      .podcast-card{
-        min-width:0;
-      }
-
-    }
-
-
-    @media(max-width:420px){
-
-      .app{
-        padding-left:16px;
-        padding-right:16px;
-      }
-
-
-      h1,
-      h2{
-        font-size:31px;
-      }
-
-
-      .audio-player{
-        grid-template-columns:
-          52px
-          minmax(0,1fr)
-          48px;
-
-        gap:9px;
-      }
-
-
-      .play-button{
-        width:50px;
-        height:50px;
-      }
-
-
-      .speed-button{
-        min-width:46px;
-
-        padding:
-          7px
-          6px;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#f1edff">
+
+<title>MBS Evolution</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#f1edff;
+  --surface:#ffffff;
+  --surface-soft:#f8f6ff;
+  --card:#e9e2ff;
+  --card2:#eee8fb;
+  --text:#25212d;
+  --muted:#817a8c;
+  --accent:#aa8db0;
+  --accent-dark:#8f708f;
+  --accent-soft:#e5d7e7;
+  --border:#ded3e3;
+  --shadow:0 5px 20px rgba(70,50,90,.07);
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+  background:var(--bg);
+  overscroll-behavior:none;
+}
+
+body{
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  padding-bottom:calc(100px + env(safe-area-inset-bottom));
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  min-height:100vh;
+  padding:
+    calc(18px + env(safe-area-inset-top))
+    18px
+    35px;
+}
+
+.page{
+  display:none;
+  width:100%;
+  max-width:850px;
+  margin:0 auto;
+}
+
+.page.active{
+  display:block;
+  animation:fade .18s ease;
+}
+
+@keyframes fade{
+  from{opacity:.4;transform:translateY(3px)}
+  to{opacity:1;transform:none}
+}
+
+/* TYPOGRAPHY */
+
+.eyebrow{
+  color:var(--muted);
+  font-size:15px;
+  margin-bottom:7px;
+}
+
+h1{
+  margin:0;
+  font-size:38px;
+  line-height:1.05;
+  letter-spacing:-1.2px;
+}
+
+h2{
+  margin:0;
+  font-size:31px;
+  line-height:1.1;
+  letter-spacing:-.8px;
+}
+
+h3{margin:0}
+
+.subtitle{
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.5;
+  margin:8px 0 0;
+}
+
+.section-title{
+  font-size:20px;
+  font-weight:750;
+  margin:30px 0 15px;
+}
+
+/* BACK */
+
+.back{
+  border:0;
+  background:var(--surface);
+  color:var(--text);
+  padding:10px 15px;
+  border-radius:999px;
+  margin-bottom:23px;
+  box-shadow:var(--shadow);
+}
+
+/* HOME */
+
+.home-header{
+  padding:10px 3px 4px;
+}
+
+.home-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:22px;
+}
+
+.home-card{
+  border:0;
+  min-height:185px;
+  padding:20px;
+  border-radius:28px;
+  background:var(--surface);
+  color:var(--text);
+  text-align:left;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:.15s;
+}
+
+.home-card:active{
+  transform:scale(.98);
+}
+
+.home-card.accent{
+  background:linear-gradient(145deg,#bea2c5,#9d7ca3);
+  color:white;
+}
+
+.home-card.full{
+  grid-column:1/-1;
+  min-height:135px;
+}
+
+.home-icon{
+  width:47px;
+  height:47px;
+  border-radius:16px;
+  background:var(--surface-soft);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:23px;
+}
+
+.home-card.accent .home-icon{
+  background:rgba(255,255,255,.18);
+}
+
+.card-title{
+  font-size:20px;
+  font-weight:750;
+  line-height:1.25;
+}
+
+.card-sub{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.4;
+  margin-top:6px;
+}
+
+.home-card.accent .card-sub{
+  color:rgba(255,255,255,.8);
+}
+
+/* SEARCH */
+
+.search{
+  min-height:57px;
+  margin:21px 0 14px;
+  padding:0 17px;
+  background:var(--surface);
+  border-radius:23px;
+  box-shadow:var(--shadow);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.search-icon{
+  font-size:22px;
+  color:var(--accent-dark);
+}
+
+.search input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
+  padding:16px 6px;
+  font-size:16px;
+}
+
+/* FILTER ENTRY */
+
+.filter-entry{
+  width:100%;
+  border:0;
+  background:var(--surface);
+  color:var(--text);
+  padding:17px 18px;
+  border-radius:23px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:var(--shadow);
+  margin-bottom:20px;
+}
+
+.filter-entry-left{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-weight:700;
+}
+
+.filter-count{
+  color:var(--accent-dark);
+  font-size:13px;
+}
+
+/* PODCAST CARD */
+
+.podcast-card{
+  background:var(--card);
+  border-radius:28px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 4px 18px rgba(70,50,90,.04);
+}
+
+.podcast-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:13px;
+}
+
+.podcast-tag{
+  border:1px solid rgba(100,75,110,.16);
+  background:rgba(255,255,255,.48);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:650;
+}
+
+.podcast-title{
+  font-size:21px;
+  line-height:1.3;
+  font-weight:760;
+  margin-bottom:15px;
+}
+
+.podcast-date{
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* AUDIO PLAYER */
+
+.audio-player{
+  background:rgba(255,255,255,.74);
+  border-radius:23px;
+  padding:13px;
+  display:grid;
+  grid-template-columns:56px 1fr 52px;
+  gap:12px;
+  align-items:center;
+}
+
+.play-button{
+  width:56px;
+  height:56px;
+  border:0;
+  border-radius:50%;
+  background:var(--accent);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:20px;
+}
+
+.play-button.loading{
+  opacity:.65;
+}
+
+.player-main{
+  min-width:0;
+}
+
+.waveform{
+  height:38px;
+  display:flex;
+  align-items:center;
+  gap:3px;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.wave-bar{
+  width:3px;
+  min-width:3px;
+  border-radius:999px;
+  background:#d9cadc;
+}
+
+.wave-bar.active{
+  background:var(--accent-dark);
+}
+
+.player-time{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.player-error{
+  display:none;
+  color:#8c526a;
+  font-size:12px;
+  margin-top:5px;
+}
+
+.speed-button{
+  border:1px solid var(--accent-dark);
+  background:transparent;
+  color:var(--accent-dark);
+  border-radius:999px;
+  padding:8px;
+}
+
+/* CARD FOOTER */
+
+.podcast-footer{
+  margin-top:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.save-button{
+  border:0;
+  width:48px;
+  height:45px;
+  border-radius:16px;
+  background:rgba(255,255,255,.55);
+  font-size:22px;
+  color:#625968;
+}
+
+.save-button.saved{
+  color:var(--accent-dark);
+}
+
+/* FILTER PAGE */
+
+.filter-page{
+  max-width:none;
+}
+
+.filter-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.filter-close{
+  border:0;
+  background:transparent;
+  color:var(--text);
+  font-size:28px;
+  padding:5px;
+}
+
+.filter-reset{
+  border:0;
+  background:transparent;
+  color:var(--accent-dark);
+  font-weight:700;
+}
+
+.filter-search{
+  background:var(--surface);
+  border-radius:23px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:0 17px;
+  margin:15px 0 25px;
+  box-shadow:var(--shadow);
+}
+
+.filter-search input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  padding:16px 4px;
+}
+
+.filter-label{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:13px;
+}
+
+.filter-sort{
+  display:flex;
+  justify-content:flex-end;
+  gap:6px;
+  margin-bottom:15px;
+}
+
+.sort-button{
+  border:0;
+  background:var(--surface);
+  border-radius:14px;
+  padding:9px 13px;
+  font-weight:650;
+}
+
+.sort-button.active{
+  background:var(--accent-soft);
+}
+
+.filter-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  padding-bottom:105px;
+}
+
+.filter-chip{
+  border:0;
+  background:var(--surface);
+  color:var(--text);
+  border-radius:999px;
+  padding:10px 14px;
+  font-size:14px;
+  font-weight:650;
+  box-shadow:0 2px 8px rgba(60,40,70,.04);
+}
+
+.filter-chip.active{
+  background:var(--accent);
+  color:white;
+}
+
+.filter-chip-count{
+  opacity:.65;
+  margin-left:4px;
+}
+
+.filter-bottom{
+  position:fixed;
+  left:18px;
+  right:18px;
+  bottom:calc(16px + env(safe-area-inset-bottom));
+  z-index:300;
+}
+
+.show-results{
+  width:100%;
+  border:0;
+  background:var(--accent);
+  color:white;
+  border-radius:22px;
+  padding:17px;
+  font-weight:750;
+  box-shadow:0 8px 25px rgba(70,50,90,.18);
+}
+
+/* STATUS */
+
+.status{
+  color:var(--muted);
+  font-size:13px;
+  margin:13px 0;
+}
+
+.status.error{
+  color:#8c526a;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:55px 20px;
+  line-height:1.55;
+}
+
+/* SESSION */
+
+.whatsapp-card{
+  background:var(--surface);
+  border-radius:28px;
+  padding:23px;
+  margin-top:24px;
+  box-shadow:var(--shadow);
+}
+
+.whatsapp-card h3{
+  font-size:21px;
+}
+
+.whatsapp-card p{
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  border-radius:20px;
+  padding:16px;
+  background:var(--accent);
+  color:white;
+  font-weight:750;
+}
+
+/* NAV */
+
+.nav{
+  position:fixed;
+  z-index:200;
+  left:16px;
+  right:16px;
+  bottom:calc(13px + env(safe-area-inset-bottom));
+  max-width:700px;
+  margin:auto;
+  background:#0b0a0d;
+  border-radius:31px;
+  padding:8px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  box-shadow:0 12px 35px rgba(0,0,0,.2);
+}
+
+.nav button{
+  border:0;
+  background:transparent;
+  color:#c9c6cc;
+  border-radius:24px;
+  padding:8px 3px;
+  font-size:11px;
+}
+
+.nav button.active{
+  background:#29272d;
+  color:#c4a1c5;
+}
+
+.nav-icon{
+  display:block;
+  font-size:21px;
+  margin-bottom:4px;
+}
+
+.nav-text{
+  display:block;
+}
+
+body.filter-open .nav{
+  display:none;
+}
+
+@media(min-width:800px){
+  .app{
+    padding-left:35px;
+    padding-right:35px;
+  }
+
+  .page{
+    max-width:1000px;
+  }
+
+  .home-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .podcast-list-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .podcast-list-grid .podcast-card{
+    margin-bottom:0;
+  }
+}
+
+@media(max-width:430px){
+  h1{font-size:34px}
+
+  .home-card{
+    min-height:170px;
+    padding:17px;
+  }
+
+  .card-title{
+    font-size:18px;
+  }
+
+  .audio-player{
+    grid-template-columns:50px 1fr 47px;
+    gap:9px;
+  }
+
+  .play-button{
+    width:50px;
+    height:50px;
+  }
+}
+</style>
 </head>
-
 
 <body>
 
-
 <main class="app">
 
+<!-- HOME -->
 
-  <!-- =====================================
-       PODCASTS
-  ====================================== -->
+<section id="home" class="page active">
 
-  <section
-    id="podcasts"
-    class="page active"
-  >
+  <div class="home-header">
+    <div class="eyebrow">Bine ai venit ♡</div>
+    <h1>MBS Evolution</h1>
+    <p class="subtitle">Mind • Body • Soul</p>
+  </div>
 
-    <div class="header">
+  <div class="section-title">Explorează</div>
 
-      <div class="eyebrow">
-        MBS
+  <div class="home-grid">
+
+    <button class="home-card accent" data-page="podcasts">
+      <div class="home-icon">▶</div>
+      <div>
+        <div class="card-title">Podcasturi</div>
+        <div class="card-sub">Audio și reflecții MBS</div>
       </div>
-
-      <h1>
-        Podcasturi
-      </h1>
-
-      <p class="subtitle">
-        Biblioteca audio MBS
-      </p>
-
-    </div>
-
-
-    <div class="search">
-
-      <span class="search-icon">
-        ⌕
-      </span>
-
-      <input
-        id="podcastSearch"
-        type="text"
-        placeholder="Caută..."
-      >
-
-    </div>
-
-
-    <button
-      id="openFilters"
-      class="filter-button"
-      type="button"
-    >
-
-      <span class="filter-left">
-
-        <span class="filter-symbol">
-          ◇
-        </span>
-
-        <span>
-          Filtru după teme
-        </span>
-
-      </span>
-
-      <span class="filter-arrow">
-        ›
-      </span>
-
     </button>
 
-
-    <div
-      id="activeFilterBox"
-      class="active-filter"
-    >
-
-      <span class="active-filter-label">
-        Filtru:
-      </span>
-
-      <button
-        id="activeFilterPill"
-        class="active-filter-pill"
-      ></button>
-
-    </div>
-
-
-    <div
-      id="telegramStatus"
-      class="status"
-    >
-      Se încarcă...
-    </div>
-
-
-    <div
-      id="podcastList"
-      class="podcast-list"
-    ></div>
-
-  </section>
-
-
-
-  <!-- =====================================
-       FILTERS
-  ====================================== -->
-
-  <section
-    id="filters"
-    class="page"
-  >
-
-    <button
-      id="filterBack"
-      class="back"
-    >
-      ‹ Înapoi
+    <button class="home-card" data-page="answers">
+      <div class="home-icon">?</div>
+      <div>
+        <div class="card-title">Răspund la întrebări</div>
+        <div class="card-sub">Răspunsuri audio la întrebări</div>
+      </div>
     </button>
 
-
-    <div class="header">
-
-      <div class="eyebrow">
-        Podcasturi
+    <button class="home-card" data-page="practices">
+      <div class="home-icon">◎</div>
+      <div>
+        <div class="card-title">Practici</div>
+        <div class="card-sub">Practici audio ghidate</div>
       </div>
-
-      <h2>
-        Filtre
-      </h2>
-
-      <p class="subtitle">
-        Alege tema pe care vrei să o explorezi.
-      </p>
-
-    </div>
-
-
-    <button
-      id="showAll"
-      class="all-filter"
-    >
-      Toate podcasturile
     </button>
 
-
-    <div
-      id="filterList"
-      class="filter-list"
-    ></div>
-
-  </section>
-
-
-
-  <!-- =====================================
-       SAVED
-  ====================================== -->
-
-  <section
-    id="saved"
-    class="page"
-  >
-
-    <div class="header">
-
-      <div class="eyebrow">
-        Biblioteca ta
+    <button class="home-card" data-page="saved">
+      <div class="home-icon">♡</div>
+      <div>
+        <div class="card-title">Salvate</div>
+        <div class="card-sub">Materialele salvate de tine</div>
       </div>
+    </button>
 
-      <h2>
-        Salvate
-      </h2>
+    <button class="home-card full" data-page="sessions">
+      <div class="home-icon">○</div>
+      <div>
+        <div class="card-title">Sesiuni individuale 1:1</div>
+        <div class="card-sub">Informații și programări</div>
+      </div>
+    </button>
 
-      <p class="subtitle">
-        Podcasturile pe care vrei să le păstrezi.
-      </p>
+  </div>
+</section>
 
+
+<!-- PODCASTS -->
+
+<section id="podcasts" class="page">
+
+  <button class="back" data-page="home">‹ Înapoi</button>
+
+  <div class="eyebrow">MBS</div>
+  <h2>Podcasturi</h2>
+  <p class="subtitle">Biblioteca audio MBS</p>
+
+  <div class="search">
+    <span class="search-icon">⌕</span>
+    <input id="podcastSearch" placeholder="Caută...">
+  </div>
+
+  <button class="filter-entry" data-page="filters">
+    <span class="filter-entry-left">
+      <span>◇</span>
+      <span>Filtru după teme</span>
+    </span>
+
+    <span>
+      <span id="activeFilterCount" class="filter-count"></span>
+      ›
+    </span>
+  </button>
+
+  <div id="telegramStatus" class="status">Se încarcă...</div>
+
+  <div id="podcastList" class="podcast-list-grid"></div>
+
+</section>
+
+
+<!-- FILTERS -->
+
+<section id="filters" class="page filter-page">
+
+  <div class="filter-top">
+
+    <div style="display:flex;align-items:center;gap:12px">
+      <button id="closeFilters" class="filter-close">×</button>
+      <h3 style="font-size:21px">Filtru după teme</h3>
     </div>
 
+    <button id="resetFilters" class="filter-reset">
+      Resetează
+    </button>
 
-    <div class="search">
+  </div>
 
-      <span class="search-icon">
-        ⌕
-      </span>
+  <div class="filter-search">
+    <span>⌕</span>
+    <input id="filterSearch" placeholder="Caută...">
+  </div>
 
-      <input
-        id="savedSearch"
-        type="text"
-        placeholder="Caută în salvate..."
-      >
+  <div class="filter-label">Sortare</div>
 
-    </div>
+  <div class="filter-sort">
+    <button class="sort-button active" data-sort="az">A–Z</button>
+    <button class="sort-button" data-sort="count">După număr</button>
+  </div>
+
+  <div id="filterTags" class="filter-tags"></div>
+
+  <div class="filter-bottom">
+    <button id="showFilterResults" class="show-results">
+      Arată toate
+    </button>
+  </div>
+
+</section>
 
 
-    <div
-      id="savedList"
-      class="podcast-list"
-    ></div>
+<!-- ANSWERS -->
 
-  </section>
+<section id="answers" class="page">
 
+  <button class="back" data-page="home">‹ Înapoi</button>
+
+  <div class="eyebrow">MBS</div>
+  <h2>Răspund la întrebări</h2>
+
+  <p class="subtitle">
+    Răspunsuri audio la întrebări.
+  </p>
+
+  <div class="search">
+    <span class="search-icon">⌕</span>
+    <input id="answerSearch" placeholder="Caută...">
+  </div>
+
+  <div id="answerList" class="podcast-list-grid"></div>
+
+</section>
+
+
+<!-- PRACTICES -->
+
+<section id="practices" class="page">
+
+  <button class="back" data-page="home">‹ Înapoi</button>
+
+  <div class="eyebrow">MBS</div>
+  <h2>Practici</h2>
+
+  <p class="subtitle">
+    Practici și exerciții audio ghidate.
+  </p>
+
+  <div class="search">
+    <span class="search-icon">⌕</span>
+    <input id="practiceSearch" placeholder="Caută...">
+  </div>
+
+  <div id="practiceList" class="podcast-list-grid"></div>
+
+</section>
+
+
+<!-- SAVED -->
+
+<section id="saved" class="page">
+
+  <button class="back" data-page="home">‹ Înapoi</button>
+
+  <div class="eyebrow">Biblioteca ta</div>
+  <h2>Salvate</h2>
+
+  <p class="subtitle">
+    Materialele salvate de tine.
+  </p>
+
+  <div class="search">
+    <span class="search-icon">⌕</span>
+    <input id="savedSearch" placeholder="Caută în salvate...">
+  </div>
+
+  <div id="savedList" class="podcast-list-grid"></div>
+
+</section>
+
+
+<!-- SESSIONS -->
+
+<section id="sessions" class="page">
+
+  <button class="back" data-page="home">‹ Înapoi</button>
+
+  <div class="eyebrow">MBS Evolution</div>
+
+  <h2>Sesiuni individuale 1:1</h2>
+
+  <p class="subtitle">
+    Pentru informații și programări îmi poți scrie direct pe WhatsApp.
+  </p>
+
+  <div class="whatsapp-card">
+
+    <h3>Vrei mai multe informații?</h3>
+
+    <p>
+      Deschide conversația WhatsApp pentru detalii despre
+      sesiunea individuală și programare.
+    </p>
+
+    <button id="whatsappButton" class="primary">
+      Scrie-mi pe WhatsApp
+    </button>
+
+  </div>
+
+</section>
 
 </main>
 
 
+<!-- NAV -->
 
-<!-- =====================================
-     NAVIGATION
-====================================== -->
+<nav id="mainNav" class="nav">
 
-<nav class="nav">
-
-  <button
-    class="active"
-    data-page="podcasts"
-  >
-
-    <span class="nav-icon">
-      ◉
-    </span>
-
-    <span class="nav-text">
-      Podcasturi
-    </span>
-
+  <button class="active" data-page="home">
+    <span class="nav-icon">⌂</span>
+    <span class="nav-text">Acasă</span>
   </button>
 
+  <button data-page="podcasts">
+    <span class="nav-icon">▶</span>
+    <span class="nav-text">Podcasturi</span>
+  </button>
 
-  <button
-    data-page="saved"
-  >
-
-    <span class="nav-icon">
-      ♡
-    </span>
-
-    <span class="nav-text">
-      Salvate
-    </span>
-
+  <button data-page="saved">
+    <span class="nav-icon">♡</span>
+    <span class="nav-text">Salvate</span>
   </button>
 
 </nav>
 
 
-
 <script>
 
-  /* =========================================================
-     CONFIG
-  ========================================================= */
+/* ==========================================================
+   CONFIG
+========================================================== */
 
-  const SUPABASE_URL =
-    "https://njthqqnebvmcubvwfrzz.supabase.co";
+const SUPABASE_URL =
+"https://njthqqnebvmcubvwfrzz.supabase.co";
 
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_AKBoN-KjVCj9lNABwwy4tQ_a7BeddTH";
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_AKBoN-KjVCj9lNABwwy4tQ_a7BeddTH";
+const SWIFT_API_URL =
+"https://njthqqnebvmcubvwfrzz.supabase.co/functions/v1/swift-api";
 
-
-  const SWIFT_API_URL =
-    "https://njthqqnebvmcubvwfrzz.supabase.co/functions/v1/swift-api";
-
-
-  /* =========================================================
-     SUPABASE
-  ========================================================= */
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+const WHATSAPP_URL =
+"https://wa.me/393281015815?text=Bun%C4%83%21%20A%C8%99%20dori%20mai%20multe%20informa%C8%9Bii%20despre%20o%20sesiune%20individual%C4%83.";
 
 
-  /* =========================================================
-     TELEGRAM
-  ========================================================= */
+/* ==========================================================
+   SUPABASE
+========================================================== */
 
-  const tg =
-    window.Telegram?.WebApp;
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
 
-  if(tg){
+/* ==========================================================
+   TELEGRAM
+========================================================== */
+
+const tg = window.Telegram?.WebApp;
+
+function initializeTelegram(){
+
+  if(!tg) return;
+
+  try{
 
     tg.ready();
+    tg.expand();
+
+    if(typeof tg.disableVerticalSwipes === "function"){
+      tg.disableVerticalSwipes();
+    }
+
+    document.documentElement.style.setProperty(
+      "--tg-height",
+      `${tg.viewportStableHeight || window.innerHeight}px`
+    );
+
+  }catch(error){
+    console.log("Telegram init:",error);
+  }
+}
+
+initializeTelegram();
+
+
+/*
+ requestFullscreen poate fi refuzat dacă este lansat
+ automat. Îl încercăm și după prima interacțiune reală.
+*/
+
+let fullscreenRequested = false;
+
+async function requestTelegramFullscreen(){
+
+  if(!tg || fullscreenRequested) return;
+
+  fullscreenRequested = true;
+
+  try{
 
     tg.expand();
 
-
-    try{
-
-      tg.setHeaderColor(
-        "#f8f3f8"
-      );
-
-      tg.setBackgroundColor(
-        "#f8f3f8"
-      );
-
-    }catch(error){
-
-      console.log(
-        "Telegram colors:",
-        error
-      );
-
+    if(typeof tg.requestFullscreen === "function"){
+      await tg.requestFullscreen();
     }
 
+  }catch(error){
+
+    fullscreenRequested = false;
+
+    console.log("Fullscreen unavailable:",error);
   }
+}
+
+document.addEventListener(
+  "pointerdown",
+  requestTelegramFullscreen,
+  {once:true}
+);
 
 
-  /* =========================================================
-     DATA
-  ========================================================= */
+/* ==========================================================
+   NAVIGATION
+========================================================== */
 
-  let telegramItems = [];
+const pages =
+document.querySelectorAll(".page");
 
-  let selectedFilter =
-    "all";
+const navButtons =
+document.querySelectorAll(".nav button");
 
+function openPage(id){
 
-  let favorites =
-    JSON.parse(
-      localStorage.getItem(
-        "mbsPodcastFavorites"
-      )
-      ||
-      "[]"
+  stopActiveAudio();
+
+  pages.forEach(page =>
+    page.classList.remove("active")
+  );
+
+  const target =
+  document.getElementById(id);
+
+  if(!target) return;
+
+  target.classList.add("active");
+
+  document.body.classList.toggle(
+    "filter-open",
+    id === "filters"
+  );
+
+  navButtons.forEach(button => {
+
+    button.classList.toggle(
+      "active",
+      button.dataset.page === id
     );
 
+  });
 
-  let activeAudio =
-    null;
+  window.scrollTo(0,0);
 
+  if(id === "podcasts") renderPodcasts();
+  if(id === "filters") renderFilters();
+  if(id === "answers") renderAnswers();
+  if(id === "practices") renderPractices();
+  if(id === "saved") renderSaved();
+}
 
-  let activePlayer =
-    null;
+document.addEventListener("click",event => {
 
+  const button =
+  event.target.closest("[data-page]");
 
-  const playbackSpeeds =
-    [
-      1,
-      1.25,
-      1.5,
-      2
-    ];
+  if(!button) return;
 
-
-  /* =========================================================
-     NAVIGATION
-  ========================================================= */
-
-  const pages =
-    document.querySelectorAll(
-      ".page"
-    );
+  openPage(button.dataset.page);
+});
 
 
-  const navButtons =
-    document.querySelectorAll(
-      ".nav button"
-    );
+/* ==========================================================
+   HELPERS
+========================================================== */
 
+function escapeHTML(value=""){
 
-  function openPage(id){
+  return String(value)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+}
 
-    stopActiveAudio();
+function normalizeTag(value=""){
 
+  return String(value)
+  .replace(/^#/,"")
+  .trim()
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g,"");
+}
 
-    pages.forEach(
-      page =>
-        page.classList.remove(
-          "active"
-        )
-    );
+function formatDate(value){
 
+  if(!value) return "";
 
-    const target =
-      document.getElementById(
-        id
-      );
+  try{
 
-
-    if(target){
-
-      target.classList.add(
-        "active"
-      );
-
-    }
-
-
-    navButtons.forEach(
-      button => {
-
-        button.classList.toggle(
-          "active",
-          button.dataset.page === id
-        );
-
+    return new Date(value).toLocaleDateString(
+      "ro-RO",
+      {
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
       }
     );
 
+  }catch{
+    return "";
+  }
+}
 
-    window.scrollTo(
-      0,
-      0
-    );
+function formatTime(seconds){
+
+  if(!Number.isFinite(seconds))
+    return "0:00";
+
+  seconds =
+  Math.max(0,Math.floor(seconds));
+
+  const minutes =
+  Math.floor(seconds/60);
+
+  const secs =
+  seconds%60;
+
+  return (
+    minutes +
+    ":" +
+    String(secs).padStart(2,"0")
+  );
+}
+
+function getTags(item){
+
+  return Array.isArray(item.hashtags)
+    ? item.hashtags
+    : [];
+}
+
+function itemHasTag(item,name){
+
+  return getTags(item)
+  .map(normalizeTag)
+  .includes(normalizeTag(name));
+}
+
+function searchItem(item,query){
+
+  if(!query) return true;
+
+  const text = [
+    item.title || "",
+    item.text || "",
+    getTags(item).join(" ")
+  ]
+  .join(" ")
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g,"");
+
+  const q =
+  query
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g,"");
+
+  return text.includes(q);
+}
 
 
-    if(
-      id === "podcasts"
-    ){
+/* ==========================================================
+   DATA
+========================================================== */
 
-      renderPodcasts();
+let telegramItems = [];
 
-    }
+async function loadTelegramContent(){
 
+  const status =
+  document.getElementById("telegramStatus");
 
-    if(
-      id === "saved"
-    ){
-
-      renderSaved();
-
-    }
-
-
-    if(
-      id === "filters"
-    ){
-
-      renderFilters();
-
-    }
-
+  if(status){
+    status.textContent="Se încarcă...";
   }
 
+  try{
 
-  navButtons.forEach(
-    button => {
+    const {data,error} =
+    await supabaseClient
+    .from("telegram_content")
+    .select(`
+      id,
+      title,
+      text,
+      content_type,
+      hashtags,
+      telegram_file_id,
+      telegram_date,
+      is_published
+    `)
+    .eq("is_published",true)
+    .order("telegram_date",{ascending:false});
 
-      button.onclick =
-        () => {
+    if(error) throw error;
 
-          openPage(
-            button.dataset.page
-          );
+    telegramItems = data || [];
 
-        };
+    if(status){
+      status.textContent =
+        telegramItems.length
+        ? ""
+        : "Nu există încă materiale.";
+    }
 
+    renderEverything();
+
+  }catch(error){
+
+    console.error(error);
+
+    if(status){
+      status.className="status error";
+      status.textContent=
+      "Nu am putut încărca materialele.";
+    }
+  }
+}
+
+function renderEverything(){
+  renderPodcasts();
+  renderFilters();
+  renderAnswers();
+  renderPractices();
+  renderSaved();
+}
+
+
+/* ==========================================================
+   FAVORITES
+========================================================== */
+
+let favorites = [];
+
+try{
+  favorites =
+  JSON.parse(
+    localStorage.getItem("mbsFavorites") || "[]"
+  );
+}catch{
+  favorites=[];
+}
+
+function favoriteKey(id){
+  return "telegram:"+id;
+}
+
+function isFavorite(id){
+  return favorites.includes(favoriteKey(id));
+}
+
+function saveFavorites(){
+  localStorage.setItem(
+    "mbsFavorites",
+    JSON.stringify(favorites)
+  );
+}
+
+function toggleFavorite(id){
+
+  const key = favoriteKey(id);
+
+  if(favorites.includes(key)){
+
+    favorites =
+    favorites.filter(item => item !== key);
+
+  }else{
+
+    favorites.push(key);
+  }
+
+  saveFavorites();
+  renderEverything();
+}
+
+
+/* ==========================================================
+   AUDIO
+========================================================== */
+
+let activeAudio=null;
+let activePlayer=null;
+
+const playbackSpeeds=[
+  1,
+  1.25,
+  1.5,
+  2
+];
+
+function getStreamUrl(fileId){
+
+  return (
+    SWIFT_API_URL +
+    "?stream=1&file_id=" +
+    encodeURIComponent(fileId)
+  );
+}
+
+function createWaveform(itemId){
+
+  let html="";
+
+  const seed =
+  String(itemId || "1")
+  .split("")
+  .reduce(
+    (total,char)=>
+      total+char.charCodeAt(0),
+    0
+  );
+
+  for(let i=0;i<55;i++){
+
+    const height =
+    8+((i*17+seed*11)%27);
+
+    html += `
+      <span
+        class="wave-bar"
+        style="height:${height}px"
+      ></span>
+    `;
+  }
+
+  return html;
+}
+
+function resetPlayerUI(player){
+
+  if(!player) return;
+
+  const button =
+  player.querySelector(".play-button");
+
+  if(button){
+    button.textContent="▶";
+    button.classList.remove("loading");
+  }
+}
+
+function stopActiveAudio(){
+
+  if(activeAudio){
+    activeAudio.pause();
+  }
+
+  resetPlayerUI(activePlayer);
+
+  activeAudio=null;
+  activePlayer=null;
+}
+
+function updateWaveform(player,percent){
+
+  const bars =
+  player.querySelectorAll(".wave-bar");
+
+  const activeCount =
+  Math.round(bars.length*percent);
+
+  bars.forEach((bar,index)=>{
+
+    bar.classList.toggle(
+      "active",
+      index<activeCount
+    );
+  });
+}
+
+function updateTime(player,audio){
+
+  const element =
+  player.querySelector(".player-time");
+
+  if(!element) return;
+
+  element.textContent =
+    formatTime(audio.currentTime)
+    +" / "+
+    (
+      Number.isFinite(audio.duration)
+      ? formatTime(audio.duration)
+      : "--:--"
+    );
+}
+
+async function toggleAudio(button){
+
+  const player =
+  button.closest(".audio-player");
+
+  const fileId =
+  button.dataset.fileId;
+
+  if(!player || !fileId) return;
+
+  if(activePlayer===player && activeAudio){
+
+    if(activeAudio.paused){
+
+      try{
+        await activeAudio.play();
+      }catch(error){
+        console.error(error);
+      }
+
+    }else{
+      activeAudio.pause();
+    }
+
+    return;
+  }
+
+  stopActiveAudio();
+
+  button.textContent="…";
+  button.classList.add("loading");
+
+  const errorBox =
+  player.querySelector(".player-error");
+
+  if(errorBox){
+    errorBox.style.display="none";
+  }
+
+  const audio = new Audio();
+
+  audio.preload="metadata";
+  audio.src=getStreamUrl(fileId);
+  audio.playsInline=true;
+
+  activeAudio=audio;
+  activePlayer=player;
+
+  audio.addEventListener(
+    "loadedmetadata",
+    ()=>updateTime(player,audio)
+  );
+
+  audio.addEventListener(
+    "timeupdate",
+    ()=>{
+
+      updateTime(player,audio);
+
+      updateWaveform(
+        player,
+        audio.duration
+        ? audio.currentTime/audio.duration
+        : 0
+      );
     }
   );
 
+  audio.addEventListener("play",()=>{
 
-  document
-    .getElementById(
-      "openFilters"
+    button.classList.remove("loading");
+    button.textContent="❚❚";
+  });
+
+  audio.addEventListener("pause",()=>{
+
+    if(!audio.ended){
+      button.textContent="▶";
+    }
+  });
+
+  audio.addEventListener("ended",()=>{
+
+    button.textContent="▶";
+    audio.currentTime=0;
+    updateWaveform(player,0);
+    updateTime(player,audio);
+  });
+
+  audio.addEventListener("error",()=>{
+
+    button.classList.remove("loading");
+    button.textContent="▶";
+
+    if(errorBox){
+      errorBox.style.display="block";
+      errorBox.textContent="Audio indisponibil";
+    }
+  });
+
+  try{
+    await audio.play();
+  }catch(error){
+
+    console.error(error);
+
+    button.classList.remove("loading");
+    button.textContent="▶";
+
+    if(errorBox){
+      errorBox.style.display="block";
+      errorBox.textContent=
+      "Nu am putut porni audio-ul.";
+    }
+  }
+}
+
+function cycleSpeed(button){
+
+  if(!activeAudio) return;
+
+  const player =
+  button.closest(".audio-player");
+
+  if(player!==activePlayer) return;
+
+  const current =
+  activeAudio.playbackRate;
+
+  let index =
+  playbackSpeeds.indexOf(current);
+
+  if(index===-1) index=0;
+
+  const next =
+  playbackSpeeds[
+    (index+1)%playbackSpeeds.length
+  ];
+
+  activeAudio.playbackRate=next;
+
+  button.textContent=next+"x";
+}
+
+function seekWaveform(waveform,event){
+
+  const player =
+  waveform.closest(".audio-player");
+
+  if(
+    player!==activePlayer ||
+    !activeAudio ||
+    !activeAudio.duration
+  ) return;
+
+  const rect =
+  waveform.getBoundingClientRect();
+
+  const ratio =
+  Math.max(
+    0,
+    Math.min(
+      1,
+      (event.clientX-rect.left)/rect.width
     )
-    .onclick =
-      () =>
-        openPage(
-          "filters"
-        );
+  );
 
+  activeAudio.currentTime =
+  activeAudio.duration*ratio;
+}
 
-  document
-    .getElementById(
-      "filterBack"
-    )
-    .onclick =
-      () =>
-        openPage(
-          "podcasts"
-        );
 
+/* ==========================================================
+   CARD
+========================================================== */
 
-  /* =========================================================
-     HELPERS
-  ========================================================= */
+function cardHTML(item){
 
-  function escapeHTML(
-    value = ""
-  ){
+  const tags=getTags(item);
 
-    return String(value)
+  const type=
+  item.content_type || "post";
 
-      .replace(
-        /&/g,
-        "&amp;"
-      )
+  const playable =
+  (type==="audio" || type==="voice")
+  && item.telegram_file_id;
 
-      .replace(
-        /</g,
-        "&lt;"
-      )
+  const favorite =
+  isFavorite(item.id);
 
-      .replace(
-        />/g,
-        "&gt;"
-      )
+  const title =
+  item.title || "Material MBS";
 
-      .replace(
-        /"/g,
-        "&quot;"
-      )
+  return `
+  <article class="podcast-card">
 
-      .replace(
-        /'/g,
-        "&#039;"
-      );
+    ${
+      tags.length
+      ? `
+        <div class="podcast-tags">
+          ${tags.map(tag=>{
 
-  }
+            const label =
+            String(tag).startsWith("#")
+            ? tag
+            : "#"+tag;
 
-
-  function normalizeTag(
-    value = ""
-  ){
-
-    return String(value)
-
-      .replace(
-        /^#/,
-        ""
-      )
-
-      .toLowerCase()
-
-      .normalize(
-        "NFD"
-      )
-
-      .replace(
-        /[\u0300-\u036f]/g,
-        ""
-      );
-
-  }
-
-
-  function formatDate(
-    value
-  ){
-
-    if(!value){
-
-      return "";
-
-    }
-
-
-    try{
-
-      return new Date(value)
-        .toLocaleDateString(
-          "ro-RO",
-          {
-            day:"2-digit",
-            month:"short",
-            year:"numeric"
-          }
-        );
-
-    }catch{
-
-      return "";
-
-    }
-
-  }
-
-
-  function formatTime(
-    seconds
-  ){
-
-    if(
-      !Number.isFinite(
-        seconds
-      )
-    ){
-
-      return "0:00";
-
-    }
-
-
-    seconds =
-      Math.max(
-        0,
-        Math.floor(
-          seconds
-        )
-      );
-
-
-    const minutes =
-      Math.floor(
-        seconds / 60
-      );
-
-
-    const secs =
-      seconds % 60;
-
-
-    return (
-      minutes
-      +
-      ":"
-      +
-      String(
-        secs
-      )
-      .padStart(
-        2,
-        "0"
-      )
-    );
-
-  }
-
-
-  /* =========================================================
-     LOAD TELEGRAM CONTENT
-  ========================================================= */
-
-  async function loadTelegramContent(){
-
-    const status =
-      document.getElementById(
-        "telegramStatus"
-      );
-
-
-    status.className =
-      "status";
-
-
-    status.textContent =
-      "Se încarcă...";
-
-
-    try{
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-
-          .from(
-            "telegram_content"
-          )
-
-          .select(
-            `
-              id,
-              title,
-              text,
-              content_type,
-              hashtags,
-              telegram_file_id,
-              telegram_date,
-              is_published
-            `
-          )
-
-          .eq(
-            "is_published",
-            true
-          )
-
-          .order(
-            "telegram_date",
-            {
-              ascending:false
-            }
-          );
-
-
-      if(error){
-
-        throw error;
-
-      }
-
-
-      /*
-        Pentru moment păstrăm în bibliotecă
-        doar materialele audio.
-      */
-
-      telegramItems =
-        (data || [])
-        .filter(
-          item =>
-            (
-              item.content_type ===
-              "audio"
-              ||
-              item.content_type ===
-              "voice"
-            )
-            &&
-            item.telegram_file_id
-        );
-
-
-      status.textContent =
-        "";
-
-
-      renderPodcasts();
-
-      renderFilters();
-
-      renderSaved();
-
-
-    }catch(error){
-
-      console.error(
-        "Load error:",
-        error
-      );
-
-
-      status.className =
-        "status error";
-
-
-      status.textContent =
-        "Nu am putut încărca podcasturile.";
-
-    }
-
-  }
-
-
-  /* =========================================================
-     FAVORITES
-  ========================================================= */
-
-  function favoriteKey(
-    id
-  ){
-
-    return (
-      "telegram:" +
-      id
-    );
-
-  }
-
-
-  function isFavorite(
-    id
-  ){
-
-    return favorites.includes(
-      favoriteKey(
-        id
-      )
-    );
-
-  }
-
-
-  function toggleFavorite(
-    id
-  ){
-
-    const key =
-      favoriteKey(
-        id
-      );
-
-
-    if(
-      favorites.includes(
-        key
-      )
-    ){
-
-      favorites =
-        favorites.filter(
-          item =>
-            item !== key
-        );
-
-    }else{
-
-      favorites.push(
-        key
-      );
-
-    }
-
-
-    localStorage.setItem(
-      "mbsPodcastFavorites",
-      JSON.stringify(
-        favorites
-      )
-    );
-
-
-    renderPodcasts();
-
-    renderSaved();
-
-  }
-
-
-  /* =========================================================
-     STREAM URL
-  ========================================================= */
-
-  function getStreamUrl(
-    fileId
-  ){
-
-    return (
-      SWIFT_API_URL
-      +
-      "?stream=1&file_id="
-      +
-      encodeURIComponent(
-        fileId
-      )
-    );
-
-  }
-
-
-  /* =========================================================
-     WAVEFORM
-  ========================================================= */
-
-  function createWaveform(
-    itemId
-  ){
-
-    let html = "";
-
-
-    const numericSeed =
-      String(
-        itemId || "1"
-      )
-      .split("")
-      .reduce(
-        (
-          total,
-          char
-        ) =>
-          total +
-          char.charCodeAt(0),
-        0
-      );
-
-
-    for(
-      let i = 0;
-      i < 60;
-      i++
-    ){
-
-      const height =
-        8
-        +
-        (
-          (
-            i * 17
-            +
-            numericSeed * 11
-          )
-          %
-          27
-        );
-
-
-      html += `
-        <span
-          class="wave-bar"
-          style="height:${height}px"
-        ></span>
-      `;
-
-    }
-
-
-    return html;
-
-  }
-
-
-  function updateWaveform(
-    player,
-    percent
-  ){
-
-    const bars =
-      player.querySelectorAll(
-        ".wave-bar"
-      );
-
-
-    const activeCount =
-      Math.round(
-        bars.length *
-        percent
-      );
-
-
-    bars.forEach(
-      (
-        bar,
-        index
-      ) => {
-
-        bar.classList.toggle(
-          "active",
-          index < activeCount
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     AUDIO ENGINE
-  ========================================================= */
-
-  function resetPlayerUI(
-    player
-  ){
-
-    if(!player){
-
-      return;
-
-    }
-
-
-    const play =
-      player.querySelector(
-        ".play-button"
-      );
-
-
-    if(play){
-
-      play.textContent =
-        "▶";
-
-
-      play.classList.remove(
-        "loading"
-      );
-
-    }
-
-  }
-
-
-  function stopActiveAudio(){
-
-    if(activeAudio){
-
-      activeAudio.pause();
-
-    }
-
-
-    resetPlayerUI(
-      activePlayer
-    );
-
-
-    activeAudio =
-      null;
-
-
-    activePlayer =
-      null;
-
-  }
-
-
-  function updateTime(
-    player,
-    audio
-  ){
-
-    const time =
-      player.querySelector(
-        ".player-time"
-      );
-
-
-    if(!time){
-
-      return;
-
-    }
-
-
-    const duration =
-      Number.isFinite(
-        audio.duration
-      )
-        ? formatTime(
-            audio.duration
-          )
-        : "--:--";
-
-
-    time.textContent =
-      formatTime(
-        audio.currentTime
-      )
-      +
-      " / "
-      +
-      duration;
-
-  }
-
-
-  async function toggleAudio(
-    button
-  ){
-
-    const player =
-      button.closest(
-        ".audio-player"
-      );
-
-
-    const fileId =
-      button.dataset.fileId;
-
-
-    if(!fileId){
-
-      return;
-
-    }
-
-
-    /*
-      SAME PLAYER
-    */
-
-    if(
-      activePlayer === player
-      &&
-      activeAudio
-    ){
-
-      if(
-        activeAudio.paused
-      ){
-
-        try{
-
-          await activeAudio.play();
-
-          button.textContent =
-            "❚❚";
-
-        }catch(error){
-
-          console.error(
-            error
-          );
-
-        }
-
-      }else{
-
-        activeAudio.pause();
-
-        button.textContent =
-          "▶";
-
-      }
-
-
-      return;
-
-    }
-
-
-    /*
-      NEW PLAYER
-    */
-
-    stopActiveAudio();
-
-
-    button.textContent =
-      "…";
-
-
-    button.classList.add(
-      "loading"
-    );
-
-
-    const errorBox =
-      player.querySelector(
-        ".player-error"
-      );
-
-
-    errorBox.style.display =
-      "none";
-
-
-    const audio =
-      new Audio();
-
-
-    audio.preload =
-      "metadata";
-
-
-    audio.src =
-      getStreamUrl(
-        fileId
-      );
-
-
-    audio.playsInline =
-      true;
-
-
-    activeAudio =
-      audio;
-
-
-    activePlayer =
-      player;
-
-
-    audio.addEventListener(
-      "loadedmetadata",
-      () => {
-
-        updateTime(
-          player,
-          audio
-        );
-
-      }
-    );
-
-
-    audio.addEventListener(
-      "durationchange",
-      () => {
-
-        updateTime(
-          player,
-          audio
-        );
-
-      }
-    );
-
-
-    audio.addEventListener(
-      "timeupdate",
-      () => {
-
-        updateTime(
-          player,
-          audio
-        );
-
-
-        const percent =
-          audio.duration
-            ? audio.currentTime /
-              audio.duration
-            : 0;
-
-
-        updateWaveform(
-          player,
-          percent
-        );
-
-      }
-    );
-
-
-    audio.addEventListener(
-      "play",
-      () => {
-
-        button.classList.remove(
-          "loading"
-        );
-
-
-        button.textContent =
-          "❚❚";
-
-      }
-    );
-
-
-    audio.addEventListener(
-      "pause",
-      () => {
-
-        if(
-          !audio.ended
-        ){
-
-          button.textContent =
-            "▶";
-
-        }
-
-      }
-    );
-
-
-    audio.addEventListener(
-      "ended",
-      () => {
-
-        button.textContent =
-          "▶";
-
-
-        audio.currentTime =
-          0;
-
-
-        updateWaveform(
-          player,
-          0
-        );
-
-
-        updateTime(
-          player,
-          audio
-        );
-
-      }
-    );
-
-
-    audio.addEventListener(
-      "error",
-      () => {
-
-        button.classList.remove(
-          "loading"
-        );
-
-
-        button.textContent =
-          "▶";
-
-
-        errorBox.style.display =
-          "block";
-
-
-        errorBox.textContent =
-          "Audio indisponibil";
-
-
-        console.error(
-          "Audio error:",
-          audio.error
-        );
-
-      }
-    );
-
-
-    try{
-
-      await audio.play();
-
-    }catch(error){
-
-      console.error(
-        "Play error:",
-        error
-      );
-
-
-      button.classList.remove(
-        "loading"
-      );
-
-
-      button.textContent =
-        "▶";
-
-
-      errorBox.style.display =
-        "block";
-
-
-      errorBox.textContent =
-        "Nu am putut porni audio-ul.";
-
-    }
-
-  }
-
-
-  /* =========================================================
-     SPEED
-  ========================================================= */
-
-  function cycleSpeed(
-    button
-  ){
-
-    const player =
-      button.closest(
-        ".audio-player"
-      );
-
-
-    if(
-      player !== activePlayer
-      ||
-      !activeAudio
-    ){
-
-      return;
-
-    }
-
-
-    const current =
-      activeAudio.playbackRate;
-
-
-    let index =
-      playbackSpeeds.indexOf(
-        current
-      );
-
-
-    index =
-      (
-        index + 1
-      )
-      %
-      playbackSpeeds.length;
-
-
-    const next =
-      playbackSpeeds[
-        index
-      ];
-
-
-    activeAudio.playbackRate =
-      next;
-
-
-    button.textContent =
-      next + "x";
-
-  }
-
-
-  /* =========================================================
-     SEEK
-  ========================================================= */
-
-  function seekWaveform(
-    waveform,
-    event
-  ){
-
-    const player =
-      waveform.closest(
-        ".audio-player"
-      );
-
-
-    if(
-      player !== activePlayer
-      ||
-      !activeAudio
-      ||
-      !activeAudio.duration
-    ){
-
-      return;
-
-    }
-
-
-    const rect =
-      waveform
-        .getBoundingClientRect();
-
-
-    const x =
-      event.clientX -
-      rect.left;
-
-
-    const ratio =
-      Math.min(
-        1,
-        Math.max(
-          0,
-          x /
-          rect.width
-        )
-      );
-
-
-    activeAudio.currentTime =
-      activeAudio.duration *
-      ratio;
-
-  }
-
-
-  /* =========================================================
-     CARD
-  ========================================================= */
-
-  function cardHTML(
-    item
-  ){
-
-    const tags =
-      Array.isArray(
-        item.hashtags
-      )
-        ? item.hashtags
-        : [];
-
-
-    const title =
-      item.title ||
-      "Podcast MBS";
-
-
-    const saved =
-      isFavorite(
-        item.id
-      );
-
-
-    const date =
-      formatDate(
-        item.telegram_date
-      );
-
-
-    return `
-
-      <article
-        class="podcast-card"
-      >
-
-
-        ${
-          tags.length
-            ? `
-
-              <div
-                class="podcast-tags"
-              >
-
-                ${
-
-                  tags
-                    .map(
-                      tag => {
-
-                        const label =
-                          String(tag)
-                            .startsWith("#")
-                            ? tag
-                            : "#" + tag;
-
-
-                        return `
-
-                          <span
-                            class="podcast-tag"
-                          >
-                            ${escapeHTML(label)}
-                          </span>
-
-                        `;
-
-                      }
-                    )
-                    .join("")
-
-                }
-
-              </div>
-
-            `
-            : ""
-        }
-
-
-        <div
-          class="podcast-title"
-        >
-          ${escapeHTML(title)}
+            return `
+              <span class="podcast-tag">
+                ${escapeHTML(label)}
+              </span>
+            `;
+          }).join("")}
         </div>
+      `
+      :""
+    }
 
+    <div class="podcast-title">
+      ${escapeHTML(title)}
+    </div>
 
-        <div
-          class="audio-player"
-          data-player-id="${escapeHTML(item.id)}"
-        >
-
+    ${
+      playable
+      ? `
+        <div class="audio-player">
 
           <button
             class="play-button"
             data-file-id="${escapeHTML(item.telegram_file_id)}"
-            type="button"
           >
             ▶
           </button>
 
+          <div class="player-main">
 
-          <div
-            class="player-main"
-          >
-
-            <div
-              class="waveform"
-            >
-
-              ${createWaveform(
-                item.id
-              )}
-
+            <div class="waveform">
+              ${createWaveform(item.id)}
             </div>
 
-
-            <div
-              class="player-time"
-            >
+            <div class="player-time">
               0:00 / --:--
             </div>
 
-
-            <div
-              class="player-error"
-            ></div>
+            <div class="player-error"></div>
 
           </div>
 
-
-          <button
-            class="speed-button"
-            type="button"
-          >
+          <button class="speed-button">
             1x
           </button>
 
-
         </div>
+      `
+      :""
+    }
+
+    <div class="podcast-footer">
+
+      <div class="podcast-date">
+        ${escapeHTML(formatDate(item.telegram_date))}
+      </div>
+
+      <button
+        class="save-button ${favorite?"saved":""}"
+        data-save-id="${escapeHTML(item.id)}"
+      >
+        ${favorite?"♥":"♡"}
+      </button>
+
+    </div>
+
+  </article>
+  `;
+}
 
 
-        <div
-          class="podcast-footer"
-        >
+/* ==========================================================
+   BIND
+========================================================== */
+
+function bindCards(container){
+
+  if(!container) return;
+
+  container
+  .querySelectorAll(".play-button")
+  .forEach(button=>{
+
+    button.onclick=()=>{
+      toggleAudio(button);
+    };
+  });
+
+  container
+  .querySelectorAll(".speed-button")
+  .forEach(button=>{
+
+    button.onclick=()=>{
+      cycleSpeed(button);
+    };
+  });
+
+  container
+  .querySelectorAll(".waveform")
+  .forEach(waveform=>{
+
+    waveform.onclick=event=>{
+      seekWaveform(waveform,event);
+    };
+  });
+
+  container
+  .querySelectorAll("[data-save-id]")
+  .forEach(button=>{
+
+    button.onclick=()=>{
+      toggleFavorite(button.dataset.saveId);
+    };
+  });
+}
 
 
-          <div
-            class="podcast-date"
-          >
-            ${escapeHTML(date)}
-          </div>
+/* ==========================================================
+   PODCAST CLASSIFICATION
+========================================================== */
+
+/*
+  REGULĂ:
+
+  #intrebari / #raspundlaintrebari
+  -> Răspund la întrebări
+
+  #practici / #practica
+  -> Practici
+
+  Restul materialelor audio
+  -> Podcasturi
+*/
+
+function isAnswer(item){
+
+  return (
+    itemHasTag(item,"intrebari") ||
+    itemHasTag(item,"raspundlaintrebari")
+  );
+}
+
+function isPractice(item){
+
+  return (
+    itemHasTag(item,"practici") ||
+    itemHasTag(item,"practica")
+  );
+}
+
+function isAudioItem(item){
+
+  return (
+    item.content_type==="audio" ||
+    item.content_type==="voice"
+  );
+}
+
+function isPodcast(item){
+
+  return (
+    isAudioItem(item) &&
+    !isAnswer(item) &&
+    !isPractice(item)
+  );
+}
 
 
-          <button
-            class="save-button ${
-              saved
-                ? "saved"
-                : ""
-            }"
-            data-save-id="${escapeHTML(item.id)}"
-            type="button"
-          >
+/* ==========================================================
+   FILTERS
+========================================================== */
 
-            <span
-              class="save-heart"
-            >
-              ${
-                saved
-                  ? "♥"
-                  : "♡"
-              }
-            </span>
+let selectedFilters = new Set();
 
-            <span>
-              ${
-                saved
-                  ? "Salvat"
-                  : "Salvează"
-              }
-            </span>
+let filterSort="az";
 
-          </button>
+function podcastItems(){
+
+  return telegramItems.filter(isPodcast);
+}
+
+function getPodcastTags(){
+
+  const map=new Map();
+
+  podcastItems().forEach(item=>{
+
+    getTags(item).forEach(tag=>{
+
+      const normalized =
+      normalizeTag(tag);
+
+      if(!normalized) return;
+
+      if(!map.has(normalized)){
+
+        map.set(normalized,{
+          name:normalized,
+          label:
+            String(tag).startsWith("#")
+            ? String(tag)
+            : "#"+tag,
+          count:0
+        });
+      }
+
+      map.get(normalized).count++;
+    });
+  });
+
+  return [...map.values()];
+}
+
+function renderFilters(){
+
+  const container =
+  document.getElementById("filterTags");
+
+  if(!container) return;
+
+  const query =
+  (
+    document
+    .getElementById("filterSearch")
+    ?.value || ""
+  )
+  .trim()
+  .toLowerCase();
+
+  let tags =
+  getPodcastTags().filter(tag=>
+    tag.label.toLowerCase().includes(query)
+  );
+
+  if(filterSort==="az"){
+
+    tags.sort((a,b)=>
+      a.label.localeCompare(
+        b.label,
+        "ro"
+      )
+    );
+
+  }else{
+
+    tags.sort((a,b)=>
+      b.count-a.count ||
+      a.label.localeCompare(b.label)
+    );
+  }
+
+  if(!tags.length){
+
+    container.innerHTML=
+    `<div class="empty">Nu am găsit această temă.</div>`;
+
+    updateFilterButton();
+
+    return;
+  }
+
+  container.innerHTML =
+  tags.map(tag=>`
+
+    <button
+      class="filter-chip ${
+        selectedFilters.has(tag.name)
+        ?"active"
+        :""
+      }"
+      data-filter-tag="${escapeHTML(tag.name)}"
+    >
+      ${escapeHTML(tag.label)}
+
+      <span class="filter-chip-count">
+        ${tag.count}
+      </span>
+
+    </button>
+
+  `).join("");
+
+  container
+  .querySelectorAll("[data-filter-tag]")
+  .forEach(button=>{
+
+    button.onclick=()=>{
+
+      const tag=
+      button.dataset.filterTag;
+
+      if(selectedFilters.has(tag)){
+        selectedFilters.delete(tag);
+      }else{
+        selectedFilters.add(tag);
+      }
+
+      renderFilters();
+    };
+  });
+
+  updateFilterButton();
+}
+
+function updateFilterButton(){
+
+  const count =
+  selectedFilters.size;
+
+  const label =
+  document.getElementById("activeFilterCount");
+
+  if(label){
+
+    label.textContent =
+    count ? count : "";
+  }
+
+  const button =
+  document.getElementById("showFilterResults");
+
+  if(button){
+
+    button.textContent =
+    count
+    ? `Arată rezultatele (${count} ${count===1?"temă":"teme"})`
+    : "Arată toate";
+  }
+}
+
+document
+.getElementById("filterSearch")
+.addEventListener(
+  "input",
+  renderFilters
+);
+
+document
+.querySelectorAll("[data-sort]")
+.forEach(button=>{
+
+  button.onclick=()=>{
+
+    filterSort =
+    button.dataset.sort;
+
+    document
+    .querySelectorAll("[data-sort]")
+    .forEach(item=>
+      item.classList.remove("active")
+    );
+
+    button.classList.add("active");
+
+    renderFilters();
+  };
+});
+
+document
+.getElementById("resetFilters")
+.onclick=()=>{
+
+  selectedFilters.clear();
+
+  document.getElementById(
+    "filterSearch"
+  ).value="";
+
+  renderFilters();
+};
+
+document
+.getElementById("closeFilters")
+.onclick=()=>{
+
+  openPage("podcasts");
+};
+
+document
+.getElementById("showFilterResults")
+.onclick=()=>{
+
+  renderPodcasts();
+  openPage("podcasts");
+};
 
 
-        </div>
+/* ==========================================================
+   PODCASTS
+========================================================== */
 
+function renderPodcasts(){
 
-      </article>
+  const container =
+  document.getElementById("podcastList");
 
+  if(!container) return;
+
+  const query =
+  (
+    document
+    .getElementById("podcastSearch")
+    ?.value || ""
+  ).trim();
+
+  let items =
+  podcastItems().filter(item=>
+    searchItem(item,query)
+  );
+
+  if(selectedFilters.size){
+
+    items =
+    items.filter(item=>{
+
+      const itemTags =
+      getTags(item).map(normalizeTag);
+
+      return [...selectedFilters]
+      .every(filter=>
+        itemTags.includes(filter)
+      );
+    });
+  }
+
+  if(!items.length){
+
+    container.innerHTML=`
+      <div class="empty">
+        Nu am găsit podcasturi pentru această selecție.
+      </div>
     `;
 
+    return;
   }
 
+  container.innerHTML =
+  items.map(cardHTML).join("");
 
-  /* =========================================================
-     BIND CARDS
-  ========================================================= */
+  bindCards(container);
+}
 
-  function bindCards(
-    container
-  ){
-
-    container
-      .querySelectorAll(
-        ".play-button"
-      )
-      .forEach(
-        button => {
-
-          button.onclick =
-            () =>
-              toggleAudio(
-                button
-              );
-
-        }
-      );
+document
+.getElementById("podcastSearch")
+.addEventListener(
+  "input",
+  renderPodcasts
+);
 
 
-    container
-      .querySelectorAll(
-        ".speed-button"
-      )
-      .forEach(
-        button => {
+/* ==========================================================
+   ANSWERS
+========================================================== */
 
-          button.onclick =
-            () =>
-              cycleSpeed(
-                button
-              );
+function renderAnswers(){
 
-        }
-      );
+  const container =
+  document.getElementById("answerList");
 
+  if(!container) return;
 
-    container
-      .querySelectorAll(
-        ".waveform"
-      )
-      .forEach(
-        waveform => {
+  const query =
+  (
+    document
+    .getElementById("answerSearch")
+    ?.value || ""
+  ).trim();
 
-          waveform.onclick =
-            event =>
-              seekWaveform(
-                waveform,
-                event
-              );
+  const items =
+  telegramItems.filter(item=>
+    isAudioItem(item) &&
+    isAnswer(item) &&
+    searchItem(item,query)
+  );
 
-        }
-      );
+  if(!items.length){
 
+    container.innerHTML=`
+      <div class="empty">
+        Nu există încă răspunsuri audio.
+      </div>
+    `;
 
-    container
-      .querySelectorAll(
-        "[data-save-id]"
-      )
-      .forEach(
-        button => {
-
-          button.onclick =
-            () => {
-
-              toggleFavorite(
-                button.dataset.saveId
-              );
-
-            };
-
-        }
-      );
-
+    return;
   }
 
+  container.innerHTML =
+  items.map(cardHTML).join("");
 
-  /* =========================================================
-     FILTER STATE
-  ========================================================= */
+  bindCards(container);
+}
 
-  function updateActiveFilterUI(){
+document
+.getElementById("answerSearch")
+.addEventListener(
+  "input",
+  renderAnswers
+);
 
-    const box =
-      document.getElementById(
-        "activeFilterBox"
-      );
+
+/* ==========================================================
+   PRACTICES
+========================================================== */
+
+function renderPractices(){
+
+  const container =
+  document.getElementById("practiceList");
+
+  if(!container) return;
+
+  const query =
+  (
+    document
+    .getElementById("practiceSearch")
+    ?.value || ""
+  ).trim();
+
+  const items =
+  telegramItems.filter(item=>
+    isAudioItem(item) &&
+    isPractice(item) &&
+    searchItem(item,query)
+  );
+
+  if(!items.length){
+
+    container.innerHTML=`
+      <div class="empty">
+        Nu există încă practici audio.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+  items.map(cardHTML).join("");
+
+  bindCards(container);
+}
+
+document
+.getElementById("practiceSearch")
+.addEventListener(
+  "input",
+  renderPractices
+);
 
 
-    const pill =
-      document.getElementById(
-        "activeFilterPill"
-      );
+/* ==========================================================
+   SAVED
+========================================================== */
 
+function renderSaved(){
+
+  const container =
+  document.getElementById("savedList");
+
+  if(!container) return;
+
+  const query =
+  (
+    document
+    .getElementById("savedSearch")
+    ?.value || ""
+  ).trim();
+
+  const items =
+  telegramItems.filter(item=>
+    isFavorite(item.id) &&
+    isAudioItem(item) &&
+    searchItem(item,query)
+  );
+
+  if(!items.length){
+
+    container.innerHTML=`
+      <div class="empty">
+
+        <div style="font-size:38px;margin-bottom:15px">
+          ♡
+        </div>
+
+        Materialele pe care le salvezi
+        vor apărea aici.
+
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+  items.map(cardHTML).join("");
+
+  bindCards(container);
+}
+
+document
+.getElementById("savedSearch")
+.addEventListener(
+  "input",
+  renderSaved
+);
+
+
+/* ==========================================================
+   WHATSAPP
+========================================================== */
+
+document
+.getElementById("whatsappButton")
+.onclick=()=>{
+
+  try{
 
     if(
-      selectedFilter === "all"
+      tg &&
+      typeof tg.openLink==="function"
     ){
 
-      box.classList.remove(
-        "visible"
+      tg.openLink(WHATSAPP_URL);
+
+    }else{
+
+      window.open(
+        WHATSAPP_URL,
+        "_blank"
       );
-
-
-      return;
-
     }
 
+  }catch{
 
-    box.classList.add(
-      "visible"
-    );
-
-
-    pill.textContent =
-      "#" + selectedFilter +
-      " ×";
-
+    window.location.href=
+    WHATSAPP_URL;
   }
+};
 
 
-  document
-    .getElementById(
-      "activeFilterPill"
-    )
-    .onclick =
-      () => {
+/* ==========================================================
+   START
+========================================================== */
 
-        selectedFilter =
-          "all";
+async function startApp(){
 
+  openPage("home");
 
-        updateActiveFilterUI();
+  await loadTelegramContent();
+}
 
-        renderPodcasts();
-
-      };
-
-
-  /* =========================================================
-     RENDER PODCASTS
-  ========================================================= */
-
-  function renderPodcasts(){
-
-    const container =
-      document.getElementById(
-        "podcastList"
-      );
-
-
-    const search =
-      (
-        document
-          .getElementById(
-            "podcastSearch"
-          )
-          ?.value
-        ||
-        ""
-      )
-      .trim()
-      .toLowerCase();
-
-
-    const filtered =
-      telegramItems.filter(
-        item => {
-
-          const tags =
-            Array.isArray(
-              item.hashtags
-            )
-              ? item.hashtags
-              : [];
-
-
-          const normalizedTags =
-            tags.map(
-              normalizeTag
-            );
-
-
-          const filterOK =
-            selectedFilter === "all"
-            ||
-            normalizedTags.includes(
-              selectedFilter
-            );
-
-
-          const haystack =
-            [
-              item.title || "",
-              item.text || "",
-              tags.join(" ")
-            ]
-            .join(" ")
-            .toLowerCase();
-
-
-          const searchOK =
-            !search
-            ||
-            haystack.includes(
-              search
-            );
-
-
-          return (
-            filterOK
-            &&
-            searchOK
-          );
-
-        }
-      );
-
-
-    updateActiveFilterUI();
-
-
-    if(
-      !filtered.length
-    ){
-
-      container.innerHTML =
-        `
-
-          <div
-            class="empty"
-            style="grid-column:1/-1;"
-          >
-
-            <div
-              class="empty-title"
-            >
-              Nu am găsit podcasturi
-            </div>
-
-            <div
-              class="empty-text"
-            >
-              Încearcă o altă căutare sau elimină filtrul.
-            </div>
-
-          </div>
-
-        `;
-
-
-      return;
-
-    }
-
-
-    container.innerHTML =
-      filtered
-        .map(
-          cardHTML
-        )
-        .join("");
-
-
-    bindCards(
-      container
-    );
-
-  }
-
-
-  document
-    .getElementById(
-      "podcastSearch"
-    )
-    .addEventListener(
-      "input",
-      renderPodcasts
-    );
-
-
-  /* =========================================================
-     FILTER PAGE
-  ========================================================= */
-
-  function getAvailableFilters(){
-
-    const map =
-      new Map();
-
-
-    telegramItems.forEach(
-      item => {
-
-        const tags =
-          Array.isArray(
-            item.hashtags
-          )
-            ? item.hashtags
-            : [];
-
-
-        tags.forEach(
-          rawTag => {
-
-            const normalized =
-              normalizeTag(
-                rawTag
-              );
-
-
-            if(!normalized){
-
-              return;
-
-            }
-
-
-            if(
-              !map.has(
-                normalized
-              )
-            ){
-
-              map.set(
-                normalized,
-                {
-                  key:normalized,
-                  label:
-                    String(rawTag)
-                      .startsWith("#")
-                      ? String(rawTag)
-                      : "#" + rawTag,
-
-                  count:0
-                }
-              );
-
-            }
-
-
-            map.get(
-              normalized
-            ).count++;
-
-          }
-        );
-
-      }
-    );
-
-
-    return [...map.values()]
-      .sort(
-        (
-          a,
-          b
-        ) => {
-
-          if(
-            b.count !== a.count
-          ){
-
-            return (
-              b.count -
-              a.count
-            );
-
-          }
-
-
-          return a.label.localeCompare(
-            b.label,
-            "ro"
-          );
-
-        }
-      );
-
-  }
-
-
-  function renderFilters(){
-
-    const container =
-      document.getElementById(
-        "filterList"
-      );
-
-
-    const filters =
-      getAvailableFilters();
-
-
-    if(
-      !filters.length
-    ){
-
-      container.innerHTML =
-        `
-
-          <div class="empty">
-
-            Nu există încă hashtaguri.
-
-          </div>
-
-        `;
-
-
-      return;
-
-    }
-
-
-    container.innerHTML =
-      filters
-        .map(
-          filter => `
-
-            <button
-              class="filter-item ${
-                selectedFilter ===
-                filter.key
-                  ? "selected"
-                  : ""
-              }"
-              data-filter="${escapeHTML(filter.key)}"
-            >
-
-              <span
-                class="filter-item-left"
-              >
-
-                <span>
-                  #
-                </span>
-
-                <span
-                  class="filter-item-name"
-                >
-                  ${escapeHTML(
-                    filter.label.replace(
-                      /^#/,
-                      ""
-                    )
-                  )}
-                </span>
-
-              </span>
-
-
-              <span
-                class="filter-count"
-              >
-                ${filter.count}
-              </span>
-
-            </button>
-
-          `
-        )
-        .join("");
-
-
-    container
-      .querySelectorAll(
-        "[data-filter]"
-      )
-      .forEach(
-        button => {
-
-          button.onclick =
-            () => {
-
-              selectedFilter =
-                button.dataset.filter;
-
-
-              openPage(
-                "podcasts"
-              );
-
-            };
-
-        }
-      );
-
-  }
-
-
-  document
-    .getElementById(
-      "showAll"
-    )
-    .onclick =
-      () => {
-
-        selectedFilter =
-          "all";
-
-
-        openPage(
-          "podcasts"
-        );
-
-      };
-
-
-  /* =========================================================
-     SAVED
-  ========================================================= */
-
-  function renderSaved(){
-
-    const container =
-      document.getElementById(
-        "savedList"
-      );
-
-
-    const query =
-      (
-        document
-          .getElementById(
-            "savedSearch"
-          )
-          ?.value
-        ||
-        ""
-      )
-      .trim()
-      .toLowerCase();
-
-
-    const selected =
-      telegramItems.filter(
-        item => {
-
-          if(
-            !isFavorite(
-              item.id
-            )
-          ){
-
-            return false;
-
-          }
-
-
-          if(!query){
-
-            return true;
-
-          }
-
-
-          const tags =
-            Array.isArray(
-              item.hashtags
-            )
-              ? item.hashtags
-              : [];
-
-
-          const haystack =
-            [
-              item.title || "",
-              item.text || "",
-              tags.join(" ")
-            ]
-            .join(" ")
-            .toLowerCase();
-
-
-          return haystack.includes(
-            query
-          );
-
-        }
-      );
-
-
-    if(
-      !selected.length
-    ){
-
-      container.innerHTML =
-        `
-
-          <div
-            class="empty"
-            style="grid-column:1/-1;"
-          >
-
-            <div
-              class="empty-heart"
-            >
-              ♡
-            </div>
-
-            <div
-              class="empty-title"
-            >
-              Încă nu ai podcasturi salvate
-            </div>
-
-            <div
-              class="empty-text"
-            >
-              Apasă „Salvează” la un podcast și îl vei găsi aici.
-            </div>
-
-          </div>
-
-        `;
-
-
-      return;
-
-    }
-
-
-    container.innerHTML =
-      selected
-        .map(
-          cardHTML
-        )
-        .join("");
-
-
-    bindCards(
-      container
-    );
-
-  }
-
-
-  document
-    .getElementById(
-      "savedSearch"
-    )
-    .addEventListener(
-      "input",
-      renderSaved
-    );
-
-
-  /* =========================================================
-     START
-  ========================================================= */
-
-  async function startApp(){
-
-    await loadTelegramContent();
-
-  }
-
-
-  startApp();
+startApp();
 
 </script>
-
 
 </body>
 </html>
