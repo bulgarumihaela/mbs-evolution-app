@@ -8,7 +8,7 @@
     content="width=device-width, initial-scale=1.0, viewport-fit=cover"
   >
 
-  <meta name="theme-color" content="#F6F2FA">
+  <meta name="theme-color" content="#A889A0">
 
   <title>MBS Evolution</title>
 
@@ -17,25 +17,26 @@
 
   <style>
 
-    /* =========================================================
-       MBS COLORS
-    ========================================================= */
-
     :root{
-  --bg:#F8F5F7;
-  --surface:#FFFFFF;
-  --surface2:#F1E9EF;
-  --card:#F2EBF0;
-  --player:#FCFAFB;
+      --bg:#F7F2F6;
 
-  --text:#211D20;
-  --muted:#81777E;
+      --surface:#FFFFFF;
+      --surface2:#EFE5EC;
 
-  --accent:#A889A0;
-  --accent2:#8F7087;
-  --accent-soft:#E5D7E1;
+      --card:#F0E7ED;
+      --player:#FCF9FB;
 
-  --border:#DED2DA;
+      --text:#211D20;
+      --muted:#80747C;
+
+      --accent:#A889A0;
+      --accent2:#8F7087;
+      --accent-soft:#E5D7E1;
+
+      --border:#DED1DA;
+
+      --shadow:
+        0 3px 16px rgba(82,55,75,.06);
     }
 
     *{
@@ -43,16 +44,17 @@
       -webkit-tap-highlight-color:transparent;
     }
 
-    html,
+    html{
+      scroll-behavior:smooth;
+      background:var(--bg);
+    }
+
     body{
       margin:0;
-      padding:0;
-
-      width:100%;
-      min-height:100%;
+      min-height:100vh;
+      min-height:100dvh;
 
       background:var(--bg);
-
       color:var(--text);
 
       font-family:
@@ -60,13 +62,6 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-
-      scroll-behavior:smooth;
-    }
-
-    body{
-      min-height:100vh;
-      min-height:100dvh;
 
       padding-bottom:
         calc(
@@ -84,21 +79,17 @@
       cursor:pointer;
     }
 
-    /* =========================================================
-       APP FULL SCREEN
-    ========================================================= */
-
     .app{
       width:100%;
       min-height:100vh;
       min-height:100dvh;
 
-      margin:0;
+      margin:0 auto;
 
       padding:
         calc(22px + env(safe-area-inset-top))
         18px
-        45px;
+        50px;
     }
 
     .page{
@@ -113,7 +104,7 @@
 
     @keyframes fade{
       from{
-        opacity:.4;
+        opacity:.45;
         transform:translateY(4px);
       }
 
@@ -123,9 +114,10 @@
       }
     }
 
-    /* =========================================================
+
+    /* =============================
        TYPOGRAPHY
-    ========================================================= */
+    ============================= */
 
     .topline{
       color:var(--muted);
@@ -135,20 +127,15 @@
 
     h1{
       margin:0;
-
-      font-size:38px;
+      font-size:36px;
       line-height:1.04;
-
-      letter-spacing:-1.3px;
+      letter-spacing:-1px;
     }
 
     h2{
       margin:0;
-
-      font-size:31px;
-      line-height:1.08;
-
-      letter-spacing:-.8px;
+      font-size:30px;
+      letter-spacing:-.7px;
     }
 
     h3{
@@ -172,176 +159,22 @@
 
       gap:15px;
 
-      margin:
-        28px
-        0
-        14px;
+      margin:28px 0 14px;
     }
 
     .section-head h3{
       font-size:21px;
     }
 
-    /* =========================================================
-       HOME HEADER
-    ========================================================= */
 
-    .home-header{
-      padding:
-        8px
-        4px
-        6px;
-    }
-
-    .brand-line{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:15px;
-    }
-
-    .brand-badge{
-      width:46px;
-      height:46px;
-
-      border-radius:50%;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      flex:none;
-
-      background:
-        linear-gradient(
-          145deg,
-          #EEE4F5,
-          #DAC6E8
-        );
-
-      color:var(--accent2);
-
-      font-weight:700;
-
-      box-shadow:var(--shadow);
-    }
-
-    /* =========================================================
-       HERO
-    ========================================================= */
-
-    .hero{
-      margin-top:22px;
-
-      min-height:150px;
-
-      border-radius:28px;
-
-      padding:23px;
-
-      position:relative;
-
-      overflow:hidden;
-
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-
-      color:white;
-
-      background:
-        linear-gradient(
-          135deg,
-          #B998CF 0%,
-          #A67DC1 45%,
-          #8D67A8 100%
-        );
-
-      box-shadow:
-        0 8px 25px rgba(104,72,124,.12);
-    }
-
-    .hero::before{
-      content:"";
-
-      position:absolute;
-
-      width:180px;
-      height:180px;
-
-      border-radius:50%;
-
-      background:
-        rgba(255,255,255,.09);
-
-      right:-40px;
-      top:-70px;
-    }
-
-    .hero::after{
-      content:"";
-
-      position:absolute;
-
-      width:110px;
-      height:110px;
-
-      border-radius:50%;
-
-      border:
-        1px solid
-        rgba(255,255,255,.17);
-
-      right:35px;
-      top:22px;
-    }
-
-    .hero-small{
-      position:relative;
-      z-index:2;
-
-      font-size:13px;
-      opacity:.82;
-
-      margin-bottom:7px;
-    }
-
-    .hero-title{
-      position:relative;
-      z-index:2;
-
-      font-size:25px;
-      font-weight:650;
-
-      letter-spacing:-.5px;
-    }
-
-    .hero-text{
-      position:relative;
-      z-index:2;
-
-      margin-top:6px;
-
-      max-width:430px;
-
-      font-size:14px;
-      line-height:1.4;
-
-      color:
-        rgba(255,255,255,.82);
-    }
-
-    /* =========================================================
-       HOME GRID
-    ========================================================= */
+    /* =============================
+       HOME
+    ============================= */
 
     .grid{
       display:grid;
-
-      grid-template-columns:
-        repeat(2,minmax(0,1fr));
-
-      gap:12px;
+      grid-template-columns:1fr 1fr;
+      gap:13px;
     }
 
     .tile{
@@ -353,7 +186,7 @@
 
       padding:18px;
 
-      border-radius:27px;
+      border-radius:26px;
 
       background:var(--surface);
 
@@ -366,7 +199,9 @@
       box-shadow:var(--shadow);
 
       display:flex;
+
       flex-direction:column;
+
       justify-content:space-between;
 
       transition:
@@ -375,34 +210,34 @@
     }
 
     .tile:active{
-      transform:scale(.98);
+      transform:scale(.985);
     }
 
     .tile-icon{
-      width:44px;
-      height:44px;
+      width:42px;
+      height:42px;
 
-      border-radius:15px;
+      border-radius:14px;
 
       background:var(--surface2);
 
-      color:var(--accent2);
-
       display:flex;
+
       align-items:center;
       justify-content:center;
 
       font-size:22px;
+
+      color:var(--accent2);
     }
 
     .tile-title{
       font-size:19px;
       font-weight:650;
-      line-height:1.15;
     }
 
     .tile-sub{
-      margin-top:6px;
+      margin-top:5px;
 
       color:var(--muted);
 
@@ -414,8 +249,8 @@
       background:
         linear-gradient(
           145deg,
-          #B995CF,
-          #8F69AA
+          #B79BAF,
+          #96768E
         );
 
       color:white;
@@ -423,23 +258,14 @@
 
     .accent-tile .tile-icon{
       background:
-        rgba(255,255,255,.16);
+        rgba(255,255,255,.17);
 
       color:white;
     }
 
     .accent-tile .tile-sub{
       color:
-        rgba(255,255,255,.76);
-    }
-
-    .soft-purple-tile{
-      background:
-        linear-gradient(
-          145deg,
-          #F1EAF6,
-          #E5D8EF
-        );
+        rgba(255,255,255,.80);
     }
 
     .wide-tile{
@@ -447,9 +273,10 @@
       min-height:135px;
     }
 
-    /* =========================================================
+
+    /* =============================
        GENERIC
-    ========================================================= */
+    ============================= */
 
     .back{
       border:0;
@@ -497,15 +324,13 @@
       font-size:13px;
     }
 
-    /* =========================================================
+
+    /* =============================
        SEARCH
-    ========================================================= */
+    ============================= */
 
     .search{
-      margin:
-        18px
-        0
-        13px;
+      margin:18px 0 13px;
 
       min-height:54px;
 
@@ -514,13 +339,12 @@
       border-radius:22px;
 
       display:flex;
+
       align-items:center;
 
       gap:6px;
 
-      padding:
-        0
-        16px;
+      padding:0 16px;
 
       box-shadow:var(--shadow);
     }
@@ -536,9 +360,7 @@
       border:0;
       outline:none;
 
-      padding:
-        15px
-        7px;
+      padding:15px 7px;
 
       background:transparent;
 
@@ -547,9 +369,14 @@
       font-size:16px;
     }
 
-    /* =========================================================
-       FILTERS
-    ========================================================= */
+    .search input::placeholder{
+      color:#A3959E;
+    }
+
+
+    /* =============================
+       FILTER
+    ============================= */
 
     .filter-button{
       width:100%;
@@ -562,12 +389,12 @@
 
       border-radius:22px;
 
-      padding:
-        15px
-        16px;
+      padding:15px 16px;
 
       display:flex;
+
       align-items:center;
+
       justify-content:space-between;
 
       margin-bottom:12px;
@@ -579,7 +406,9 @@
 
     .filter-left{
       display:flex;
+
       gap:10px;
+
       align-items:center;
     }
 
@@ -590,10 +419,7 @@
 
       overflow-x:auto;
 
-      padding:
-        2px
-        0
-        14px;
+      padding:2px 0 14px;
 
       scrollbar-width:none;
     }
@@ -609,16 +435,13 @@
         1px solid
         var(--border);
 
-      background:
-        rgba(255,255,255,.5);
+      background:transparent;
 
       color:var(--text);
 
       border-radius:999px;
 
-      padding:
-        9px
-        14px;
+      padding:9px 14px;
 
       font-size:13px;
 
@@ -633,9 +456,10 @@
       color:white;
     }
 
-    /* =========================================================
-       PODCAST
-    ========================================================= */
+
+    /* =============================
+       PODCAST CARD
+    ============================= */
 
     .podcast-card{
       background:var(--card);
@@ -645,12 +469,11 @@
       padding:17px;
 
       margin-bottom:15px;
-
-      box-shadow:var(--shadow);
     }
 
     .podcast-tags{
       display:flex;
+
       flex-wrap:wrap;
 
       gap:7px;
@@ -661,20 +484,20 @@
     .podcast-tag{
       border:
         1px solid
-        #D7C7E1;
+        var(--border);
 
       border-radius:999px;
 
-      padding:
-        5px
-        9px;
+      padding:5px 9px;
 
       background:
-        rgba(255,255,255,.48);
+        rgba(255,255,255,.55);
 
       font-size:12px;
 
       font-weight:600;
+
+      color:var(--accent2);
     }
 
     .podcast-title{
@@ -692,17 +515,15 @@
 
       line-height:1.45;
 
-      color:#625A68;
+      color:var(--muted);
 
-      margin:
-        -6px
-        0
-        13px;
+      margin:-6px 0 13px;
     }
 
-    /* =========================================================
+
+    /* =============================
        AUDIO PLAYER
-    ========================================================= */
+    ============================= */
 
     .audio-player{
       background:var(--player);
@@ -714,9 +535,7 @@
       display:grid;
 
       grid-template-columns:
-        58px
-        1fr
-        55px;
+        58px 1fr 55px;
 
       gap:12px;
 
@@ -736,6 +555,7 @@
       color:white;
 
       display:flex;
+
       justify-content:center;
       align-items:center;
 
@@ -763,6 +583,7 @@
       height:38px;
 
       display:flex;
+
       align-items:center;
 
       gap:3px;
@@ -774,11 +595,12 @@
 
     .wave-bar{
       width:3px;
+
       min-width:3px;
 
       border-radius:999px;
 
-      background:#DDCBE8;
+      background:#DCCAD6;
 
       transition:
         background .12s;
@@ -799,17 +621,15 @@
     .speed-button{
       border:
         1px solid
-        #918799;
+        var(--accent2);
 
       background:transparent;
 
-      color:#625A68;
+      color:var(--accent2);
 
       border-radius:999px;
 
-      padding:
-        8px
-        10px;
+      padding:8px 10px;
 
       min-width:52px;
     }
@@ -817,22 +637,20 @@
     .player-error{
       margin-top:8px;
 
-      color:#985B74;
+      color:#8D526F;
 
       font-size:12px;
 
       display:none;
     }
 
-    /* =========================================================
-       POST ACTIONS
-    ========================================================= */
+
+    /* =============================
+       POST FOOTER
+    ============================= */
 
     .podcast-date{
-      margin:
-        14px
-        0
-        10px;
+      margin:14px 0 10px;
 
       font-size:13px;
 
@@ -870,6 +688,7 @@
 
     .save-button{
       min-width:58px;
+
       font-size:21px;
     }
 
@@ -877,9 +696,10 @@
       color:var(--accent);
     }
 
-    /* =========================================================
+
+    /* =============================
        HABITS
-    ========================================================= */
+    ============================= */
 
     .progress-wrap{
       background:var(--surface);
@@ -908,7 +728,7 @@
 
       border-radius:999px;
 
-      background:#E9E0EF;
+      background:#EADFE6;
 
       overflow:hidden;
     }
@@ -918,12 +738,7 @@
 
       width:0;
 
-      background:
-        linear-gradient(
-          90deg,
-          var(--accent),
-          var(--accent2)
-        );
+      background:var(--accent);
 
       border-radius:999px;
 
@@ -932,6 +747,7 @@
 
     .habits{
       display:flex;
+
       flex-direction:column;
 
       gap:10px;
@@ -945,6 +761,7 @@
       padding:16px;
 
       display:flex;
+
       align-items:center;
 
       gap:13px;
@@ -960,7 +777,7 @@
 
       border:
         2px solid
-        #CDBAD9;
+        #CBB8C5;
 
       background:white;
 
@@ -1032,9 +849,7 @@
 
       background:#fff;
 
-      padding:
-        13px
-        14px;
+      padding:13px 14px;
 
       outline:none;
 
@@ -1052,35 +867,28 @@
 
       border-radius:18px;
 
-      padding:
-        14px
-        18px;
+      padding:14px 18px;
 
-      background:
-        linear-gradient(
-          135deg,
-          var(--accent),
-          var(--accent2)
-        );
+      background:var(--accent);
 
       color:white;
 
       margin-top:20px;
 
       font-weight:600;
-
-      box-shadow:
-        0 5px 16px rgba(117,79,139,.12);
     }
 
-    /* =========================================================
+    .primary:active{
+      background:var(--accent2);
+    }
+
+
+    /* =============================
        STATES
-    ========================================================= */
+    ============================= */
 
     .status{
-      margin:
-        14px
-        0;
+      margin:14px 0;
 
       color:var(--muted);
 
@@ -1088,44 +896,43 @@
     }
 
     .status.error{
-      color:#97596F;
+      color:#8D526F;
     }
 
     .empty{
       text-align:center;
 
-      padding:
-        45px
-        15px;
+      padding:45px 15px;
 
       color:var(--muted);
     }
 
-    /* =========================================================
-       BOTTOM NAV
-    ========================================================= */
+
+    /* =============================
+       NAVIGATION
+    ============================= */
 
     .nav{
       position:fixed;
 
       bottom:
         calc(
-          12px +
+          13px +
           env(safe-area-inset-bottom)
         );
 
-      left:12px;
-      right:12px;
+      left:16px;
+      right:16px;
 
-      width:auto;
+      max-width:620px;
+
+      margin:auto;
 
       z-index:100;
 
-      padding:
-        7px;
+      padding:8px 7px;
 
-      background:
-        rgba(16,14,18,.97);
+      background:#090909;
 
       border-radius:31px;
 
@@ -1136,13 +943,7 @@
 
       box-shadow:
         0 10px 35px
-        rgba(0,0,0,.20);
-
-      backdrop-filter:
-        blur(18px);
-
-      -webkit-backdrop-filter:
-        blur(18px);
+        rgba(0,0,0,.18);
     }
 
     .nav button{
@@ -1150,21 +951,19 @@
 
       background:transparent;
 
-      color:#C9C5CC;
+      color:#ccc;
 
       border-radius:25px;
 
-      padding:
-        8px
-        2px;
+      padding:8px 2px;
 
       font-size:11px;
     }
 
     .nav button.active{
-      background:#2B2730;
+      background:#292929;
 
-      color:#C79BDC;
+      color:#C5A8BC;
     }
 
     .nav-icon{
@@ -1179,49 +978,108 @@
       display:block;
     }
 
-    /* =========================================================
-       TABLET / DESKTOP
-    ========================================================= */
+
+    /* =============================
+       SPLASH
+    ============================= */
+
+    #splash{
+      position:fixed;
+
+      inset:0;
+
+      z-index:9999;
+
+      background:#A889A0;
+
+      display:flex;
+
+      flex-direction:column;
+
+      align-items:center;
+      justify-content:center;
+
+      transition:
+        opacity .45s ease,
+        visibility .45s ease;
+    }
+
+    #splash.hidden{
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+    }
+
+    .splash-logo{
+      width:74px;
+      height:74px;
+
+      border-radius:20px;
+
+      background:white;
+
+      display:flex;
+
+      align-items:center;
+      justify-content:center;
+
+      color:var(--accent2);
+
+      font-family:Georgia,serif;
+
+      font-size:18px;
+
+      text-align:center;
+
+      line-height:1.05;
+
+      box-shadow:
+        0 8px 30px
+        rgba(65,42,58,.13);
+    }
+
+    .splash-spinner{
+      width:25px;
+      height:25px;
+
+      margin-top:24px;
+
+      border-radius:50%;
+
+      border:
+        2px solid
+        rgba(255,255,255,.30);
+
+      border-top-color:white;
+
+      animation:
+        spin .8s linear infinite;
+    }
+
+    @keyframes spin{
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
 
     @media(min-width:700px){
 
       .app{
-        padding-left:
-          max(
-            28px,
-            calc(
-              (100vw - 760px) / 2
-            )
-          );
-
-        padding-right:
-          max(
-            28px,
-            calc(
-              (100vw - 760px) / 2
-            )
-          );
+        max-width:720px;
       }
 
       .nav{
-        max-width:720px;
-        margin:auto;
-      }
-
-      .hero{
-        min-height:180px;
-      }
-
-      .tile{
-        min-height:205px;
+        max-width:680px;
       }
 
     }
 
+
     @media(max-width:375px){
 
       h1{
-        font-size:34px;
+        font-size:32px;
       }
 
       .tile{
@@ -1234,79 +1092,56 @@
 
       .audio-player{
         grid-template-columns:
-          50px
-          1fr
-          50px;
+          50px 1fr 50px;
       }
 
       .play-button{
         width:50px;
         height:50px;
       }
-
     }
 
   </style>
 </head>
 
+
 <body>
+
+
+<!-- SPLASH -->
+
+<div id="splash">
+
+  <div class="splash-logo">
+    MBS<br>♡
+  </div>
+
+  <div class="splash-spinner"></div>
+
+</div>
+
 
 <main class="app">
 
-  <!-- ======================================================
-       HOME
-  ======================================================= -->
+
+  <!-- HOME -->
 
   <section
     id="home"
     class="page active"
   >
 
-    <div class="home-header">
-
-      <div class="brand-line">
-
-        <div>
-
-          <div class="topline">
-            Bine ai venit ♡
-          </div>
-
-          <h1>
-            MBS Evolution
-          </h1>
-
-          <p class="subtitle">
-            Mind • Body • Soul
-          </p>
-
-        </div>
-
-        <div class="brand-badge">
-          MBS
-        </div>
-
-      </div>
-
+    <div class="topline">
+      Bine ai venit ♡
     </div>
 
+    <h1>
+      MBS Evolution
+    </h1>
 
-    <div class="hero">
-
-      <div class="hero-small">
-        MBS EVOLUTION
-      </div>
-
-      <div class="hero-title">
-        Spațiul tău pentru evoluție
-      </div>
-
-      <div class="hero-text">
-        Practici, audio și resurse pentru minte,
-        corp și suflet.
-      </div>
-
-    </div>
+    <p class="subtitle">
+      Mind • Body • Soul
+    </p>
 
 
     <div class="section-head">
@@ -1315,6 +1150,7 @@
 
 
     <div class="grid">
+
 
       <button
         class="tile"
@@ -1341,7 +1177,7 @@
 
 
       <button
-        class="tile soft-purple-tile"
+        class="tile"
         data-page="meditations"
       >
 
@@ -1437,7 +1273,7 @@
 
 
       <button
-        class="tile soft-purple-tile"
+        class="tile"
         data-page="sleep"
       >
 
@@ -1485,7 +1321,7 @@
 
 
       <button
-        class="tile soft-purple-tile"
+        class="tile"
         data-page="emotional"
       >
 
@@ -1533,7 +1369,7 @@
 
 
       <button
-        class="tile soft-purple-tile"
+        class="tile"
         data-page="moment"
       >
 
@@ -1581,7 +1417,7 @@
 
 
       <button
-        class="tile wide-tile accent-tile"
+        class="tile wide-tile"
         data-page="work"
       >
 
@@ -1603,14 +1439,14 @@
 
       </button>
 
+
     </div>
 
   </section>
 
 
-  <!-- ======================================================
-       AUDIO
-  ======================================================= -->
+
+  <!-- AUDIO -->
 
   <section
     id="audio"
@@ -1628,9 +1464,12 @@
       Podcasturi
     </h2>
 
-    <p class="subtitle">
-      Biblioteca audio MBS
-    </p>
+    <div
+      class="topline"
+      style="margin-top:5px;"
+    >
+      Acasă
+    </div>
 
 
     <div class="search">
@@ -1687,9 +1526,8 @@
   </section>
 
 
-  <!-- ======================================================
-       PRACTICES
-  ======================================================= -->
+
+  <!-- PRACTICI -->
 
   <section
     id="practices"
@@ -1703,9 +1541,7 @@
       ‹ Înapoi
     </button>
 
-    <h2>
-      Practici
-    </h2>
+    <h2>Practici</h2>
 
     <p class="subtitle">
       Exerciții și procese ghidate.
@@ -1760,9 +1596,8 @@
   </section>
 
 
-  <!-- ======================================================
-       MEDITATIONS
-  ======================================================= -->
+
+  <!-- MEDITATII -->
 
   <section
     id="meditations"
@@ -1833,9 +1668,8 @@
   </section>
 
 
-  <!-- ======================================================
-       ANSWERS
-  ======================================================= -->
+
+  <!-- ANSWERS -->
 
   <section
     id="answers"
@@ -1867,9 +1701,8 @@
   </section>
 
 
-  <!-- ======================================================
-       HABITS
-  ======================================================= -->
+
+  <!-- HABITS -->
 
   <section
     id="habits"
@@ -1965,9 +1798,8 @@
   </section>
 
 
-  <!-- ======================================================
-       NUTRITION
-  ======================================================= -->
+
+  <!-- SIMPLE SECTIONS -->
 
   <section
     id="nutrition"
@@ -1992,10 +1824,6 @@
   </section>
 
 
-  <!-- ======================================================
-       SLEEP
-  ======================================================= -->
-
   <section
     id="sleep"
     class="page"
@@ -2019,10 +1847,6 @@
   </section>
 
 
-  <!-- ======================================================
-       MOVEMENT
-  ======================================================= -->
-
   <section
     id="movement"
     class="page"
@@ -2045,10 +1869,6 @@
 
   </section>
 
-
-  <!-- ======================================================
-       EMOTIONAL
-  ======================================================= -->
 
   <section
     id="emotional"
@@ -2080,10 +1900,6 @@
   </section>
 
 
-  <!-- ======================================================
-       MOMENT
-  ======================================================= -->
-
   <section
     id="moment"
     class="page"
@@ -2107,10 +1923,6 @@
   </section>
 
 
-  <!-- ======================================================
-       PROGRAMS
-  ======================================================= -->
-
   <section
     id="programs"
     class="page"
@@ -2127,16 +1939,8 @@
       Programele MBS
     </h2>
 
-    <p class="subtitle">
-      Programele și experiențele MBS.
-    </p>
-
   </section>
 
-
-  <!-- ======================================================
-       WORK
-  ======================================================= -->
 
   <section
     id="work"
@@ -2180,9 +1984,8 @@
   </section>
 
 
-  <!-- ======================================================
-       EVOLUTION
-  ======================================================= -->
+
+  <!-- EVOLUTION -->
 
   <section
     id="evolution"
@@ -2211,9 +2014,8 @@
   </section>
 
 
-  <!-- ======================================================
-       FAVORITES
-  ======================================================= -->
+
+  <!-- FAVORITES -->
 
   <section
     id="favorites"
@@ -2248,12 +2050,12 @@
 
   </section>
 
+
 </main>
 
 
-<!-- =========================================================
-     NAVIGATION
-========================================================= -->
+
+<!-- NAVIGATION -->
 
 <nav class="nav">
 
@@ -2320,6 +2122,7 @@
 </nav>
 
 
+
 <script>
 
   /* =========================================================
@@ -2348,7 +2151,7 @@
 
 
   /* =========================================================
-     TELEGRAM FULLSCREEN
+     TELEGRAM
   ========================================================= */
 
   const tg =
@@ -2362,52 +2165,41 @@
     tg.expand();
 
 
+    /*
+      Cerem Telegram să deschidă Mini App-ul
+      cât mai mare posibil.
+    */
+
+    try {
+
+      if (tg.requestFullscreen) {
+        tg.requestFullscreen();
+      }
+
+    } catch(error) {
+
+      console.log(
+        "Fullscreen indisponibil:",
+        error
+      );
+
+    }
+
+
     try {
 
       tg.setHeaderColor(
-        "#F6F2FA"
+        "#A889A0"
       );
 
       tg.setBackgroundColor(
-        "#F6F2FA"
-      );
-
-      tg.setBottomBarColor?.(
-        "#F6F2FA"
+        "#F7F2F6"
       );
 
     } catch(error) {
 
       console.log(
         "Telegram colors:",
-        error
-      );
-
-    }
-
-
-    try {
-
-      tg.requestFullscreen?.();
-
-    } catch(error) {
-
-      console.log(
-        "Fullscreen:",
-        error
-      );
-
-    }
-
-
-    try {
-
-      tg.disableVerticalSwipes?.();
-
-    } catch(error) {
-
-      console.log(
-        "Vertical swipes:",
         error
       );
 
@@ -2476,10 +2268,8 @@
 
 
     window.scrollTo(
-      {
-        top:0,
-        behavior:"instant"
-      }
+      0,
+      0
     );
 
 
@@ -2667,15 +2457,12 @@
 
 
   /* =========================================================
-     TELEGRAM CONTENT
+     TELEGRAM DATA
   ========================================================= */
 
-  let telegramItems =
-    [];
+  let telegramItems = [];
 
-
-  let audioFilter =
-    "all";
+  let audioFilter = "all";
 
 
   async function loadTelegramContent() {
@@ -2684,10 +2471,6 @@
       document.getElementById(
         "telegramStatus"
       );
-
-
-    status.className =
-      "status";
 
 
     status.textContent =
@@ -2755,7 +2538,7 @@
           ? ""
           : "Nu există materiale.";
 
-    } catch(error) {
+    } catch (error) {
 
       console.error(
         error
@@ -2947,8 +2730,8 @@
 
       favorites =
         favorites.filter(
-          item =>
-            item !== key
+          x =>
+            x !== key
         );
 
     } else {
@@ -2976,15 +2759,12 @@
 
 
   /* =========================================================
-     AUDIO
+     AUDIO ENGINE
   ========================================================= */
 
-  let activeAudio =
-    null;
+  let activeAudio = null;
 
-
-  let activePlayer =
-    null;
+  let activePlayer = null;
 
 
   const playbackSpeeds =
@@ -3017,8 +2797,7 @@
     itemId
   ) {
 
-    let html =
-      "";
+    let html = "";
 
 
     for (
@@ -3027,25 +2806,13 @@
       i++
     ) {
 
-      const numericId =
-        parseInt(
-          String(itemId)
-            .replace(
-              /\D/g,
-              ""
-            )
-        )
-        ||
-        1;
-
-
       const height =
         8
         +
         (
           (
             i * 17 +
-            numericId * 11
+            Number(itemId || 1) * 11
           )
           %
           27
@@ -3101,7 +2868,9 @@
 
   function stopActiveAudio() {
 
-    if (activeAudio) {
+    if (
+      activeAudio
+    ) {
 
       activeAudio.pause();
 
@@ -3113,12 +2882,9 @@
     );
 
 
-    activeAudio =
-      null;
+    activeAudio = null;
 
-
-    activePlayer =
-      null;
+    activePlayer = null;
 
   }
 
@@ -3173,16 +2939,6 @@
     }
 
 
-    const duration =
-      Number.isFinite(
-        audio.duration
-      )
-        ? formatTime(
-            audio.duration
-          )
-        : "--:--";
-
-
     time.textContent =
       formatTime(
         audio.currentTime
@@ -3190,7 +2946,9 @@
       +
       " / "
       +
-      duration;
+      formatTime(
+        audio.duration
+      );
 
   }
 
@@ -3232,7 +2990,7 @@
           button.textContent =
             "❚❚";
 
-        } catch(error) {
+        } catch (error) {
 
           console.error(
             error
@@ -3436,7 +3194,7 @@
 
       await audio.play();
 
-    } catch(error) {
+    } catch (error) {
 
       console.error(
         "Play error:",
@@ -3568,7 +3326,7 @@
 
 
   /* =========================================================
-     CARDS
+     PODCAST CARD
   ========================================================= */
 
   function cardHTML(
@@ -3615,7 +3373,9 @@
 
 
     return `
-      <article class="podcast-card">
+      <article
+        class="podcast-card"
+      >
 
         ${
           tags.length
@@ -3626,13 +3386,11 @@
                   .map(
                     tag => `
                       <span class="podcast-tag">
-
                         ${escapeHTML(
                           tag.startsWith("#")
                             ? tag
                             : "#" + tag
                         )}
-
                       </span>
                     `
                   )
@@ -3742,7 +3500,7 @@
 
 
   /* =========================================================
-     CARD EVENTS
+     BIND PLAYERS
   ========================================================= */
 
   function bindCards(
@@ -3962,24 +3720,12 @@
         ||
         ""
       )
-      .trim()
       .toLowerCase();
 
 
     const selected =
       telegramItems.filter(
         item => {
-
-          const haystack =
-            (
-              (item.title || "")
-              +
-              " "
-              +
-              (item.text || "")
-            )
-            .toLowerCase();
-
 
           return (
             isFavorite(
@@ -3989,7 +3735,21 @@
             (
               !query
               ||
-              haystack.includes(
+              (
+                (
+                  item.title ||
+                  ""
+                )
+                +
+                " "
+                +
+                (
+                  item.text ||
+                  ""
+                )
+              )
+              .toLowerCase()
+              .includes(
                 query
               )
             )
@@ -4094,46 +3854,43 @@
 
 
     list.innerHTML =
-      habits
-        .map(
-          habit => `
-            <div
-              class="habit ${
-                habit.done
-                  ? "done"
-                  : ""
-              }"
-            >
+      habits.map(
+        habit => `
+          <div
+            class="habit ${
+              habit.done
+                ? "done"
+                : ""
+            }"
+          >
 
-              <button
-                class="habit-check"
-                data-habit="${habit.id}"
-              ></button>
+            <button
+              class="habit-check"
+              data-habit="${habit.id}"
+            ></button>
 
+            <div class="habit-info">
 
-              <div class="habit-info">
+              <div class="habit-title">
+                ${escapeHTML(habit.title)}
+              </div>
 
-                <div class="habit-title">
-                  ${escapeHTML(habit.title)}
-                </div>
+              <div class="habit-meta">
 
-
-                <div class="habit-meta">
-
-                  ${
-                    habit.done
-                      ? "Completat"
-                      : "De făcut"
-                  }
-
-                </div>
+                ${
+                  habit.done
+                    ? "Completat"
+                    : "De făcut"
+                }
 
               </div>
 
             </div>
-          `
-        )
-        .join("");
+
+          </div>
+        `
+      )
+      .join("");
 
 
     list
@@ -4248,7 +4005,8 @@
 
         habits.push(
           {
-            id:Date.now(),
+            id:
+              Date.now(),
 
             title,
 
@@ -4303,6 +4061,42 @@
 
 
   /* =========================================================
+     SPLASH
+  ========================================================= */
+
+  function hideSplash() {
+
+    const splash =
+      document.getElementById(
+        "splash"
+      );
+
+
+    if (!splash) {
+
+      return;
+
+    }
+
+
+    splash.classList.add(
+      "hidden"
+    );
+
+
+    setTimeout(
+      () => {
+
+        splash.remove();
+
+      },
+      500
+    );
+
+  }
+
+
+  /* =========================================================
      START
   ========================================================= */
 
@@ -4310,7 +4104,24 @@
 
     renderHabits();
 
-    await loadTelegramContent();
+
+    try {
+
+      await loadTelegramContent();
+
+    } catch(error) {
+
+      console.error(
+        error
+      );
+
+    }
+
+
+    setTimeout(
+      hideSplash,
+      500
+    );
 
   }
 
