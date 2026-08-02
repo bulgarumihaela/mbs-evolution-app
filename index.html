@@ -17,23 +17,23 @@
 
   <style>
     :root{
-  --bg:#f1edff;
-  --surface:#ffffff;
-  --surface-soft:#f7f5ff;
-  --card:#e9e2ff;
-  --card-soft:#f5f2ff;
+      --bg:#f1edff;
+      --surface:#ffffff;
+      --surface-soft:#f7f5ff;
+      --card:#e9e2ff;
+      --card-soft:#f5f2ff;
 
-  --text:#25212d;
-  --muted:#817a8c;
+      --text:#25212d;
+      --muted:#817a8c;
 
-  --accent:#8f78c9;
-  --accent-dark:#735caf;
-  --accent-soft:#ddd3f7;
+      --accent:#8f78c9;
+      --accent-dark:#735caf;
+      --accent-soft:#ddd3f7;
 
-  --border:#d9d0ec;
+      --border:#d9d0ec;
 
-  --shadow:
-    0 4px 18px rgba(78,61,115,.07);
+      --shadow:
+        0 4px 18px rgba(78,61,115,.07);
     }
 
     *{
@@ -80,10 +80,14 @@
     .app{
       width:100%;
       max-width:650px;
+
       margin:0 auto;
 
       padding:
-        calc(18px + env(safe-area-inset-top))
+        calc(
+          18px +
+          env(safe-area-inset-top)
+        )
         18px
         45px;
     }
@@ -109,9 +113,7 @@
       }
     }
 
-    /* =========================
-       TYPOGRAPHY
-    ========================= */
+    /* TYPOGRAPHY */
 
     .eyebrow{
       color:var(--muted);
@@ -150,12 +152,10 @@
       font-weight:700;
     }
 
-    /* =========================
-       HOME
-    ========================= */
+    /* HOME */
 
     .home-header{
-      padding:8px 2px 8px;
+      padding:8px 2px;
     }
 
     .home-grid{
@@ -180,8 +180,7 @@
       justify-content:space-between;
 
       transition:
-        transform .12s ease,
-        box-shadow .12s ease;
+        transform .12s ease;
     }
 
     .home-card:active{
@@ -194,24 +193,20 @@
     }
 
     .home-card.accent{
-      background:
-        linear-gradient(
-          145deg,
-          #a893df,
-          #8069ba
-        );
-
-      color:white;
+      background:var(--card);
+      color:var(--text);
     }
 
     .home-card.accent .card-sub{
-      color:rgba(255,255,255,.82);
+      color:var(--muted);
     }
 
     .home-icon{
       width:46px;
       height:46px;
+
       border-radius:16px;
+
       background:var(--card-soft);
 
       display:flex;
@@ -222,7 +217,7 @@
     }
 
     .home-card.accent .home-icon{
-      background:rgba(255,255,255,.18);
+      background:rgba(255,255,255,.58);
     }
 
     .card-title{
@@ -238,9 +233,7 @@
       line-height:1.4;
     }
 
-    /* =========================
-       BACK
-    ========================= */
+    /* BACK */
 
     .back{
       border:0;
@@ -252,145 +245,7 @@
       box-shadow:var(--shadow);
     }
 
-    /* =========================
-       ABOUT MBS
-    ========================= */
-
-    .about-hero{
-      margin-top:20px;
-      padding:27px 22px;
-      border-radius:30px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #a893df,
-          #8069ba
-        );
-
-      color:white;
-
-      box-shadow:var(--shadow);
-    }
-
-    .about-hero-small{
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:1.4px;
-      opacity:.78;
-      margin-bottom:8px;
-    }
-
-    .about-hero h3{
-      font-size:28px;
-      line-height:1.12;
-      letter-spacing:-.6px;
-    }
-
-    .about-hero p{
-      margin:13px 0 0;
-      line-height:1.55;
-      color:rgba(255,255,255,.86);
-    }
-
-    .about-content{
-      margin-top:16px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
-
-    .about-section{
-      background:var(--surface);
-      border-radius:27px;
-      padding:22px 20px;
-      box-shadow:var(--shadow);
-    }
-
-    .about-section h3{
-      font-size:21px;
-      line-height:1.25;
-      margin-bottom:14px;
-    }
-
-    .about-section p{
-      margin:0 0 14px;
-      font-size:15.5px;
-      line-height:1.67;
-    }
-
-    .about-section p:last-child{
-      margin-bottom:0;
-    }
-
-    .about-question{
-      margin:18px 0;
-      padding:17px;
-      border-radius:20px;
-      background:var(--accent-soft);
-      font-size:18px;
-      font-weight:700;
-      line-height:1.4;
-      text-align:center;
-    }
-
-    .about-examples{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      margin:16px 0;
-    }
-
-    .about-example{
-      padding:13px 14px;
-      border-radius:17px;
-      background:var(--surface-soft);
-      font-size:15px;
-      line-height:1.45;
-    }
-
-    .about-list{
-      margin:14px 0;
-      padding-left:20px;
-    }
-
-    .about-list li{
-      margin-bottom:8px;
-      line-height:1.5;
-    }
-
-    .about-highlight{
-      background:var(--accent-soft);
-    }
-
-    .about-ending{
-      background:
-        linear-gradient(
-          145deg,
-          #9c87d4,
-          #8069ba
-        );
-
-      color:white;
-    }
-
-    .about-ending p{
-      color:rgba(255,255,255,.93);
-    }
-
-    .about-disclaimer{
-      margin-top:16px;
-      padding:18px;
-      border-radius:22px;
-      background:rgba(255,255,255,.55);
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.55;
-    }
-
-    /* =========================
-       SEARCH
-    ========================= */
+    /* SEARCH */
 
     .search{
       min-height:55px;
@@ -421,9 +276,7 @@
       font-size:16px;
     }
 
-    /* =========================
-       FILTER BUTTON
-    ========================= */
+    /* FILTER */
 
     .filter-entry{
       width:100%;
@@ -448,9 +301,7 @@
       font-weight:650;
     }
 
-    /* =========================
-       PODCAST CARDS
-    ========================= */
+    /* PODCAST */
 
     .podcast-card{
       background:var(--card);
@@ -459,8 +310,7 @@
       margin-bottom:16px;
 
       box-shadow:
-        0 4px 18px
-        rgba(80,62,122,.05);
+        0 4px 18px rgba(80,62,122,.05);
     }
 
     .podcast-tags{
@@ -472,14 +322,14 @@
 
     .podcast-tag{
       border:
-        1px solid
-        rgba(111,91,158,.18);
+        1px solid rgba(111,91,158,.18);
 
       background:
         rgba(255,255,255,.45);
 
       border-radius:999px;
       padding:6px 10px;
+
       font-size:12px;
       font-weight:650;
     }
@@ -496,9 +346,7 @@
       font-size:13px;
     }
 
-    /* =========================
-       PLAYER
-    ========================= */
+    /* AUDIO */
 
     .audio-player{
       background:rgba(255,255,255,.72);
@@ -514,8 +362,10 @@
     .play-button{
       width:56px;
       height:56px;
+
       border:0;
       border-radius:50%;
+
       background:var(--accent);
       color:white;
 
@@ -580,9 +430,7 @@
       padding:8px 9px;
     }
 
-    /* =========================
-       SAVE
-    ========================= */
+    /* FOOTER */
 
     .podcast-footer{
       display:flex;
@@ -606,9 +454,7 @@
       color:var(--accent-dark);
     }
 
-    /* =========================
-       FILTER PAGE
-    ========================= */
+    /* FILTER PAGE */
 
     .filter-list{
       margin-top:22px;
@@ -651,7 +497,6 @@
       display:flex;
       align-items:center;
       justify-content:center;
-
       flex:none;
     }
 
@@ -677,9 +522,122 @@
       font-weight:700;
     }
 
-    /* =========================
-       STATES
-    ========================= */
+    /* ABOUT MBS */
+
+    .about-intro{
+      margin-top:22px;
+      padding:22px;
+      border-radius:28px;
+      background:var(--card);
+      box-shadow:var(--shadow);
+    }
+
+    .about-intro-title{
+      font-size:25px;
+      line-height:1.2;
+      font-weight:750;
+      margin-bottom:12px;
+    }
+
+    .about-intro p{
+      margin:0;
+      color:#625b6c;
+      font-size:15px;
+      line-height:1.65;
+    }
+
+    .about-content{
+      margin-top:15px;
+      padding:22px;
+      border-radius:28px;
+      background:var(--surface);
+      box-shadow:var(--shadow);
+    }
+
+    .about-content h3{
+      margin:
+        27px
+        0
+        10px;
+
+      font-size:20px;
+      line-height:1.3;
+    }
+
+    .about-content h3:first-child{
+      margin-top:0;
+    }
+
+    .about-content p{
+      margin:
+        0
+        0
+        15px;
+
+      color:#4f4957;
+      font-size:15.5px;
+      line-height:1.72;
+    }
+
+    .about-content .question{
+      margin:20px 0;
+      padding:18px;
+      border-radius:20px;
+      background:var(--surface-soft);
+      font-size:18px;
+      line-height:1.45;
+      font-weight:700;
+      color:var(--accent-dark);
+    }
+
+    .about-content .examples{
+      margin:
+        15px
+        0;
+
+      padding:
+        17px 18px;
+
+      border-radius:20px;
+
+      background:var(--surface-soft);
+    }
+
+    .about-content .examples p{
+      margin:0 0 9px;
+    }
+
+    .about-content .examples p:last-child{
+      margin-bottom:0;
+    }
+
+    .mbs-direction{
+      margin:
+        20px
+        0;
+
+      padding:20px;
+
+      background:var(--card);
+
+      border-radius:22px;
+
+      font-weight:650;
+
+      line-height:1.65;
+    }
+
+    .disclaimer{
+      margin-top:18px;
+      padding:18px;
+      border-radius:20px;
+      background:var(--surface-soft);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    /* GENERAL */
 
     .status{
       margin:14px 0;
@@ -698,9 +656,7 @@
       line-height:1.5;
     }
 
-    /* =========================
-       WHATSAPP
-    ========================= */
+    /* WHATSAPP */
 
     .whatsapp-card{
       margin-top:22px;
@@ -730,12 +686,11 @@
       margin-top:10px;
     }
 
-    /* =========================
-       NAV
-    ========================= */
+    /* NAV */
 
     .nav{
       position:fixed;
+
       left:16px;
       right:16px;
 
@@ -750,6 +705,7 @@
       z-index:100;
 
       padding:8px 7px;
+
       border-radius:31px;
       background:#0c0b0e;
 
@@ -757,8 +713,7 @@
       grid-template-columns:repeat(3,1fr);
 
       box-shadow:
-        0 12px 35px
-        rgba(0,0,0,.2);
+        0 12px 35px rgba(0,0,0,.2);
     }
 
     .nav button{
@@ -786,6 +741,7 @@
     }
 
     @media(max-width:375px){
+
       h1{
         font-size:33px;
       }
@@ -807,6 +763,7 @@
         height:50px;
       }
     }
+
   </style>
 </head>
 
@@ -814,9 +771,7 @@
 
 <main class="app">
 
-  <!-- =========================
-       HOME
-  ========================== -->
+  <!-- HOME -->
 
   <section id="home" class="page active">
 
@@ -826,9 +781,7 @@
         Bine ai venit ♡
       </div>
 
-      <h1>
-        MBS Evolution
-      </h1>
+      <h1>MBS Evolution</h1>
 
       <p class="subtitle">
         Mind • Body • Soul
@@ -845,18 +798,18 @@
       <!-- DESPRE MBS -->
 
       <button
-        class="home-card accent"
+        class="home-card accent full"
         data-page="about"
       >
 
         <div class="home-icon">
-          ✦
+          ◌
         </div>
 
         <div>
 
           <div class="card-title">
-            Despre MBS
+            Despre MBS®
           </div>
 
           <div class="card-sub">
@@ -866,6 +819,7 @@
         </div>
 
       </button>
+
 
       <!-- PODCASTURI -->
 
@@ -892,6 +846,7 @@
 
       </button>
 
+
       <!-- INTREBARI -->
 
       <button
@@ -916,6 +871,7 @@
         </div>
 
       </button>
+
 
       <!-- PRACTICI -->
 
@@ -942,6 +898,7 @@
 
       </button>
 
+
       <!-- SALVATE -->
 
       <button
@@ -967,10 +924,11 @@
 
       </button>
 
-      <!-- SESIUNI -->
+
+      <!-- 1:1 -->
 
       <button
-        class="home-card"
+        class="home-card full"
         data-page="sessions"
       >
 
@@ -981,11 +939,11 @@
         <div>
 
           <div class="card-title">
-            Sesiuni 1:1
+            Sesiuni individuale 1:1
           </div>
 
           <div class="card-sub">
-            Informații și programare
+            Află mai multe și programează o sesiune
           </div>
 
         </div>
@@ -997,16 +955,11 @@
   </section>
 
 
-  <!-- =========================
-       DESPRE MBS
-  ========================== -->
+  <!-- DESPRE MBS -->
 
   <section id="about" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1018,19 +971,17 @@
       Dincolo de comportament
     </h2>
 
-    <div class="about-hero">
+    <div class="about-intro">
 
-      <div class="about-hero-small">
-        Perspectiva MBS®
+      <div class="about-intro-title">
+        De multe ori încercăm să schimbăm ceea ce se vede.
       </div>
 
-      <h3>
-        Ce produce comportamentul pe care încerc să-l schimb?
-      </h3>
-
       <p>
-        MBS® privește dincolo de ceea ce se vede și explorează
-        procesul interior din care apare comportamentul.
+        Să mâncăm diferit. Să avem mai multă disciplină.
+        Să nu mai reacționăm atât de puternic.
+        Să nu mai repetăm aceleași alegeri.
+        Să punem limite. Să avem mai multă încredere în noi.
       </p>
 
     </div>
@@ -1038,374 +989,295 @@
 
     <div class="about-content">
 
-      <div class="about-section">
+      <p>
+        Și uneori reușim.
+      </p>
 
-        <p>
-          De multe ori încercăm să schimbăm ceea ce se vede.
-        </p>
+      <p>
+        Pentru o perioadă.
+      </p>
 
-        <div class="about-examples">
+      <p>
+        Apoi, în anumite situații, ne trezim făcând exact
+        ceea ce ne-am promis că nu vom mai face.
+      </p>
 
-          <div class="about-example">
-            Să mâncăm diferit.
-          </div>
+      <p>
+        Perspectiva MBS® – Mind Body Soul pornește de la
+        o întrebare diferită:
+      </p>
 
-          <div class="about-example">
-            Să avem mai multă disciplină.
-          </div>
-
-          <div class="about-example">
-            Să nu mai reacționăm atât de puternic.
-          </div>
-
-          <div class="about-example">
-            Să nu mai repetăm aceleași alegeri.
-          </div>
-
-          <div class="about-example">
-            Să punem limite.
-          </div>
-
-          <div class="about-example">
-            Să avem mai multă încredere în noi.
-          </div>
-
-        </div>
-
-        <p>
-          Și uneori reușim.
-        </p>
-
-        <p>
-          Pentru o perioadă.
-        </p>
-
-        <p>
-          Apoi, în anumite situații, ne trezim făcând exact
-          ceea ce ne-am promis că nu vom mai face.
-        </p>
-
-        <p>
-          Perspectiva MBS® – Mind Body Soul pornește de la
-          o întrebare diferită:
-        </p>
-
-        <div class="about-question">
-          Ce produce comportamentul pe care încerc să-l schimb?
-        </div>
-
+      <div class="question">
+        Ce produce comportamentul pe care încerc să-l schimb?
       </div>
 
 
-      <div class="about-section">
+      <h3>
+        Comportamentul nu apare din nimic
+      </h3>
 
-        <h3>
-          Comportamentul nu apare din nimic
-        </h3>
+      <p>
+        Felul în care reacționăm astăzi nu este construit
+        doar din ceea ce gândim conștient în prezent.
+      </p>
 
-        <p>
-          Felul în care reacționăm astăzi nu este construit doar
-          din ceea ce gândim conștient în prezent.
-        </p>
+      <p>
+        Experiențele prin care am trecut, mediul în care am
+        crescut, relațiile importante, lucrurile pe care le-am
+        învățat despre noi și despre ceilalți contribuie la
+        formarea modului în care interpretăm ceea ce ni se
+        întâmplă.
+      </p>
 
-        <p>
-          Experiențele prin care am trecut, mediul în care am crescut,
-          relațiile importante, lucrurile pe care le-am învățat despre
-          noi și despre ceilalți contribuie la formarea modului în care
-          interpretăm ceea ce ni se întâmplă.
-        </p>
+      <p>
+        Iar interpretarea influențează starea noastră interioară.
+      </p>
 
-        <p>
-          Iar interpretarea influențează starea noastră interioară.
-        </p>
+      <p>
+        Două persoane pot trece prin aceeași situație și pot
+        avea reacții complet diferite, pentru că situația
+        exterioară este aceeași, dar semnificația pe care
+        fiecare i-o atribuie este diferită.
+      </p>
 
-        <p>
-          Două persoane pot trece prin aceeași situație și pot avea
-          reacții complet diferite, pentru că situația exterioară este
-          aceeași, dar semnificația pe care fiecare i-o atribuie este
-          diferită.
-        </p>
+      <p>
+        De aceea, în MBS®, întrebarea nu este doar:
+      </p>
 
-        <p>
-          De aceea, în MBS®, întrebarea nu este doar:
-        </p>
-
-        <div class="about-question">
-          „Ce fac?”
-        </div>
-
-        <p>
-          ci și:
-        </p>
-
-        <div class="about-question">
-          „Ce se întâmplă în mine înainte să fac asta?”
-        </div>
-
+      <div class="question">
+        „Ce fac?”
+        <br><br>
+        ci și:
+        <br><br>
+        „Ce se întâmplă în mine înainte să fac asta?”
       </div>
 
 
-      <div class="about-section">
+      <h3>
+        Unele reacții au devenit automate
+      </h3>
 
-        <h3>
-          Unele reacții au devenit automate
-        </h3>
+      <p>
+        Atunci când un anumit mod de a interpreta, simți și
+        reacționa se repetă suficient, el poate deveni familiar.
+      </p>
+
+      <p>
+        Nu mai avem nevoie să îl alegem conștient de fiecare dată.
+      </p>
+
+      <p>
+        Îl executăm.
+      </p>
+
+      <p>
+        De aici apar multe dintre situațiile aparent contradictorii
+        din viața de zi cu zi:
+      </p>
+
+      <div class="examples">
 
         <p>
-          Atunci când un anumit mod de a interpreta, simți și reacționa
-          se repetă suficient, el poate deveni familiar.
+          Știi că vrei să spui „nu”, dar spui „da”.
         </p>
 
         <p>
-          Nu mai avem nevoie să îl alegem conștient de fiecare dată.
+          Știi că relația nu îți face bine, dar continui să te întorci.
         </p>
 
         <p>
-          Îl executăm.
+          Știi ce ai vrea să faci, dar amâni.
         </p>
 
         <p>
-          De aici apar multe dintre situațiile aparent contradictorii
-          din viața de zi cu zi:
-        </p>
-
-        <div class="about-examples">
-
-          <div class="about-example">
-            Știi că vrei să spui „nu”, dar spui „da”.
-          </div>
-
-          <div class="about-example">
-            Știi că relația nu îți face bine, dar continui să te întorci.
-          </div>
-
-          <div class="about-example">
-            Știi ce ai vrea să faci, dar amâni.
-          </div>
-
-          <div class="about-example">
-            Îți propui să reacționezi diferit, iar în momentul tensionat
-            apare aceeași reacție.
-          </div>
-
-        </div>
-
-        <p>
-          Nu pentru că informația îți lipsește neapărat.
-        </p>
-
-        <p>
-          Ci pentru că a înțelege ceva și a avea deja o reacție nouă
-          disponibilă în momentul real sunt două lucruri diferite.
+          Îți propui să reacționezi diferit, iar în momentul
+          tensionat apare aceeași reacție.
         </p>
 
       </div>
 
+      <p>
+        Nu pentru că informația îți lipsește neapărat.
+      </p>
 
-      <div class="about-section">
-
-        <h3>
-          Corpul face parte din ecuație
-        </h3>
-
-        <p>
-          MBS® nu privește omul doar prin ceea ce gândește.
-        </p>
-
-        <p>
-          Corpul, emoțiile și interpretările noastre se influențează
-          reciproc.
-        </p>
-
-        <p>
-          Uneori observăm mai întâi tensiunea din corp.
-        </p>
-
-        <p>
-          Alteori apare emoția.
-        </p>
-
-        <p>
-          Alteori gândul pare să vină primul.
-        </p>
-
-        <p>
-          În realitate, acestea pot face parte din același proces.
-        </p>
-
-        <p>
-          De aceea, corpul poate deveni o sursă importantă de informație
-          despre ceea ce se petrece în interiorul nostru.
-        </p>
-
-        <p>
-          Nu înseamnă că orice simptom fizic are o cauză emoțională
-          și nici că evaluarea medicală trebuie înlocuită cu interpretări
-          psihologice.
-        </p>
-
-        <p>
-          Înseamnă doar că, atunci când încercăm să înțelegem un
-          comportament uman, corpul nu trebuie exclus din conversație.
-        </p>
-
-      </div>
+      <p>
+        Ci pentru că a înțelege ceva și a avea deja o reacție
+        nouă disponibilă în momentul real sunt două lucruri diferite.
+      </p>
 
 
-      <div class="about-section about-highlight">
+      <h3>
+        Corpul face parte din ecuație
+      </h3>
 
-        <h3>
-          Atenția creează spațiu între automatism și alegere
-        </h3>
+      <p>
+        MBS® nu privește omul doar prin ceea ce gândește.
+      </p>
 
-        <p>
-          Un tipar este greu de schimbat cât timp nici măcar nu observăm
-          momentul în care începe.
-        </p>
+      <p>
+        Corpul, emoțiile și interpretările noastre se influențează
+        reciproc.
+      </p>
 
-        <p>
-          De aceea, una dintre capacitățile centrale cultivate în
-          perspectiva MBS® este atenția.
-        </p>
+      <p>
+        Uneori observăm mai întâi tensiunea din corp.
+        Alteori apare emoția.
+        Alteori gândul pare să vină primul.
+      </p>
 
-        <p>
-          Să poți observa ce se activează în tine înainte ca reacția
-          obișnuită să preia controlul:
-        </p>
+      <p>
+        În realitate, acestea pot face parte din același proces.
+      </p>
 
-        <ul class="about-list">
-          <li>ce simți în corp,</li>
-          <li>ce emoție apare,</li>
-          <li>ce semnificație dai situației,</li>
-          <li>ce impuls apare imediat după.</li>
-        </ul>
+      <p>
+        De aceea, corpul poate deveni o sursă importantă de
+        informație despre ceea ce se petrece în interiorul nostru.
+      </p>
 
-        <p>
-          În acel spațiu începe să devină posibilă o diferență importantă:
-        </p>
+      <p>
+        Nu înseamnă că orice simptom fizic are o cauză emoțională
+        și nici că evaluarea medicală trebuie înlocuită cu
+        interpretări psihologice.
+      </p>
 
-        <p>
-          să nu mai confunzi reacția automată cu identitatea ta.
-        </p>
+      <p>
+        Înseamnă doar că, atunci când încercăm să înțelegem un
+        comportament uman, corpul nu trebuie exclus din conversație.
+      </p>
 
-        <div class="about-question">
-          „Așa reacționez acum” nu înseamnă neapărat „așa sunt eu”.
-        </div>
+
+      <h3>
+        Atenția creează spațiu între automatism și alegere
+      </h3>
+
+      <p>
+        Un tipar este greu de schimbat cât timp nici măcar nu
+        observăm momentul în care începe.
+      </p>
+
+      <p>
+        De aceea, una dintre capacitățile centrale cultivate în
+        perspectiva MBS® este atenția.
+      </p>
+
+      <p>
+        Să poți observa ce se activează în tine înainte ca reacția
+        obișnuită să preia controlul:
+      </p>
+
+      <div class="examples">
+
+        <p>ce simți în corp,</p>
+        <p>ce emoție apare,</p>
+        <p>ce semnificație dai situației,</p>
+        <p>ce impuls apare imediat după.</p>
 
       </div>
 
+      <p>
+        În acel spațiu începe să devină posibilă o diferență
+        importantă:
+      </p>
 
-      <div class="about-section">
+      <p>
+        să nu mai confunzi reacția automată cu identitatea ta.
+      </p>
 
-        <h3>
-          Schimbarea nu înseamnă să lupți permanent cu tine
-        </h3>
-
-        <p>
-          Dacă un comportament este ultima verigă a unui proces interior,
-          simpla încercare de a controla comportamentul poate să nu fie
-          suficientă.
-        </p>
-
-        <p>
-          Poți câștiga o luptă cu tine astăzi și să fii nevoită să o
-          repeți mâine.
-        </p>
-
-        <p>
-          Perspectiva MBS® caută să înțeleagă ce menține acel răspuns
-          și cum poate fi construit treptat un mod diferit de a răspunde.
-        </p>
-
-        <p>
-          Nu prin război cu vechea versiune a ta.
-        </p>
-
-        <p>
-          Ci prin observare, înțelegere, integrare și repetarea unor
-          răspunsuri noi până când ceea ce era dificil începe să devină
-          mai disponibil și mai firesc.
-        </p>
-
+      <div class="question">
+        „Așa reacționez acum” nu înseamnă neapărat
+        „așa sunt eu”.
       </div>
 
 
-      <div class="about-section about-ending">
+      <h3>
+        Schimbarea nu înseamnă să lupți permanent cu tine
+      </h3>
 
-        <h3>
-          De la reacție la alegere
-        </h3>
+      <p>
+        Dacă un comportament este ultima verigă a unui proces
+        interior, simpla încercare de a controla comportamentul
+        poate să nu fie suficientă.
+      </p>
 
-        <p>
-          Pentru MBS®, transformarea nu înseamnă să devii o persoană
-          care nu mai simte frică, furie, nesiguranță sau disconfort.
-        </p>
+      <p>
+        Poți câștiga o luptă cu tine astăzi și să fii nevoită
+        să o repeți mâine.
+      </p>
 
-        <p>
-          Înseamnă să nu mai fii obligată să urmezi automat fiecare
-          reacție pe care aceste stări o declanșează.
-        </p>
+      <p>
+        Perspectiva MBS® caută să înțeleagă ce menține acel
+        răspuns și cum poate fi construit treptat un mod diferit
+        de a răspunde.
+      </p>
 
-        <p>
-          Între ceea ce se întâmplă și ceea ce faci poate apărea tot
-          mai mult spațiu.
-        </p>
+      <p>
+        Nu prin război cu vechea versiune a ta.
+      </p>
 
-        <p>
-          Iar în acel spațiu apare alegerea.
-        </p>
+      <p>
+        Ci prin observare, înțelegere, integrare și repetarea
+        unor răspunsuri noi până când ceea ce era dificil începe
+        să devină mai disponibil și mai firesc.
+      </p>
 
-        <p>
-          Aceasta este direcția MBS®:
-        </p>
 
-        <p>
-          să înțelegi ce te conduce din interior, să recunoști ceea ce
-          funcționează pe pilot automat și să construiești treptat
-          capacitatea de a răspunde vieții mai conștient.
-        </p>
+      <h3>
+        De la reacție la alegere
+      </h3>
 
-        <p>
-          Nu doar să schimbi ceea ce faci.
-        </p>
+      <p>
+        Pentru MBS®, transformarea nu înseamnă să devii o
+        persoană care nu mai simte frică, furie, nesiguranță
+        sau disconfort.
+      </p>
 
-        <p>
-          <strong>
-            Ci să schimbi locul interior din care faci ceea ce faci.
-          </strong>
-        </p>
+      <p>
+        Înseamnă să nu mai fii obligată să urmezi automat fiecare
+        reacție pe care aceste stări o declanșează.
+      </p>
 
+      <p>
+        Între ceea ce se întâmplă și ceea ce faci poate apărea
+        tot mai mult spațiu.
+      </p>
+
+      <p>
+        Iar în acel spațiu apare alegerea.
+      </p>
+
+      <div class="mbs-direction">
+        Aceasta este direcția MBS®:
+        <br><br>
+        să înțelegi ce te conduce din interior, să recunoști
+        ceea ce funcționează pe pilot automat și să construiești
+        treptat capacitatea de a răspunde vieții mai conștient.
+        <br><br>
+        Nu doar să schimbi ceea ce faci.
+        <br><br>
+        Ci să schimbi locul interior din care faci ceea ce faci.
       </div>
 
-    </div>
+      <div class="disclaimer">
+        MBS® este un model educațional de dezvoltare personală.
+        Nu reprezintă psihoterapie, diagnostic sau tratament
+        medical și nu înlocuiește asistența oferită de
+        profesioniști autorizați atunci când aceasta este necesară.
+      </div>
 
-
-    <div class="about-disclaimer">
-      MBS® este un model educațional de dezvoltare personală.
-      Nu reprezintă psihoterapie, diagnostic sau tratament medical
-      și nu înlocuiește asistența oferită de profesioniști autorizați
-      atunci când aceasta este necesară.
     </div>
 
   </section>
 
 
-  <!-- =========================
-       PODCASTS
-  ========================== -->
+  <!-- PODCASTURI -->
 
   <section id="podcasts" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
-    <h2>
-      Podcasturi
-    </h2>
+    <h2>Podcasturi</h2>
 
     <p class="subtitle">
       Biblioteca audio MBS
@@ -1413,9 +1285,7 @@
 
     <div class="search">
 
-      <span class="search-icon">
-        ⌕
-      </span>
+      <span class="search-icon">⌕</span>
 
       <input
         id="podcastSearch"
@@ -1431,13 +1301,8 @@
     >
 
       <span class="filter-entry-left">
-
         <span>◇</span>
-
-        <span>
-          Filtru după teme
-        </span>
-
+        <span>Filtru după teme</span>
       </span>
 
       <span>›</span>
@@ -1456,9 +1321,7 @@
   </section>
 
 
-  <!-- =========================
-       FILTERS
-  ========================== -->
+  <!-- FILTRE -->
 
   <section id="filters" class="page">
 
@@ -1496,16 +1359,11 @@
   </section>
 
 
-  <!-- =========================
-       ANSWERS
-  ========================== -->
+  <!-- INTREBARI -->
 
   <section id="answers" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1519,9 +1377,7 @@
 
     <div class="search">
 
-      <span class="search-icon">
-        ⌕
-      </span>
+      <span class="search-icon">⌕</span>
 
       <input
         id="answerSearch"
@@ -1536,16 +1392,11 @@
   </section>
 
 
-  <!-- =========================
-       PRACTICES
-  ========================== -->
+  <!-- PRACTICI -->
 
   <section id="practices" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1559,9 +1410,7 @@
 
     <div class="search">
 
-      <span class="search-icon">
-        ⌕
-      </span>
+      <span class="search-icon">⌕</span>
 
       <input
         id="practiceSearch"
@@ -1576,16 +1425,11 @@
   </section>
 
 
-  <!-- =========================
-       SAVED
-  ========================== -->
+  <!-- SALVATE -->
 
   <section id="saved" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1603,9 +1447,7 @@
 
     <div class="search">
 
-      <span class="search-icon">
-        ⌕
-      </span>
+      <span class="search-icon">⌕</span>
 
       <input
         id="savedSearch"
@@ -1620,16 +1462,11 @@
   </section>
 
 
-  <!-- =========================
-       SESSIONS
-  ========================== -->
+  <!-- SESIUNI -->
 
   <section id="sessions" class="page">
 
-    <button
-      class="back"
-      data-page="home"
-    >
+    <button class="back" data-page="home">
       ‹ Înapoi
     </button>
 
@@ -1671,9 +1508,7 @@
 </main>
 
 
-<!-- =========================
-     NAVIGATION
-========================== -->
+<!-- NAV -->
 
 <nav class="nav">
 
@@ -1681,43 +1516,18 @@
     class="active"
     data-page="home"
   >
-
-    <span class="nav-icon">
-      ⌂
-    </span>
-
-    <span class="nav-text">
-      Acasă
-    </span>
-
+    <span class="nav-icon">⌂</span>
+    <span class="nav-text">Acasă</span>
   </button>
 
-  <button
-    data-page="podcasts"
-  >
-
-    <span class="nav-icon">
-      ▶
-    </span>
-
-    <span class="nav-text">
-      Podcasturi
-    </span>
-
+  <button data-page="podcasts">
+    <span class="nav-icon">▶</span>
+    <span class="nav-text">Podcasturi</span>
   </button>
 
-  <button
-    data-page="saved"
-  >
-
-    <span class="nav-icon">
-      ♡
-    </span>
-
-    <span class="nav-text">
-      Salvate
-    </span>
-
+  <button data-page="saved">
+    <span class="nav-icon">♡</span>
+    <span class="nav-text">Salvate</span>
   </button>
 
 </nav>
@@ -1725,9 +1535,7 @@
 
 <script>
 
-  /* =========================================================
-     CONFIG
-  ========================================================= */
+  /* CONFIG */
 
   const SUPABASE_URL =
     "https://njthqqnebvmcubvwfrzz.supabase.co";
@@ -1742,9 +1550,7 @@
     "https://wa.me/393281015815?text=Bun%C4%83%21%20A%C8%99%20dori%20mai%20multe%20informa%C8%9Bii%20despre%20o%20sesiune%20individual%C4%83.";
 
 
-  /* =========================================================
-     SUPABASE
-  ========================================================= */
+  /* SUPABASE */
 
   const supabaseClient =
     window.supabase.createClient(
@@ -1753,9 +1559,7 @@
     );
 
 
-  /* =========================================================
-     TELEGRAM
-  ========================================================= */
+  /* TELEGRAM */
 
   const tg =
     window.Telegram?.WebApp;
@@ -1771,12 +1575,10 @@
         typeof tg.requestFullscreen ===
         "function"
       ) {
-
         tg.requestFullscreen();
-
       }
 
-    } catch (error) {
+    } catch(error) {
 
       console.log(
         "Telegram fullscreen:",
@@ -1788,9 +1590,7 @@
   }
 
 
-  /* =========================================================
-     NAVIGATION
-  ========================================================= */
+  /* NAVIGATION */
 
   const pages =
     document.querySelectorAll(
@@ -1802,29 +1602,22 @@
       ".nav button"
     );
 
-  function openPage(id) {
+  function openPage(id){
+
+    stopActiveAudio();
 
     pages.forEach(
-      page => {
-
+      page =>
         page.classList.remove(
           "active"
-        );
-
-      }
+        )
     );
 
     const page =
-      document.getElementById(
-        id
-      );
+      document.getElementById(id);
 
-    if (page) {
-
-      page.classList.add(
-        "active"
-      );
-
+    if(page){
+      page.classList.add("active");
     }
 
     navButtons.forEach(
@@ -1838,28 +1631,25 @@
       }
     );
 
-    window.scrollTo(
-      0,
-      0
-    );
+    window.scrollTo(0,0);
 
-    if (id === "podcasts") {
+    if(id === "podcasts"){
       renderPodcasts();
     }
 
-    if (id === "filters") {
+    if(id === "filters"){
       renderFilters();
     }
 
-    if (id === "answers") {
+    if(id === "answers"){
       renderAnswers();
     }
 
-    if (id === "practices") {
+    if(id === "practices"){
       renderPractices();
     }
 
-    if (id === "saved") {
+    if(id === "saved"){
       renderSaved();
     }
 
@@ -1874,7 +1664,7 @@
           "[data-page]"
         );
 
-      if (!button) {
+      if(!button){
         return;
       }
 
@@ -1886,11 +1676,9 @@
   );
 
 
-  /* =========================================================
-     HELPERS
-  ========================================================= */
+  /* HELPERS */
 
-  function escapeHTML(value = "") {
+  function escapeHTML(value = ""){
 
     return String(value)
 
@@ -1902,24 +1690,27 @@
 
   }
 
-  function normalizeTag(value = "") {
+  function normalizeTag(value = ""){
 
     return String(value)
 
       .replace(/^#/,"")
       .toLowerCase()
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"");
+      .replace(
+        /[\u0300-\u036f]/g,
+        ""
+      );
 
   }
 
-  function formatDate(value) {
+  function formatDate(value){
 
-    if (!value) {
+    if(!value){
       return "";
     }
 
-    try {
+    try{
 
       return new Date(value)
         .toLocaleDateString(
@@ -1931,17 +1722,15 @@
           }
         );
 
-    } catch {
-
+    }catch{
       return "";
-
     }
 
   }
 
-  function formatTime(seconds) {
+  function formatTime(seconds){
 
-    if (!Number.isFinite(seconds)) {
+    if(!Number.isFinite(seconds)){
       return "0:00";
     }
 
@@ -1962,8 +1751,7 @@
     return (
       minutes +
       ":" +
-      String(secs)
-        .padStart(2,"0")
+      String(secs).padStart(2,"0")
     );
 
   }
@@ -1971,7 +1759,7 @@
   function itemHasTag(
     item,
     tagName
-  ) {
+  ){
 
     const tags =
       Array.isArray(item.hashtags)
@@ -1989,9 +1777,9 @@
   function searchItem(
     item,
     query
-  ) {
+  ){
 
-    if (!query) {
+    if(!query){
       return true;
     }
 
@@ -2016,21 +1804,19 @@
   }
 
 
-  /* =========================================================
-     TELEGRAM DATA
-  ========================================================= */
+  /* DATA */
 
   let telegramItems = [];
   let activeFilter = "all";
 
-  async function loadTelegramContent() {
+  async function loadTelegramContent(){
 
     const status =
       document.getElementById(
         "telegramStatus"
       );
 
-    if (status) {
+    if(status){
 
       status.className =
         "status";
@@ -2040,36 +1826,28 @@
 
     }
 
-    try {
+    try{
 
       const {
         data,
         error
       } =
         await supabaseClient
-
-          .from(
-            "telegram_content"
-          )
-
-          .select(
-            `
-              id,
-              title,
-              text,
-              content_type,
-              hashtags,
-              telegram_file_id,
-              telegram_date,
-              is_published
-            `
-          )
-
+          .from("telegram_content")
+          .select(`
+            id,
+            title,
+            text,
+            content_type,
+            hashtags,
+            telegram_file_id,
+            telegram_date,
+            is_published
+          `)
           .eq(
             "is_published",
             true
           )
-
           .order(
             "telegram_date",
             {
@@ -2077,14 +1855,14 @@
             }
           );
 
-      if (error) {
+      if(error){
         throw error;
       }
 
       telegramItems =
         data || [];
 
-      if (status) {
+      if(status){
 
         status.textContent =
           telegramItems.length
@@ -2099,14 +1877,14 @@
       renderPractices();
       renderSaved();
 
-    } catch (error) {
+    }catch(error){
 
       console.error(
         "Supabase error:",
         error
       );
 
-      if (status) {
+      if(status){
 
         status.className =
           "status error";
@@ -2121,13 +1899,11 @@
   }
 
 
-  /* =========================================================
-     FAVORITES
-  ========================================================= */
+  /* FAVORITES */
 
   let favorites = [];
 
-  try {
+  try{
 
     favorites =
       JSON.parse(
@@ -2136,25 +1912,21 @@
         ) || "[]"
       );
 
-    if (!Array.isArray(favorites)) {
+    if(!Array.isArray(favorites)){
       favorites = [];
     }
 
-  } catch {
+  }catch{
 
     favorites = [];
 
   }
 
-  function favoriteKey(id) {
-
-    return (
-      "telegram:" + id
-    );
-
+  function favoriteKey(id){
+    return "telegram:" + id;
   }
 
-  function isFavorite(id) {
+  function isFavorite(id){
 
     return favorites.includes(
       favoriteKey(id)
@@ -2162,7 +1934,7 @@
 
   }
 
-  function saveFavorites() {
+  function saveFavorites(){
 
     localStorage.setItem(
       "mbsFavorites",
@@ -2171,22 +1943,19 @@
 
   }
 
-  function toggleFavorite(id) {
+  function toggleFavorite(id){
 
     const key =
       favoriteKey(id);
 
-    if (
-      favorites.includes(key)
-    ) {
+    if(favorites.includes(key)){
 
       favorites =
         favorites.filter(
-          item =>
-            item !== key
+          item => item !== key
         );
 
-    } else {
+    }else{
 
       favorites.push(key);
 
@@ -2202,22 +1971,15 @@
   }
 
 
-  /* =========================================================
-     AUDIO
-  ========================================================= */
+  /* AUDIO */
 
   let activeAudio = null;
   let activePlayer = null;
 
   const playbackSpeeds =
-    [
-      1,
-      1.25,
-      1.5,
-      2
-    ];
+    [1,1.25,1.5,2];
 
-  function getStreamUrl(fileId) {
+  function getStreamUrl(fileId){
 
     return (
       SWIFT_API_URL +
@@ -2227,7 +1989,7 @@
 
   }
 
-  function createWaveform(itemId) {
+  function createWaveform(itemId){
 
     let html = "";
 
@@ -2241,11 +2003,11 @@
           0
         );
 
-    for (
+    for(
       let i = 0;
       i < 55;
       i++
-    ) {
+    ){
 
       const height =
         8 +
@@ -2253,9 +2015,7 @@
           (
             i * 17 +
             seed * 11
-          )
-          %
-          27
+          ) % 27
         );
 
       html += `
@@ -2271,23 +2031,21 @@
 
   }
 
-  function resetPlayerUI(player) {
+  function resetPlayerUI(player){
 
-    if (!player) {
+    if(!player){
       return;
     }
 
-    const playButton =
+    const button =
       player.querySelector(
         ".play-button"
       );
 
-    if (playButton) {
+    if(button){
 
-      playButton.textContent =
-        "▶";
-
-      playButton.classList.remove(
+      button.textContent = "▶";
+      button.classList.remove(
         "loading"
       );
 
@@ -2295,9 +2053,9 @@
 
   }
 
-  function stopActiveAudio() {
+  function stopActiveAudio(){
 
-    if (activeAudio) {
+    if(activeAudio){
       activeAudio.pause();
     }
 
@@ -2313,7 +2071,7 @@
   function updateWaveform(
     player,
     percent
-  ) {
+  ){
 
     const bars =
       player.querySelectorAll(
@@ -2322,8 +2080,7 @@
 
     const activeCount =
       Math.round(
-        bars.length *
-        percent
+        bars.length * percent
       );
 
     bars.forEach(
@@ -2342,37 +2099,31 @@
   function updateTime(
     player,
     audio
-  ) {
+  ){
 
     const element =
       player.querySelector(
         ".player-time"
       );
 
-    if (!element) {
+    if(!element){
       return;
     }
 
     element.textContent =
-      formatTime(
-        audio.currentTime
-      )
+      formatTime(audio.currentTime)
       +
       " / "
       +
       (
-        Number.isFinite(
-          audio.duration
-        )
-          ? formatTime(
-              audio.duration
-            )
+        Number.isFinite(audio.duration)
+          ? formatTime(audio.duration)
           : "--:--"
       );
 
   }
 
-  async function toggleAudio(button) {
+  async function toggleAudio(button){
 
     const player =
       button.closest(
@@ -2382,53 +2133,41 @@
     const fileId =
       button.dataset.fileId;
 
-    if (
-      !player ||
-      !fileId
-    ) {
+    if(!player || !fileId){
       return;
     }
 
-    if (
+    if(
       activePlayer === player &&
       activeAudio
-    ) {
+    ){
 
-      if (
-        activeAudio.paused
-      ) {
+      if(activeAudio.paused){
 
-        try {
+        try{
 
           await activeAudio.play();
+          button.textContent = "❚❚";
 
-          button.textContent =
-            "❚❚";
-
-        } catch (error) {
+        }catch(error){
 
           console.error(error);
 
         }
 
-      } else {
+      }else{
 
         activeAudio.pause();
-
-        button.textContent =
-          "▶";
+        button.textContent = "▶";
 
       }
 
       return;
-
     }
 
     stopActiveAudio();
 
-    button.textContent =
-      "…";
-
+    button.textContent = "…";
     button.classList.add(
       "loading"
     );
@@ -2438,27 +2177,22 @@
         ".player-error"
       );
 
-    if (errorBox) {
-      errorBox.style.display = "none";
+    if(errorBox){
+      errorBox.style.display =
+        "none";
     }
 
     const audio =
       new Audio();
 
-    audio.preload =
-      "metadata";
-
+    audio.preload = "metadata";
     audio.src =
       getStreamUrl(fileId);
 
-    audio.playsInline =
-      true;
+    audio.playsInline = true;
 
-    activeAudio =
-      audio;
-
-    activePlayer =
-      player;
+    activeAudio = audio;
+    activePlayer = player;
 
     audio.addEventListener(
       "loadedmetadata",
@@ -2513,11 +2247,8 @@
       "pause",
       () => {
 
-        if (!audio.ended) {
-
-          button.textContent =
-            "▶";
-
+        if(!audio.ended){
+          button.textContent = "▶";
         }
 
       }
@@ -2527,11 +2258,8 @@
       "ended",
       () => {
 
-        button.textContent =
-          "▶";
-
-        audio.currentTime =
-          0;
+        button.textContent = "▶";
+        audio.currentTime = 0;
 
         updateWaveform(
           player,
@@ -2554,10 +2282,9 @@
           "loading"
         );
 
-        button.textContent =
-          "▶";
+        button.textContent = "▶";
 
-        if (errorBox) {
+        if(errorBox){
 
           errorBox.style.display =
             "block";
@@ -2567,19 +2294,14 @@
 
         }
 
-        console.error(
-          "Audio error:",
-          audio.error
-        );
-
       }
     );
 
-    try {
+    try{
 
       await audio.play();
 
-    } catch (error) {
+    }catch(error){
 
       console.error(
         "Play error:",
@@ -2590,10 +2312,9 @@
         "loading"
       );
 
-      button.textContent =
-        "▶";
+      button.textContent = "▶";
 
-      if (errorBox) {
+      if(errorBox){
 
         errorBox.style.display =
           "block";
@@ -2607,17 +2328,17 @@
 
   }
 
-  function cycleSpeed(button) {
+  function cycleSpeed(button){
 
     const player =
       button.closest(
         ".audio-player"
       );
 
-    if (
+    if(
       player !== activePlayer ||
       !activeAudio
-    ) {
+    ){
       return;
     }
 
@@ -2629,7 +2350,7 @@
         current
       );
 
-    if (index === -1) {
+    if(index === -1){
       index = 0;
     }
 
@@ -2650,18 +2371,18 @@
   function seekWaveform(
     waveform,
     event
-  ) {
+  ){
 
     const player =
       waveform.closest(
         ".audio-player"
       );
 
-    if (
+    if(
       player !== activePlayer ||
       !activeAudio ||
       !activeAudio.duration
-    ) {
+    ){
       return;
     }
 
@@ -2688,11 +2409,9 @@
   }
 
 
-  /* =========================================================
-     CARD
-  ========================================================= */
+  /* CARDS */
 
-  function cardHTML(item) {
+  function cardHTML(item){
 
     const tags =
       Array.isArray(item.hashtags)
@@ -2731,25 +2450,23 @@
             ? `
               <div class="podcast-tags">
 
-                ${tags
-                  .map(
-                    tag => {
+                ${tags.map(
+                  tag => {
 
-                      const label =
-                        String(tag)
-                          .startsWith("#")
-                          ? tag
-                          : "#" + tag;
+                    const label =
+                      String(tag)
+                        .startsWith("#")
+                        ? tag
+                        : "#" + tag;
 
-                      return `
-                        <span class="podcast-tag">
-                          ${escapeHTML(label)}
-                        </span>
-                      `;
+                    return `
+                      <span class="podcast-tag">
+                        ${escapeHTML(label)}
+                      </span>
+                    `;
 
-                    }
-                  )
-                  .join("")}
+                  }
+                ).join("")}
 
               </div>
             `
@@ -2779,11 +2496,7 @@
                 <div class="player-main">
 
                   <div class="waveform">
-
-                    ${createWaveform(
-                      item.id
-                    )}
-
+                    ${createWaveform(item.id)}
                   </div>
 
                   <div class="player-time">
@@ -2820,13 +2533,8 @@
             }"
             data-save-id="${escapeHTML(item.id)}"
             type="button"
-            aria-label="Salvează"
           >
-            ${
-              favorite
-                ? "♥"
-                : "♡"
-            }
+            ${favorite ? "♥" : "♡"}
           </button>
 
         </div>
@@ -2836,14 +2544,9 @@
 
   }
 
+  function bindCards(container){
 
-  /* =========================================================
-     BIND CARDS
-  ========================================================= */
-
-  function bindCards(container) {
-
-    if (!container) {
+    if(!container){
       return;
     }
 
@@ -2855,8 +2558,7 @@
         button => {
 
           button.onclick =
-            () =>
-              toggleAudio(button);
+            () => toggleAudio(button);
 
         }
       );
@@ -2869,8 +2571,7 @@
         button => {
 
           button.onclick =
-            () =>
-              cycleSpeed(button);
+            () => cycleSpeed(button);
 
         }
       );
@@ -2911,18 +2612,16 @@
   }
 
 
-  /* =========================================================
-     PODCASTS
-  ========================================================= */
+  /* PODCASTS */
 
-  function renderPodcasts() {
+  function renderPodcasts(){
 
     const container =
       document.getElementById(
         "podcastList"
       );
 
-    if (!container) {
+    if(!container){
       return;
     }
 
@@ -2932,9 +2631,7 @@
           .getElementById(
             "podcastSearch"
           )
-          ?.value
-        ||
-        ""
+          ?.value || ""
       )
       .trim()
       .toLowerCase();
@@ -2944,16 +2641,12 @@
         item => {
 
           const tags =
-            Array.isArray(
-              item.hashtags
-            )
+            Array.isArray(item.hashtags)
               ? item.hashtags
               : [];
 
           const normalizedTags =
-            tags.map(
-              normalizeTag
-            );
+            tags.map(normalizeTag);
 
           const filterOK =
             activeFilter === "all"
@@ -2964,26 +2657,21 @@
 
           return (
             filterOK &&
-            searchItem(
-              item,
-              query
-            )
+            searchItem(item,query)
           );
 
         }
       );
 
-    if (!filtered.length) {
+    if(!filtered.length){
 
-      container.innerHTML =
-        `
-          <div class="empty">
-            Nu am găsit materiale pentru această selecție.
-          </div>
-        `;
+      container.innerHTML = `
+        <div class="empty">
+          Nu am găsit materiale pentru această selecție.
+        </div>
+      `;
 
       return;
-
     }
 
     container.innerHTML =
@@ -3005,11 +2693,9 @@
     );
 
 
-  /* =========================================================
-     FILTERS
-  ========================================================= */
+  /* FILTERS */
 
-  function getAllTags() {
+  function getAllTags(){
 
     const map =
       new Map();
@@ -3018,9 +2704,7 @@
       item => {
 
         const tags =
-          Array.isArray(
-            item.hashtags
-          )
+          Array.isArray(item.hashtags)
             ? item.hashtags
             : [];
 
@@ -3030,15 +2714,14 @@
             const normalized =
               normalizeTag(tag);
 
-            if (
+            if(
               normalized &&
               !map.has(normalized)
-            ) {
+            ){
 
               map.set(
                 normalized,
-                String(tag)
-                  .startsWith("#")
+                String(tag).startsWith("#")
                   ? tag
                   : "#" + tag
               );
@@ -3051,63 +2734,57 @@
       }
     );
 
-    return [
-      ...map.entries()
-    ];
+    return [...map.entries()];
 
   }
 
-  function renderFilters() {
+  function renderFilters(){
 
     const container =
       document.getElementById(
         "filterList"
       );
 
-    if (!container) {
+    if(!container){
       return;
     }
 
     const tags =
       getAllTags();
 
-    if (!tags.length) {
+    if(!tags.length){
 
-      container.innerHTML =
-        `
-          <div class="empty">
-            Nu există încă teme disponibile.
-          </div>
-        `;
+      container.innerHTML = `
+        <div class="empty">
+          Nu există încă teme disponibile.
+        </div>
+      `;
 
       return;
-
     }
 
     container.innerHTML =
-      tags
-        .map(
-          ([normalized,label]) => `
-            <button
-              class="filter-option ${
-                activeFilter === normalized
-                  ? "active"
-                  : ""
-              }"
-              data-theme="${escapeHTML(normalized)}"
-              type="button"
-            >
+      tags.map(
+        ([normalized,label]) => `
+          <button
+            class="filter-option ${
+              activeFilter === normalized
+                ? "active"
+                : ""
+            }"
+            data-theme="${escapeHTML(normalized)}"
+            type="button"
+          >
 
-              <span class="filter-name">
-                ${escapeHTML(label)}
-              </span>
+            <span class="filter-name">
+              ${escapeHTML(label)}
+            </span>
 
-              <span class="filter-check"></span>
+            <span class="filter-check"></span>
 
-            </button>
-          `
-        )
-        .join("");
+          </button>
+        `
+      ).join("");
 
     container
       .querySelectorAll(
@@ -3144,8 +2821,7 @@
       "click",
       () => {
 
-        activeFilter =
-          "all";
+        activeFilter = "all";
 
         renderFilters();
         renderPodcasts();
@@ -3158,18 +2834,16 @@
     );
 
 
-  /* =========================================================
-     ANSWERS
-  ========================================================= */
+  /* ANSWERS */
 
-  function renderAnswers() {
+  function renderAnswers(){
 
     const container =
       document.getElementById(
         "answerList"
       );
 
-    if (!container) {
+    if(!container){
       return;
     }
 
@@ -3179,9 +2853,7 @@
           .getElementById(
             "answerSearch"
           )
-          ?.value
-        ||
-        ""
+          ?.value || ""
       )
       .trim()
       .toLowerCase();
@@ -3203,30 +2875,24 @@
 
           return (
             category &&
-            searchItem(
-              item,
-              query
-            )
+            searchItem(item,query)
           );
 
         }
       );
 
-    if (!selected.length) {
+    if(!selected.length){
 
-      container.innerHTML =
-        `
-          <div class="empty">
-            Nu există încă răspunsuri audio.
-            <br><br>
-            Materialele cu hashtagul
-            <strong>#intrebari</strong>
-            vor apărea aici.
-          </div>
-        `;
+      container.innerHTML = `
+        <div class="empty">
+          Nu există încă răspunsuri audio.
+          <br><br>
+          Folosește în Telegram hashtagul
+          <strong>#intrebari</strong>.
+        </div>
+      `;
 
       return;
-
     }
 
     container.innerHTML =
@@ -3248,18 +2914,16 @@
     );
 
 
-  /* =========================================================
-     PRACTICES
-  ========================================================= */
+  /* PRACTICES */
 
-  function renderPractices() {
+  function renderPractices(){
 
     const container =
       document.getElementById(
         "practiceList"
       );
 
-    if (!container) {
+    if(!container){
       return;
     }
 
@@ -3269,9 +2933,7 @@
           .getElementById(
             "practiceSearch"
           )
-          ?.value
-        ||
-        ""
+          ?.value || ""
       )
       .trim()
       .toLowerCase();
@@ -3286,30 +2948,24 @@
               "practici"
             )
             &&
-            searchItem(
-              item,
-              query
-            )
+            searchItem(item,query)
           );
 
         }
       );
 
-    if (!selected.length) {
+    if(!selected.length){
 
-      container.innerHTML =
-        `
-          <div class="empty">
-            Nu există încă practici audio.
-            <br><br>
-            Materialele cu hashtagul
-            <strong>#practici</strong>
-            vor apărea aici.
-          </div>
-        `;
+      container.innerHTML = `
+        <div class="empty">
+          Nu există încă practici audio.
+          <br><br>
+          Folosește în Telegram hashtagul
+          <strong>#practici</strong>.
+        </div>
+      `;
 
       return;
-
     }
 
     container.innerHTML =
@@ -3331,18 +2987,16 @@
     );
 
 
-  /* =========================================================
-     SAVED
-  ========================================================= */
+  /* SAVED */
 
-  function renderSaved() {
+  function renderSaved(){
 
     const container =
       document.getElementById(
         "savedList"
       );
 
-    if (!container) {
+    if(!container){
       return;
     }
 
@@ -3352,9 +3006,7 @@
           .getElementById(
             "savedSearch"
           )
-          ?.value
-        ||
-        ""
+          ?.value || ""
       )
       .trim()
       .toLowerCase();
@@ -3366,38 +3018,31 @@
           return (
             isFavorite(item.id)
             &&
-            searchItem(
-              item,
-              query
-            )
+            searchItem(item,query)
           );
 
         }
       );
 
-    if (!selected.length) {
+    if(!selected.length){
 
-      container.innerHTML =
-        `
-          <div class="empty">
+      container.innerHTML = `
+        <div class="empty">
 
-            <div
-              style="
-                font-size:34px;
-                margin-bottom:14px;
-              "
-            >
-              ♡
-            </div>
-
-            Materialele pe care le salvezi
-            vor apărea aici.
-
+          <div style="
+            font-size:34px;
+            margin-bottom:14px;
+          ">
+            ♡
           </div>
-        `;
+
+          Materialele pe care le salvezi
+          vor apărea aici.
+
+        </div>
+      `;
 
       return;
-
     }
 
     container.innerHTML =
@@ -3419,9 +3064,7 @@
     );
 
 
-  /* =========================================================
-     WHATSAPP
-  ========================================================= */
+  /* WHATSAPP */
 
   document
     .getElementById(
@@ -3431,19 +3074,19 @@
       "click",
       () => {
 
-        try {
+        try{
 
-          if (
+          if(
             tg &&
             typeof tg.openLink ===
             "function"
-          ) {
+          ){
 
             tg.openLink(
               WHATSAPP_URL
             );
 
-          } else {
+          }else{
 
             window.open(
               WHATSAPP_URL,
@@ -3452,7 +3095,7 @@
 
           }
 
-        } catch (error) {
+        }catch(error){
 
           window.location.href =
             WHATSAPP_URL;
@@ -3463,11 +3106,9 @@
     );
 
 
-  /* =========================================================
-     START
-  ========================================================= */
+  /* START */
 
-  async function startApp() {
+  async function startApp(){
 
     await loadTelegramContent();
 
