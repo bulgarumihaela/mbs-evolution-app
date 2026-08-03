@@ -40,9 +40,9 @@
 }
 
 
-/* =========================
+/* =========================================================
    RESET
-========================= */
+========================================================= */
 
 *{
   box-sizing:border-box;
@@ -86,9 +86,9 @@ button{
 }
 
 
-/* =========================
+/* =========================================================
    APP
-========================= */
+========================================================= */
 
 .app{
   width:100%;
@@ -126,9 +126,9 @@ button{
 }
 
 
-/* =========================
+/* =========================================================
    TYPOGRAPHY
-========================= */
+========================================================= */
 
 .eyebrow{
   color:var(--muted);
@@ -175,7 +175,9 @@ h3{
 }
 
 
-/* contrast */
+/* =========================================================
+   CONTRAST
+========================================================= */
 
 .subtitle,
 .eyebrow,
@@ -196,9 +198,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    HOME
-========================= */
+========================================================= */
 
 .home-header{
   padding:8px 2px 8px;
@@ -237,14 +239,24 @@ h3{
   flex-direction:column;
 
   justify-content:space-between;
+
+  transition:transform .12s ease;
 }
 
 .home-card:active{
   transform:scale(.985);
 }
 
+.home-card.full{
+  grid-column:1/-1;
 
-/* DESPRE MBS */
+  min-height:135px;
+}
+
+
+/* =========================================================
+   DESPRE MBS CARD
+========================================================= */
 
 .home-card.about-card{
   grid-column:1/-1;
@@ -270,21 +282,9 @@ h3{
 }
 
 
-/* full card */
-
-.home-card.full{
-  grid-column:1/-1;
-
-  min-height:135px;
-}
-
-
-/* accent */
-
-.home-card.accent{
-  background:var(--surface);
-  color:var(--text);
-}
+/* =========================================================
+   HOME ICONS
+========================================================= */
 
 .home-icon{
   width:46px;
@@ -327,9 +327,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    BACK
-========================= */
+========================================================= */
 
 .back{
   border:0;
@@ -348,9 +348,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    ABOUT
-========================= */
+========================================================= */
 
 .about-content{
   margin-top:24px;
@@ -418,9 +418,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    SEARCH
-========================= */
+========================================================= */
 
 .search{
   min-height:55px;
@@ -463,9 +463,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    FILTER ENTRY
-========================= */
+========================================================= */
 
 .filter-entry{
   width:100%;
@@ -501,18 +501,22 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    PODCAST CARDS
-========================= */
+   COMPACTATE PE VERTICALĂ
+   LĂȚIMEA RĂMÂNE NESCHIMBATĂ
+========================================================= */
 
 .podcast-card{
+  width:100%;
+
   background:var(--card);
 
-  border-radius:28px;
+  border-radius:24px;
 
-  padding:18px;
+  padding:14px;
 
-  margin-bottom:16px;
+  margin-bottom:12px;
 
   box-shadow:
     0 4px 18px
@@ -524,9 +528,9 @@ h3{
 
   flex-wrap:wrap;
 
-  gap:7px;
+  gap:5px;
 
-  margin-bottom:13px;
+  margin-bottom:9px;
 }
 
 .podcast-tag{
@@ -539,58 +543,61 @@ h3{
 
   border-radius:999px;
 
-  padding:6px 10px;
+  padding:4px 8px;
 
-  font-size:12px;
+  font-size:11px;
 
   font-weight:650;
 }
 
 .podcast-title{
-  font-size:21px;
+  font-size:19px;
 
-  line-height:1.3;
+  line-height:1.25;
 
   font-weight:750;
 
-  margin-bottom:15px;
+  margin-bottom:10px;
 }
 
 .podcast-date{
-  margin-top:13px;
+  margin-top:0;
 
   color:var(--muted);
 
-  font-size:13px;
+  font-size:12px;
 }
 
 
-/* =========================
-   AUDIO
-========================= */
+/* =========================================================
+   AUDIO PLAYER
+   COMPACT
+========================================================= */
 
 .audio-player{
+  width:100%;
+
   background:rgba(255,255,255,.75);
 
-  border-radius:23px;
+  border-radius:20px;
 
-  padding:13px;
+  padding:10px;
 
   display:grid;
 
   grid-template-columns:
-    56px
+    48px
     1fr
-    52px;
+    48px;
 
-  gap:12px;
+  gap:9px;
 
   align-items:center;
 }
 
 .play-button{
-  width:56px;
-  height:56px;
+  width:48px;
+  height:48px;
 
   border:0;
 
@@ -605,9 +612,11 @@ h3{
   align-items:center;
   justify-content:center;
 
-  font-size:20px;
+  font-size:17px;
 
-  padding-left:3px;
+  padding-left:2px;
+
+  transition:transform .12s ease;
 }
 
 .play-button:active{
@@ -623,13 +632,13 @@ h3{
 }
 
 .waveform{
-  height:38px;
+  height:30px;
 
   display:flex;
 
   align-items:center;
 
-  gap:3px;
+  gap:2px;
 
   overflow:hidden;
 
@@ -650,24 +659,26 @@ h3{
 }
 
 .player-time{
-  margin-top:5px;
+  margin-top:3px;
 
   color:var(--muted);
 
-  font-size:12px;
+  font-size:11px;
 }
 
 .player-error{
   display:none;
 
-  margin-top:6px;
+  margin-top:4px;
 
   color:#7e3f60;
 
-  font-size:12px;
+  font-size:11px;
 }
 
 .speed-button{
+  min-width:46px;
+
   border:
     1px solid
     #806c79;
@@ -678,13 +689,15 @@ h3{
 
   border-radius:999px;
 
-  padding:8px 9px;
+  padding:7px 6px;
+
+  font-size:13px;
 }
 
 
-/* =========================
-   SAVE
-========================= */
+/* =========================================================
+   PODCAST FOOTER
+========================================================= */
 
 .podcast-footer{
   display:flex;
@@ -693,24 +706,29 @@ h3{
 
   justify-content:space-between;
 
-  gap:10px;
+  gap:8px;
 
-  margin-top:14px;
+  margin-top:9px;
 }
 
 .save-button{
   border:0;
 
-  min-width:48px;
-  min-height:44px;
+  width:42px;
+  height:40px;
 
-  border-radius:16px;
+  border-radius:14px;
 
   background:rgba(255,255,255,.58);
 
   color:#61525c;
 
-  font-size:21px;
+  font-size:19px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
 }
 
 .save-button.saved{
@@ -718,9 +736,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    FILTER PAGE
-========================= */
+========================================================= */
 
 .filter-list{
   margin-top:22px;
@@ -815,9 +833,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    EMPTY / STATUS
-========================= */
+========================================================= */
 
 .status{
   margin:14px 0;
@@ -844,9 +862,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    WHATSAPP
-========================= */
+========================================================= */
 
 .whatsapp-card{
   margin-top:22px;
@@ -889,9 +907,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    NAV
-========================= */
+========================================================= */
 
 .nav{
   position:fixed;
@@ -960,9 +978,9 @@ h3{
 }
 
 
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media(max-width:375px){
 
@@ -980,14 +998,21 @@ h3{
 
   .audio-player{
     grid-template-columns:
-      50px
+      44px
       1fr
-      48px;
+      44px;
+
+    gap:8px;
   }
 
   .play-button{
-    width:50px;
-    height:50px;
+    width:44px;
+    height:44px;
+  }
+
+  .speed-button{
+    min-width:42px;
+    font-size:12px;
   }
 
 }
@@ -1220,14 +1245,20 @@ h3{
     </p>
 
     <p>
-      Să mâncăm diferit. Să avem mai multă disciplină.
+      Să mâncăm diferit.
+      Să avem mai multă disciplină.
       Să nu mai reacționăm atât de puternic.
       Să nu mai repetăm aceleași alegeri.
-      Să punem limite. Să avem mai multă încredere în noi.
+      Să punem limite.
+      Să avem mai multă încredere în noi.
     </p>
 
     <p>
-      Și uneori reușim. Pentru o perioadă.
+      Și uneori reușim.
+    </p>
+
+    <p>
+      Pentru o perioadă.
     </p>
 
     <p>
@@ -1237,7 +1268,8 @@ h3{
 
     <div class="mbs-question">
       Perspectiva MBS® – Mind Body Soul pornește de la o
-      întrebare diferită:<br><br>
+      întrebare diferită:
+      <br><br>
       Ce produce comportamentul pe care încerc să-l schimb?
     </div>
 
@@ -1272,8 +1304,11 @@ h3{
 
     <div class="mbs-question">
       De aceea, în MBS®, întrebarea nu este doar:
-      „Ce fac?”<br><br>
-      ci și:<br><br>
+      <br><br>
+      „Ce fac?”
+      <br><br>
+      ci și:
+      <br><br>
       „Ce se întâmplă în mine înainte să fac asta?”
     </div>
 
@@ -1289,20 +1324,41 @@ h3{
 
     <p>
       Nu mai avem nevoie să îl alegem conștient de fiecare dată.
+    </p>
+
+    <p>
       Îl executăm.
     </p>
 
     <p>
+      De aici apar multe dintre situațiile aparent contradictorii
+      din viața de zi cu zi:
+    </p>
+
+    <p>
       Știi că vrei să spui „nu”, dar spui „da”.
-      Știi că relația nu îți face bine, dar continui să te
-      întorci. Știi ce ai vrea să faci, dar amâni.
+    </p>
+
+    <p>
+      Știi că relația nu îți face bine, dar continui să te întorci.
+    </p>
+
+    <p>
+      Știi ce ai vrea să faci, dar amâni.
+    </p>
+
+    <p>
+      Îți propui să reacționezi diferit, iar în momentul tensionat
+      apare aceeași reacție.
     </p>
 
     <p>
       Nu pentru că informația îți lipsește neapărat.
+    </p>
+
+    <p>
       Ci pentru că a înțelege ceva și a avea deja o reacție
-      nouă disponibilă în momentul real sunt două lucruri
-      diferite.
+      nouă disponibilă în momentul real sunt două lucruri diferite.
     </p>
 
 
@@ -1321,8 +1377,17 @@ h3{
 
     <p>
       Uneori observăm mai întâi tensiunea din corp.
-      Alteori apare emoția. Alteori gândul pare să vină primul.
+      Alteori apare emoția.
+      Alteori gândul pare să vină primul.
+    </p>
+
+    <p>
       În realitate, acestea pot face parte din același proces.
+    </p>
+
+    <p>
+      De aceea, corpul poate deveni o sursă importantă de
+      informație despre ceea ce se petrece în interiorul nostru.
     </p>
 
     <p>
@@ -1333,8 +1398,7 @@ h3{
 
     <p>
       Înseamnă doar că, atunci când încercăm să înțelegem un
-      comportament uman, corpul nu trebuie exclus din
-      conversație.
+      comportament uman, corpul nu trebuie exclus din conversație.
     </p>
 
 
@@ -1354,9 +1418,23 @@ h3{
 
     <p>
       Să poți observa ce se activează în tine înainte ca reacția
-      obișnuită să preia controlul: ce simți în corp, ce emoție
-      apare, ce semnificație dai situației și ce impuls apare
-      imediat după.
+      obișnuită să preia controlul:
+    </p>
+
+    <p>
+      ce simți în corp,
+      ce emoție apare,
+      ce semnificație dai situației,
+      ce impuls apare imediat după.
+    </p>
+
+    <p>
+      În acel spațiu începe să devină posibilă o diferență
+      importantă:
+    </p>
+
+    <p>
+      să nu mai confunzi reacția automată cu identitatea ta.
     </p>
 
     <div class="mbs-question">
@@ -1373,6 +1451,11 @@ h3{
       Dacă un comportament este ultima verigă a unui proces
       interior, simpla încercare de a controla comportamentul
       poate să nu fie suficientă.
+    </p>
+
+    <p>
+      Poți câștiga o luptă cu tine astăzi și să fii nevoită
+      să o repeți mâine.
     </p>
 
     <p>
@@ -1408,11 +1491,17 @@ h3{
 
     <p>
       Între ceea ce se întâmplă și ceea ce faci poate apărea tot
-      mai mult spațiu. Iar în acel spațiu apare alegerea.
+      mai mult spațiu.
     </p>
 
+    <p>
+      Iar în acel spațiu apare alegerea.
+    </p>
+
+
     <div class="mbs-question">
-      Aceasta este direcția MBS®:<br><br>
+      Aceasta este direcția MBS®:
+      <br><br>
       să înțelegi ce te conduce din interior, să recunoști ceea
       ce funcționează pe pilot automat și să construiești treptat
       capacitatea de a răspunde vieții mai conștient.
@@ -1427,8 +1516,7 @@ h3{
       MBS® este un model educațional de dezvoltare personală.
       Nu reprezintă psihoterapie, diagnostic sau tratament
       medical și nu înlocuiește asistența oferită de
-      profesioniști autorizați atunci când aceasta este
-      necesară.
+      profesioniști autorizați atunci când aceasta este necesară.
     </p>
 
   </div>
@@ -1478,7 +1566,9 @@ h3{
 
     <span class="filter-entry-left">
 
-      <span>◇</span>
+      <span>
+        ◇
+      </span>
 
       <span>
         Filtru după teme
@@ -1486,7 +1576,9 @@ h3{
 
     </span>
 
-    <span>›</span>
+    <span>
+      ›
+    </span>
 
   </button>
 
@@ -1511,9 +1603,13 @@ h3{
 
 <section id="filters" class="page">
 
-  <button class="back" data-page="podcasts">
+  <button
+    class="back"
+    data-page="podcasts"
+  >
     ‹ Înapoi
   </button>
+
 
   <div class="eyebrow">
     Podcasturi
@@ -1551,9 +1647,13 @@ h3{
 
 <section id="answers" class="page">
 
-  <button class="back" data-page="home">
+  <button
+    class="back"
+    data-page="home"
+  >
     ‹ Înapoi
   </button>
+
 
   <h2>
     Răspund la întrebări
@@ -1591,9 +1691,13 @@ h3{
 
 <section id="practices" class="page">
 
-  <button class="back" data-page="home">
+  <button
+    class="back"
+    data-page="home"
+  >
     ‹ Înapoi
   </button>
+
 
   <h2>
     Practici
@@ -1631,9 +1735,13 @@ h3{
 
 <section id="saved" class="page">
 
-  <button class="back" data-page="home">
+  <button
+    class="back"
+    data-page="home"
+  >
     ‹ Înapoi
   </button>
+
 
   <div class="eyebrow">
     Biblioteca ta
@@ -1675,9 +1783,13 @@ h3{
 
 <section id="sessions" class="page">
 
-  <button class="back" data-page="home">
+  <button
+    class="back"
+    data-page="home"
+  >
     ‹ Înapoi
   </button>
+
 
   <div class="eyebrow">
     MBS Evolution
@@ -1732,7 +1844,9 @@ h3{
     data-page="home"
   >
 
-    <span class="nav-icon">⌂</span>
+    <span class="nav-icon">
+      ⌂
+    </span>
 
     <span class="nav-text">
       Acasă
@@ -1741,9 +1855,13 @@ h3{
   </button>
 
 
-  <button data-page="podcasts">
+  <button
+    data-page="podcasts"
+  >
 
-    <span class="nav-icon">▶</span>
+    <span class="nav-icon">
+      ▶
+    </span>
 
     <span class="nav-text">
       Podcasturi
@@ -1752,9 +1870,13 @@ h3{
   </button>
 
 
-  <button data-page="saved">
+  <button
+    data-page="saved"
+  >
 
-    <span class="nav-icon">♡</span>
+    <span class="nav-icon">
+      ♡
+    </span>
 
     <span class="nav-text">
       Salvate
@@ -1790,9 +1912,6 @@ const WHATSAPP_URL =
 
 /* =========================================================
    CATEGORY TAGS
-
-   Acestea stabilesc UNDE apare materialul.
-   NU sunt teme.
 ========================================================= */
 
 const CATEGORY_TAGS = [
@@ -1856,61 +1975,82 @@ if (tg) {
 ========================================================= */
 
 const pages =
-  document.querySelectorAll(".page");
+  document.querySelectorAll(
+    ".page"
+  );
 
 
 const navButtons =
-  document.querySelectorAll(".nav button");
+  document.querySelectorAll(
+    ".nav button"
+  );
 
 
 function openPage(id) {
 
-  pages.forEach(page => {
+  pages.forEach(
+    page => {
 
-    page.classList.remove("active");
+      page.classList.remove(
+        "active"
+      );
 
-  });
+    }
+  );
 
 
   const page =
-    document.getElementById(id);
+    document.getElementById(
+      id
+    );
 
 
   if (page) {
 
-    page.classList.add("active");
+    page.classList.add(
+      "active"
+    );
 
   }
 
 
-  navButtons.forEach(button => {
+  navButtons.forEach(
+    button => {
 
-    button.classList.toggle(
-      "active",
-      button.dataset.page === id
-    );
+      button.classList.toggle(
+        "active",
+        button.dataset.page === id
+      );
 
-  });
+    }
+  );
 
 
-  window.scrollTo(0,0);
+  window.scrollTo(
+    0,
+    0
+  );
 
 
   if (id === "podcasts") {
     renderPodcasts();
   }
 
+
   if (id === "filters") {
     renderFilters();
   }
+
 
   if (id === "answers") {
     renderAnswers();
   }
 
+
   if (id === "practices") {
     renderPractices();
   }
+
 
   if (id === "saved") {
     renderSaved();
@@ -1924,15 +2064,20 @@ document.addEventListener(
   event => {
 
     const button =
-      event.target.closest("[data-page]");
+      event.target.closest(
+        "[data-page]"
+      );
 
 
     if (!button) {
+
       return;
+
     }
 
 
     stopActiveAudio();
+
 
     openPage(
       button.dataset.page
@@ -1946,34 +2091,58 @@ document.addEventListener(
    HELPERS
 ========================================================= */
 
-function escapeHTML(value = "") {
+function escapeHTML(
+  value = ""
+) {
 
   return String(value)
 
-    .replace(/&/g,"&amp;")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
 
-    .replace(/</g,"&lt;")
+    .replace(
+      /</g,
+      "&lt;"
+    )
 
-    .replace(/>/g,"&gt;")
+    .replace(
+      />/g,
+      "&gt;"
+    )
 
-    .replace(/"/g,"&quot;")
+    .replace(
+      /"/g,
+      "&quot;"
+    )
 
-    .replace(/'/g,"&#039;");
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
-function normalizeTag(value = "") {
+function normalizeTag(
+  value = ""
+) {
 
   return String(value)
 
-    .replace(/^#/,"")
+    .replace(
+      /^#/,
+      ""
+    )
 
     .trim()
 
     .toLowerCase()
 
-    .normalize("NFD")
+    .normalize(
+      "NFD"
+    )
 
     .replace(
       /[\u0300-\u036f]/g,
@@ -1983,10 +2152,14 @@ function normalizeTag(value = "") {
 }
 
 
-function formatDate(value) {
+function formatDate(
+  value
+) {
 
   if (!value) {
+
     return "";
+
   }
 
 
@@ -2011,17 +2184,27 @@ function formatDate(value) {
 }
 
 
-function formatTime(seconds) {
+function formatTime(
+  seconds
+) {
 
-  if (!Number.isFinite(seconds)) {
+  if (
+    !Number.isFinite(
+      seconds
+    )
+  ) {
+
     return "0:00";
+
   }
 
 
   seconds =
     Math.max(
       0,
-      Math.floor(seconds)
+      Math.floor(
+        seconds
+      )
     );
 
 
@@ -2038,15 +2221,24 @@ function formatTime(seconds) {
   return (
     minutes +
     ":" +
-    String(secs).padStart(2,"0")
+    String(
+      secs
+    ).padStart(
+      2,
+      "0"
+    )
   );
 
 }
 
 
-function getTags(item) {
+function getTags(
+  item
+) {
 
-  return Array.isArray(item.hashtags)
+  return Array.isArray(
+    item.hashtags
+  )
     ? item.hashtags
     : [];
 
@@ -2058,10 +2250,16 @@ function itemHasTag(
   tagName
 ) {
 
-  return getTags(item)
-    .map(normalizeTag)
+  return getTags(
+    item
+  )
+    .map(
+      normalizeTag
+    )
     .includes(
-      normalizeTag(tagName)
+      normalizeTag(
+        tagName
+      )
     );
 
 }
@@ -2073,7 +2271,9 @@ function searchItem(
 ) {
 
   if (!query) {
+
     return true;
+
   }
 
 
@@ -2096,27 +2296,33 @@ function searchItem(
 
 /* =========================================================
    THEMES
-
-   Eliminăm hashtagurile de categorie.
 ========================================================= */
 
-function getThemeTags(item) {
+function getThemeTags(
+  item
+) {
 
-  return getTags(item)
-    .filter(tag => {
+  return getTags(
+    item
+  )
+    .filter(
+      tag => {
 
-      const normalized =
-        normalizeTag(tag);
+        const normalized =
+          normalizeTag(
+            tag
+          );
 
 
-      return (
-        normalized &&
-        !CATEGORY_TAGS.includes(
-          normalized
-        )
-      );
+        return (
+          normalized &&
+          !CATEGORY_TAGS.includes(
+            normalized
+          )
+        );
 
-    });
+      }
+    );
 
 }
 
@@ -2125,9 +2331,12 @@ function getThemeTags(item) {
    DATA
 ========================================================= */
 
-let telegramItems = [];
+let telegramItems =
+  [];
 
-let activeFilter = "all";
+
+let activeFilter =
+  "all";
 
 
 async function loadTelegramContent() {
@@ -2157,18 +2366,22 @@ async function loadTelegramContent() {
     } =
       await supabaseClient
 
-        .from("telegram_content")
+        .from(
+          "telegram_content"
+        )
 
-        .select(`
-          id,
-          title,
-          text,
-          content_type,
-          hashtags,
-          telegram_file_id,
-          telegram_date,
-          is_published
-        `)
+        .select(
+          `
+            id,
+            title,
+            text,
+            content_type,
+            hashtags,
+            telegram_file_id,
+            telegram_date,
+            is_published
+          `
+        )
 
         .eq(
           "is_published",
@@ -2184,7 +2397,9 @@ async function loadTelegramContent() {
 
 
     if (error) {
+
       throw error;
+
     }
 
 
@@ -2241,26 +2456,61 @@ async function loadTelegramContent() {
 ========================================================= */
 
 let favorites =
-  JSON.parse(
-    localStorage.getItem(
-      "mbsFavorites"
+  [];
+
+
+try {
+
+  favorites =
+    JSON.parse(
+      localStorage.getItem(
+        "mbsFavorites"
+      )
+      ||
+      "[]"
+    );
+
+
+  if (
+    !Array.isArray(
+      favorites
     )
-    ||
-    "[]"
-  );
+  ) {
+
+    favorites =
+      [];
+
+  }
 
 
-function favoriteKey(id) {
+} catch(error) {
 
-  return "telegram:" + id;
+  favorites =
+    [];
 
 }
 
 
-function isFavorite(id) {
+function favoriteKey(
+  id
+) {
+
+  return (
+    "telegram:" +
+    id
+  );
+
+}
+
+
+function isFavorite(
+  id
+) {
 
   return favorites.includes(
-    favoriteKey(id)
+    favoriteKey(
+      id
+    )
   );
 
 }
@@ -2270,19 +2520,29 @@ function saveFavorites() {
 
   localStorage.setItem(
     "mbsFavorites",
-    JSON.stringify(favorites)
+    JSON.stringify(
+      favorites
+    )
   );
 
 }
 
 
-function toggleFavorite(id) {
+function toggleFavorite(
+  id
+) {
 
   const key =
-    favoriteKey(id);
+    favoriteKey(
+      id
+    );
 
 
-  if (favorites.includes(key)) {
+  if (
+    favorites.includes(
+      key
+    )
+  ) {
 
     favorites =
       favorites.filter(
@@ -2292,12 +2552,15 @@ function toggleFavorite(id) {
 
   } else {
 
-    favorites.push(key);
+    favorites.push(
+      key
+    );
 
   }
 
 
   saveFavorites();
+
 
   renderPodcasts();
 
@@ -2314,61 +2577,81 @@ function toggleFavorite(id) {
    AUDIO
 ========================================================= */
 
-let activeAudio = null;
-
-let activePlayer = null;
-
-
-const playbackSpeeds = [
-  1,
-  1.25,
-  1.5,
-  2
-];
+let activeAudio =
+  null;
 
 
-function getStreamUrl(fileId) {
+let activePlayer =
+  null;
+
+
+const playbackSpeeds =
+  [
+    1,
+    1.25,
+    1.5,
+    2
+  ];
+
+
+function getStreamUrl(
+  fileId
+) {
 
   return (
-    SWIFT_API_URL +
-    "?stream=1&file_id=" +
-    encodeURIComponent(fileId)
+    SWIFT_API_URL
+    +
+    "?stream=1&file_id="
+    +
+    encodeURIComponent(
+      fileId
+    )
   );
 
 }
 
 
-function createWaveform(itemId) {
+function createWaveform(
+  itemId
+) {
 
-  let html = "";
+  let html =
+    "";
 
 
   const seed =
-    String(itemId || "1")
-      .split("")
-      .reduce(
-        (total,char) =>
-          total +
-          char.charCodeAt(0),
-        0
-      );
+    String(
+      itemId ||
+      "1"
+    )
+    .split("")
+    .reduce(
+      (
+        total,
+        char
+      ) =>
+        total +
+        char.charCodeAt(0),
+      0
+    );
 
 
   for (
     let i = 0;
-    i < 55;
+    i < 48;
     i++
   ) {
 
     const height =
-      8 +
+      7
+      +
       (
         (
           i * 17 +
           seed * 11
         )
         %
-        27
+        22
       );
 
 
@@ -2387,10 +2670,14 @@ function createWaveform(itemId) {
 }
 
 
-function resetPlayerUI(player) {
+function resetPlayerUI(
+  player
+) {
 
   if (!player) {
+
     return;
+
   }
 
 
@@ -2416,11 +2703,14 @@ function resetPlayerUI(player) {
 
 function stopActiveAudio() {
 
-  if (activeAudio) {
+  if (
+    activeAudio
+  ) {
 
     activeAudio.pause();
 
-    activeAudio.src = "";
+    activeAudio.src =
+      "";
 
   }
 
@@ -2430,9 +2720,12 @@ function stopActiveAudio() {
   );
 
 
-  activeAudio = null;
+  activeAudio =
+    null;
 
-  activePlayer = null;
+
+  activePlayer =
+    null;
 
 }
 
@@ -2456,11 +2749,15 @@ function updateWaveform(
 
 
   bars.forEach(
-    (bar,index) => {
+    (
+      bar,
+      index
+    ) => {
 
       bar.classList.toggle(
         "active",
-        index < activeCount
+        index <
+        activeCount
       );
 
     }
@@ -2481,7 +2778,9 @@ function updateTime(
 
 
   if (!element) {
+
     return;
+
   }
 
 
@@ -2505,7 +2804,9 @@ function updateTime(
 }
 
 
-async function toggleAudio(button) {
+async function toggleAudio(
+  button
+) {
 
   const player =
     button.closest(
@@ -2521,7 +2822,9 @@ async function toggleAudio(button) {
     !player ||
     !fileId
   ) {
+
     return;
+
   }
 
 
@@ -2530,24 +2833,32 @@ async function toggleAudio(button) {
     activeAudio
   ) {
 
-    if (activeAudio.paused) {
+    if (
+      activeAudio.paused
+    ) {
 
       try {
 
         await activeAudio.play();
 
+
         button.textContent =
           "❚❚";
 
+
       } catch(error) {
 
-        console.error(error);
+        console.error(
+          error
+        );
 
       }
+
 
     } else {
 
       activeAudio.pause();
+
 
       button.textContent =
         "▶";
@@ -2563,7 +2874,9 @@ async function toggleAudio(button) {
   stopActiveAudio();
 
 
-  button.textContent = "…";
+  button.textContent =
+    "…";
+
 
   button.classList.add(
     "loading"
@@ -2576,7 +2889,9 @@ async function toggleAudio(button) {
     );
 
 
-  if (errorBox) {
+  if (
+    errorBox
+  ) {
 
     errorBox.style.display =
       "none";
@@ -2593,7 +2908,9 @@ async function toggleAudio(button) {
 
 
   audio.src =
-    getStreamUrl(fileId);
+    getStreamUrl(
+      fileId
+    );
 
 
   audio.playsInline =
@@ -2655,6 +2972,7 @@ async function toggleAudio(button) {
         "loading"
       );
 
+
       button.textContent =
         "❚❚";
 
@@ -2666,7 +2984,9 @@ async function toggleAudio(button) {
     "pause",
     () => {
 
-      if (!audio.ended) {
+      if (
+        !audio.ended
+      ) {
 
         button.textContent =
           "▶";
@@ -2717,10 +3037,13 @@ async function toggleAudio(button) {
         "▶";
 
 
-      if (errorBox) {
+      if (
+        errorBox
+      ) {
 
         errorBox.style.display =
           "block";
+
 
         errorBox.textContent =
           "Audio indisponibil";
@@ -2734,6 +3057,7 @@ async function toggleAudio(button) {
   try {
 
     await audio.play();
+
 
   } catch(error) {
 
@@ -2752,10 +3076,13 @@ async function toggleAudio(button) {
       "▶";
 
 
-    if (errorBox) {
+    if (
+      errorBox
+    ) {
 
       errorBox.style.display =
         "block";
+
 
       errorBox.textContent =
         "Nu am putut porni audio-ul.";
@@ -2767,7 +3094,9 @@ async function toggleAudio(button) {
 }
 
 
-function cycleSpeed(button) {
+function cycleSpeed(
+  button
+) {
 
   const player =
     button.closest(
@@ -2779,7 +3108,9 @@ function cycleSpeed(button) {
     player !== activePlayer ||
     !activeAudio
   ) {
+
     return;
+
   }
 
 
@@ -2793,8 +3124,13 @@ function cycleSpeed(button) {
     );
 
 
-  if (index === -1) {
-    index = 0;
+  if (
+    index === -1
+  ) {
+
+    index =
+      0;
+
   }
 
 
@@ -2834,7 +3170,9 @@ function seekWaveform(
     !activeAudio ||
     !activeAudio.duration
   ) {
+
     return;
+
   }
 
 
@@ -2852,7 +3190,8 @@ function seekWaveform(
       0,
       Math.min(
         1,
-        x / rect.width
+        x /
+        rect.width
       )
     );
 
@@ -2868,18 +3207,14 @@ function seekWaveform(
    CARD
 ========================================================= */
 
-function cardHTML(item) {
-
-  /*
-    Pe card afișăm DOAR temele.
-    Nu afișăm:
-    #podcasturi
-    #intrebari
-    #practici
-  */
+function cardHTML(
+  item
+) {
 
   const tags =
-    getThemeTags(item);
+    getThemeTags(
+      item
+    );
 
 
   const type =
@@ -2897,7 +3232,9 @@ function cardHTML(item) {
 
 
   const favorite =
-    isFavorite(item.id);
+    isFavorite(
+      item.id
+    );
 
 
   const title =
@@ -2922,22 +3259,26 @@ function cardHTML(item) {
 
                 ${
                   tags
-                    .map(tag => {
+                    .map(
+                      tag => {
 
-                      const label =
-                        String(tag)
+                        const label =
+                          String(
+                            tag
+                          )
                           .startsWith("#")
-                          ? tag
-                          : "#" + tag;
+                            ? tag
+                            : "#" + tag;
 
 
-                      return `
-                        <span class="podcast-tag">
-                          ${escapeHTML(label)}
-                        </span>
-                      `;
+                        return `
+                          <span class="podcast-tag">
+                            ${escapeHTML(label)}
+                          </span>
+                        `;
 
-                    })
+                      }
+                    )
                     .join("")
                 }
 
@@ -2964,6 +3305,7 @@ function cardHTML(item) {
                   class="play-button"
                   data-file-id="${escapeHTML(item.telegram_file_id)}"
                   type="button"
+                  aria-label="Redă"
                 >
                   ▶
                 </button>
@@ -3041,10 +3383,16 @@ function cardHTML(item) {
    BIND CARDS
 ========================================================= */
 
-function bindCards(container) {
+function bindCards(
+  container
+) {
 
-  if (!container) {
+  if (
+    !container
+  ) {
+
     return;
+
   }
 
 
@@ -3052,76 +3400,87 @@ function bindCards(container) {
     .querySelectorAll(
       ".play-button"
     )
-    .forEach(button => {
+    .forEach(
+      button => {
 
-      button.onclick =
-        () => {
+        button.onclick =
+          () => {
 
-          toggleAudio(button);
+            toggleAudio(
+              button
+            );
 
-        };
+          };
 
-    });
+      }
+    );
 
 
   container
     .querySelectorAll(
       ".speed-button"
     )
-    .forEach(button => {
+    .forEach(
+      button => {
 
-      button.onclick =
-        () => {
+        button.onclick =
+          () => {
 
-          cycleSpeed(button);
+            cycleSpeed(
+              button
+            );
 
-        };
+          };
 
-    });
+      }
+    );
 
 
   container
     .querySelectorAll(
       ".waveform"
     )
-    .forEach(waveform => {
+    .forEach(
+      waveform => {
 
-      waveform.onclick =
-        event => {
+        waveform.onclick =
+          event => {
 
-          seekWaveform(
-            waveform,
-            event
-          );
+            seekWaveform(
+              waveform,
+              event
+            );
 
-        };
+          };
 
-    });
+      }
+    );
 
 
   container
     .querySelectorAll(
       "[data-save-id]"
     )
-    .forEach(button => {
+    .forEach(
+      button => {
 
-      button.onclick =
-        () => {
+        button.onclick =
+          () => {
 
-          toggleFavorite(
-            button.dataset.saveId
-          );
+            toggleFavorite(
+              button.dataset.saveId
+            );
 
-        };
+          };
 
-    });
+      }
+    );
 
 }
 
 
 /* =========================================================
    PODCASTURI
-
    DOAR #podcasturi
 ========================================================= */
 
@@ -3133,8 +3492,12 @@ function renderPodcasts() {
     );
 
 
-  if (!container) {
+  if (
+    !container
+  ) {
+
     return;
+
   }
 
 
@@ -3153,60 +3516,62 @@ function renderPodcasts() {
 
 
   const filtered =
-    telegramItems.filter(item => {
+    telegramItems.filter(
+      item => {
 
-      /*
-        Categoria obligatorie:
-        #podcasturi
-      */
+        if (
+          !itemHasTag(
+            item,
+            "podcasturi"
+          )
+        ) {
 
-      if (
-        !itemHasTag(
-          item,
-          "podcasturi"
-        )
-      ) {
+          return false;
 
-        return false;
-
-      }
+        }
 
 
-      /*
-        Filtrul după temă
-      */
+        const themes =
+          getThemeTags(
+            item
+          )
+          .map(
+            normalizeTag
+          );
 
-      const themes =
-        getThemeTags(item)
-          .map(normalizeTag);
+
+        const filterOK =
+          activeFilter === "all"
+          ||
+          themes.includes(
+            activeFilter
+          );
 
 
-      const filterOK =
-        activeFilter === "all"
-        ||
-        themes.includes(
-          activeFilter
+        return (
+          filterOK
+          &&
+          searchItem(
+            item,
+            query
+          )
         );
 
-
-      return (
-        filterOK &&
-        searchItem(
-          item,
-          query
-        )
-      );
-
-    });
+      }
+    );
 
 
-  if (!filtered.length) {
+  if (
+    !filtered.length
+  ) {
 
-    container.innerHTML = `
-      <div class="empty">
-        Nu am găsit podcasturi pentru această selecție.
-      </div>
-    `;
+    container.innerHTML =
+      `
+        <div class="empty">
+          Nu am găsit podcasturi pentru această selecție.
+        </div>
+      `;
+
 
     return;
 
@@ -3215,11 +3580,15 @@ function renderPodcasts() {
 
   container.innerHTML =
     filtered
-      .map(cardHTML)
+      .map(
+        cardHTML
+      )
       .join("");
 
 
-  bindCards(container);
+  bindCards(
+    container
+  );
 
 }
 
@@ -3236,8 +3605,6 @@ document
 
 /* =========================================================
    FILTERS PODCASTURI
-
-   DOAR temele materialelor #podcasturi.
 ========================================================= */
 
 function getAllTags() {
@@ -3256,38 +3623,53 @@ function getAllTags() {
     );
 
 
-  podcastItems.forEach(item => {
+  podcastItems.forEach(
+    item => {
 
-    const themes =
-      getThemeTags(item);
-
-
-    themes.forEach(tag => {
-
-      const normalized =
-        normalizeTag(tag);
-
-
-      if (
-        normalized &&
-        !map.has(normalized)
-      ) {
-
-        map.set(
-          normalized,
-          String(tag).startsWith("#")
-            ? tag
-            : "#" + tag
+      const themes =
+        getThemeTags(
+          item
         );
 
-      }
 
-    });
+      themes.forEach(
+        tag => {
 
-  });
+          const normalized =
+            normalizeTag(
+              tag
+            );
 
 
-  return [...map.entries()];
+          if (
+            normalized &&
+            !map.has(
+              normalized
+            )
+          ) {
+
+            map.set(
+              normalized,
+              String(
+                tag
+              )
+              .startsWith("#")
+                ? tag
+                : "#" + tag
+            );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+  return [
+    ...map.entries()
+  ];
 
 }
 
@@ -3300,8 +3682,12 @@ function renderFilters() {
     );
 
 
-  if (!container) {
+  if (
+    !container
+  ) {
+
     return;
+
   }
 
 
@@ -3309,13 +3695,17 @@ function renderFilters() {
     getAllTags();
 
 
-  if (!tags.length) {
+  if (
+    !tags.length
+  ) {
 
-    container.innerHTML = `
-      <div class="empty">
-        Nu există încă teme disponibile.
-      </div>
-    `;
+    container.innerHTML =
+      `
+        <div class="empty">
+          Nu există încă teme disponibile.
+        </div>
+      `;
+
 
     return;
 
@@ -3325,7 +3715,12 @@ function renderFilters() {
   container.innerHTML =
     tags
       .map(
-        ([normalized,label]) => `
+        (
+          [
+            normalized,
+            label
+          ]
+        ) => `
           <button
             class="filter-option ${
               activeFilter === normalized
@@ -3353,26 +3748,29 @@ function renderFilters() {
     .querySelectorAll(
       "[data-theme]"
     )
-    .forEach(button => {
+    .forEach(
+      button => {
 
-      button.onclick =
-        () => {
+        button.onclick =
+          () => {
 
-          activeFilter =
-            button.dataset.theme;
+            activeFilter =
+              button.dataset.theme;
 
 
-          renderFilters();
+            renderFilters();
 
-          renderPodcasts();
+            renderPodcasts();
 
-          openPage(
-            "podcasts"
-          );
 
-        };
+            openPage(
+              "podcasts"
+            );
 
-    });
+          };
+
+      }
+    );
 
 }
 
@@ -3393,6 +3791,7 @@ document
 
       renderPodcasts();
 
+
       openPage(
         "podcasts"
       );
@@ -3403,7 +3802,6 @@ document
 
 /* =========================================================
    INTREBARI
-
    DOAR #intrebari
 ========================================================= */
 
@@ -3415,8 +3813,12 @@ function renderAnswers() {
     );
 
 
-  if (!container) {
+  if (
+    !container
+  ) {
+
     return;
+
   }
 
 
@@ -3435,30 +3837,36 @@ function renderAnswers() {
 
 
   const selected =
-    telegramItems.filter(item => {
+    telegramItems.filter(
+      item => {
 
-      return (
-        itemHasTag(
-          item,
-          "intrebari"
-        )
-        &&
-        searchItem(
-          item,
-          query
-        )
-      );
+        return (
+          itemHasTag(
+            item,
+            "intrebari"
+          )
+          &&
+          searchItem(
+            item,
+            query
+          )
+        );
 
-    });
+      }
+    );
 
 
-  if (!selected.length) {
+  if (
+    !selected.length
+  ) {
 
-    container.innerHTML = `
-      <div class="empty">
-        Nu există încă răspunsuri audio.
-      </div>
-    `;
+    container.innerHTML =
+      `
+        <div class="empty">
+          Nu există încă răspunsuri audio.
+        </div>
+      `;
+
 
     return;
 
@@ -3467,11 +3875,15 @@ function renderAnswers() {
 
   container.innerHTML =
     selected
-      .map(cardHTML)
+      .map(
+        cardHTML
+      )
       .join("");
 
 
-  bindCards(container);
+  bindCards(
+    container
+  );
 
 }
 
@@ -3488,7 +3900,6 @@ document
 
 /* =========================================================
    PRACTICI
-
    DOAR #practici
 ========================================================= */
 
@@ -3500,8 +3911,12 @@ function renderPractices() {
     );
 
 
-  if (!container) {
+  if (
+    !container
+  ) {
+
     return;
+
   }
 
 
@@ -3520,30 +3935,36 @@ function renderPractices() {
 
 
   const selected =
-    telegramItems.filter(item => {
+    telegramItems.filter(
+      item => {
 
-      return (
-        itemHasTag(
-          item,
-          "practici"
-        )
-        &&
-        searchItem(
-          item,
-          query
-        )
-      );
+        return (
+          itemHasTag(
+            item,
+            "practici"
+          )
+          &&
+          searchItem(
+            item,
+            query
+          )
+        );
 
-    });
+      }
+    );
 
 
-  if (!selected.length) {
+  if (
+    !selected.length
+  ) {
 
-    container.innerHTML = `
-      <div class="empty">
-        Nu există încă practici audio.
-      </div>
-    `;
+    container.innerHTML =
+      `
+        <div class="empty">
+          Nu există încă practici audio.
+        </div>
+      `;
+
 
     return;
 
@@ -3552,11 +3973,15 @@ function renderPractices() {
 
   container.innerHTML =
     selected
-      .map(cardHTML)
+      .map(
+        cardHTML
+      )
       .join("");
 
 
-  bindCards(container);
+  bindCards(
+    container
+  );
 
 }
 
@@ -3583,8 +4008,12 @@ function renderSaved() {
     );
 
 
-  if (!container) {
+  if (
+    !container
+  ) {
+
     return;
+
   }
 
 
@@ -3603,41 +4032,47 @@ function renderSaved() {
 
 
   const selected =
-    telegramItems.filter(item => {
+    telegramItems.filter(
+      item => {
 
-      return (
-        isFavorite(
-          item.id
-        )
-        &&
-        searchItem(
-          item,
-          query
-        )
-      );
+        return (
+          isFavorite(
+            item.id
+          )
+          &&
+          searchItem(
+            item,
+            query
+          )
+        );
 
-    });
+      }
+    );
 
 
-  if (!selected.length) {
+  if (
+    !selected.length
+  ) {
 
-    container.innerHTML = `
-      <div class="empty">
+    container.innerHTML =
+      `
+        <div class="empty">
 
-        <div
-          style="
-            font-size:34px;
-            margin-bottom:14px;
-          "
-        >
-          ♡
+          <div
+            style="
+              font-size:34px;
+              margin-bottom:14px;
+            "
+          >
+            ♡
+          </div>
+
+          Materialele pe care le salvezi
+          vor apărea aici.
+
         </div>
+      `;
 
-        Materialele pe care le salvezi
-        vor apărea aici.
-
-      </div>
-    `;
 
     return;
 
@@ -3646,11 +4081,15 @@ function renderSaved() {
 
   container.innerHTML =
     selected
-      .map(cardHTML)
+      .map(
+        cardHTML
+      )
       .join("");
 
 
-  bindCards(container);
+  bindCards(
+    container
+  );
 
 }
 
@@ -3689,6 +4128,7 @@ document
             WHATSAPP_URL
           );
 
+
         } else {
 
           window.open(
@@ -3697,6 +4137,7 @@ document
           );
 
         }
+
 
       } catch(error) {
 
