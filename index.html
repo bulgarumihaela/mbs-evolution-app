@@ -862,6 +862,91 @@ h3{
 }
 
 
+
+/* =========================================================
+   LIVE-URI
+========================================================= */
+function renderInfo() {
+  const list = document.getElementById("infoList");
+  if (!list) return;
+  const search = (document.getElementById("infoSearch")?.value || "").toLowerCase();
+  const items = telegramItems.filter(item => {
+    const tags = (item.hashtags || []).map(t => String(t).replace(/^#/, "").toLowerCase());
+    if (!tags.includes("informatii")) return false;
+    const haystack = `${item.title || ""} ${item.text || ""} ${tags.join(" ")}`.toLowerCase();
+    return !search || haystack.includes(search);
+  });
+  list.innerHTML = items.length
+    ? items.map(cardHTML).join("")
+    : '<div class="empty">Nu există încă materiale în această categorie.</div>';
+}
+
+function renderLive() {
+  const container = document.getElementById("liveList");
+  if (!container) return;
+
+  const query = (document.getElementById("liveSearch")?.value || "").trim().toLowerCase();
+const infoSearchEl = document.getElementById("infoSearch");
+if (infoSearchEl) infoSearchEl.addEventListener("input", renderInfo);
+  const selected = telegramItems.filter(item =>
+    itemHasTag(item, "live") && searchItem(item, query)
+  );
+
+  if (!selected.length) {
+    container.innerHTML = `<div class="empty">Nu există încă live-uri.</div>`;
+    return;
+  }
+
+  container.innerHTML = selected.map(cardHTML).join("");
+  bindCards(container);
+}
+
+document.getElementById("liveSearch")?.addEventListener("input", renderLive);
+
+
+/* =========================================================
+   NOU ÎN MBS
+========================================================= */
+function renderNew() {
+  const container = document.getElementById("newList");
+  if (!container) return;
+
+  const selected = telegramItems
+    .filter(item => CATEGORY_TAGS.some(tag => itemHasTag(item, tag)))
+    .slice(0, 6);
+
+  if (!selected.length) {
+    container.innerHTML = `<div class="empty">Materialele noi vor apărea aici.</div>`;
+    return;
+  }
+
+  container.innerHTML = selected.map(cardHTML).join("");
+  bindCards(container);
+}
+
+
+/* =========================================================
+   TELEGRAM LINKS
+========================================================= */
+document.addEventListener("click", event => {
+  const link = event.target.closest("[data-url]");
+  if (!link) return;
+
+  const url = link.dataset.url;
+  try {
+    if (tg && typeof tg.openTelegramLink === "function" && url.includes("t.me/")) {
+      tg.openTelegramLink(url);
+    } else if (tg && typeof tg.openLink === "function") {
+      tg.openLink(url);
+    } else {
+      window.open(url, "_blank");
+    }
+  } catch(error) {
+    window.location.href = url;
+  }
+});
+
+
 /* =========================================================
    WHATSAPP
 ========================================================= */
@@ -1017,6 +1102,1739 @@ h3{
 
 }
 
+
+
+/* =========================================================
+   MBS V4 — DIGITAL CLUB / LIBRARY
+========================================================= */
+:root{
+  --bg:#f6f2ec;
+  --surface:#fffdfa;
+  --surface-soft:#f0ebe4;
+  --card:#fffdfa;
+  --card-soft:#eee6eb;
+  --text:#211d20;
+  --muted:#776d72;
+  --accent:#8d687f;
+  --accent-dark:#5e4354;
+  --accent-soft:#e7dbe2;
+  --border:#e3dbd6;
+  --shadow:0 8px 28px rgba(44,34,39,.055);
+}
+html,body{background:var(--bg)}
+.app{max-width:680px;padding:calc(12px + env(safe-area-inset-top)) 18px 46px}
+
+/* HEADER */
+.home-header{
+  padding:12px 2px 18px;
+  display:grid;
+  grid-template-columns:58px 1fr;
+  grid-template-areas:"logo eyebrow" "logo title" "logo sub";
+  column-gap:14px;
+  align-items:center;
+}
+.brand-logo{grid-area:logo;width:58px;height:58px;object-fit:contain;margin:0}
+.home-header .eyebrow{grid-area:eyebrow;margin:0 0 2px;font-size:12px;color:var(--muted)}
+.home-header h1{grid-area:title;font-size:26px;line-height:1.05;letter-spacing:-.6px}
+.home-header .subtitle{grid-area:sub;margin:4px 0 0;font-size:12px}
+
+/* HERO */
+.club-hero{
+  margin:8px 0 28px;
+  min-height:170px;
+  padding:26px 24px;
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 82% 20%,rgba(255,255,255,.22),transparent 28%),
+    linear-gradient(135deg,#6b4c60,#9a758c);
+  color:#fff;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;position:relative;
+}
+.club-hero:after{
+  content:"MBS";position:absolute;right:-6px;top:-17px;
+  font-size:102px;font-weight:800;letter-spacing:-8px;color:rgba(255,255,255,.055)
+}
+.club-hero small{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.76}
+.club-hero strong{margin-top:8px;font-size:29px;line-height:1.05;max-width:280px;font-weight:650}
+.club-hero p{margin:9px 0 0;font-size:13px;line-height:1.45;max-width:320px;color:rgba(255,255,255,.8)}
+
+.section-title{margin:29px 2px 13px;font-size:19px;font-weight:700}
+
+/* JOURNEY: horizontal strips */
+.journey-home{display:grid;gap:11px}
+.journey-strip{
+  width:100%;border:0;border-radius:25px;padding:19px 18px;
+  display:grid;grid-template-columns:45px 1fr 26px;gap:13px;align-items:center;
+  text-align:left;color:#fff;background:#76576b;
+}
+.journey-strip.evolution-strip{background:#30292d}
+.journey-strip .strip-icon{
+  width:45px;height:45px;border-radius:16px;background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center
+}
+.journey-strip .line-icon{width:23px;height:23px}
+.journey-strip strong{display:block;font-size:18px}
+.journey-strip span{display:block;margin-top:3px;font-size:12px;color:rgba(255,255,255,.72)}
+.journey-strip .arrow{font-size:22px;color:rgba(255,255,255,.65)}
+
+/* LIBRARY */
+.library-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.library-card{
+  border:1px solid var(--border);background:var(--surface);color:var(--text);
+  min-height:132px;border-radius:24px;padding:16px;text-align:left;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.library-card .visual{
+  width:40px;height:40px;border-radius:14px;background:var(--accent-soft);
+  display:flex;align-items:center;justify-content:center;color:var(--accent-dark)
+}
+.library-card .line-icon{width:21px;height:21px}
+.library-card strong{font-size:17px;display:block}
+.library-card span{font-size:11px;color:var(--muted);display:block;margin-top:4px;line-height:1.35}
+
+/* NEW FEED */
+.new-section{margin-top:34px}
+.new-list{display:grid;gap:10px}
+.new-list .podcast-card{
+  margin:0;border-radius:22px;padding:15px;background:var(--surface);
+  border:1px solid var(--border);box-shadow:none
+}
+.podcast-card{
+  background:var(--surface);border:1px solid var(--border);
+  box-shadow:none;border-radius:22px
+}
+.podcast-title{font-size:17px}
+.podcast-tag{background:#f4eef1;border-color:#e4d8df}
+
+/* SECONDARY */
+.secondary-links{display:grid;gap:10px;margin-top:10px}
+.secondary-link{
+  border:1px solid var(--border);background:transparent;color:var(--text);
+  border-radius:20px;padding:16px 17px;display:flex;align-items:center;
+  justify-content:space-between;text-align:left
+}
+.secondary-link strong{font-size:15px}
+.secondary-link span{font-size:12px;color:var(--muted);display:block;margin-top:3px}
+
+/* INNER PAGES */
+.search,.filter-entry,.filter-option,.about-content,.whatsapp-card,.back{
+  box-shadow:none;border:1px solid var(--border);background:var(--surface)
+}
+.journey-list{display:grid;gap:10px;margin-top:22px}
+.journey-link{
+  width:100%;border:1px solid var(--border);border-radius:22px;padding:17px;
+  background:var(--surface);color:var(--text);box-shadow:none;
+  display:flex;align-items:center;justify-content:space-between;text-align:left
+}
+.journey-link strong{display:block;font-size:17px}
+.journey-link span{display:block;margin-top:4px;color:var(--muted);font-size:12px}
+.journey-link.group{background:#6d5062;color:#fff;border:0}
+.journey-link.group span{color:rgba(255,255,255,.76)}
+
+/* NAV */
+.nav{
+  background:rgba(24,21,23,.97);grid-template-columns:repeat(4,1fr);
+  border-radius:28px;padding:7px;box-shadow:0 14px 34px rgba(0,0,0,.2)
+}
+.nav button{padding:8px 1px}
+.nav button.active{background:#373035;color:#eadde5}
+.nav-icon{font-size:19px;margin-bottom:3px}
+
+@media(max-width:375px){
+  .club-hero{min-height:155px;padding:22px 20px}
+  .club-hero strong{font-size:26px}
+  .library-card{min-height:124px;padding:14px}
+}
+
+
+/* =========================================================
+   MBS V5 — STRATEGIC OPTIMIZATION
+========================================================= */
+.app{max-width:660px}
+.home-header{padding-bottom:12px}
+.club-hero{min-height:185px;margin-top:4px;margin-bottom:30px}
+.club-hero strong{font-size:31px;max-width:340px}
+.club-hero p{max-width:360px}
+
+.section-kicker{
+  margin:32px 2px 7px;
+  color:var(--accent-dark);
+  font-size:10px;
+  font-weight:750;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.section-title.with-kicker{margin:0 2px 14px;font-size:20px}
+
+.journey-strip{min-height:88px;padding:18px 17px}
+.journey-strip strong{font-size:19px}
+.journey-strip span{max-width:290px}
+
+.library-card{min-height:126px}
+.library-card strong{font-size:16px}
+.library-card .visual{margin-bottom:18px}
+
+.new-section{
+  margin-top:38px;
+  padding-top:4px;
+  border-top:1px solid var(--border);
+}
+.new-list .podcast-card{position:relative;padding:16px 16px 14px}
+.new-list .podcast-title{font-size:16px;line-height:1.3}
+
+.secondary-links{margin-bottom:14px}
+.secondary-link{min-height:70px;background:rgba(255,253,250,.45)}
+
+.home-cta{
+  margin-top:30px;
+  padding:22px;
+  border-radius:26px;
+  background:#2e282c;
+  color:#fff;
+}
+.home-cta small{
+  display:block;margin-bottom:8px;
+  color:rgba(255,255,255,.58);
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase
+}
+.home-cta strong{display:block;font-size:21px;line-height:1.2}
+.home-cta p{margin:7px 0 17px;color:rgba(255,255,255,.72);font-size:12px;line-height:1.5}
+.home-cta button{
+  width:100%;border:0;border-radius:16px;padding:13px 15px;
+  background:#fff;color:#292328;font-weight:700
+}
+
+@media(max-width:375px){
+  .club-hero strong{font-size:27px}
+  .journey-strip{grid-template-columns:42px 1fr 22px}
+}
+
+
+/* =========================================================
+   MBS V6 — VISUAL CLUB
+========================================================= */
+:root{
+  --bg:#f5f1eb; --surface:#fff; --text:#201b1e; --muted:#776d72;
+  --accent:#8e667e; --border:#e6ddd8;
+}
+html,body{background:var(--bg)}
+.app{max-width:680px;padding:12px 12px 105px}
+.home-header{padding:10px 5px 15px;display:flex;align-items:center;gap:12px}
+.brand-logo{width:52px;height:52px;object-fit:contain;margin:0}
+.home-header .eyebrow{display:none}
+.home-header h1{font-size:22px;letter-spacing:-.4px}
+.home-header .subtitle{font-size:11px;margin-top:3px;color:var(--muted)}
+
+.visual-hero{
+  height:155px;border-radius:27px;overflow:hidden;position:relative;margin:4px 0 13px;
+  background:
+    radial-gradient(circle at 78% 38%,rgba(255,255,255,.23),transparent 24%),
+    radial-gradient(circle at 68% 45%,rgba(92,60,82,.34),transparent 24%),
+    linear-gradient(120deg,#a7cbd7,#d4e8eb);
+}
+.visual-hero:before,.visual-hero:after{
+  content:"";position:absolute;width:70px;height:112px;border-radius:50% 50% 42% 42%;
+  background:linear-gradient(#695060,#b790a8);filter:blur(7px);opacity:.62;top:27px
+}
+.visual-hero:before{right:72px;transform:rotate(-7deg)}
+.visual-hero:after{right:27px;transform:rotate(7deg)}
+.hero-copy{position:absolute;left:22px;bottom:22px;z-index:3;color:white}
+.hero-copy small{display:inline-block;border:1px solid rgba(255,255,255,.65);border-radius:20px;padding:5px 11px;font-size:10px;letter-spacing:.08em}
+.hero-copy strong{display:block;margin-top:9px;font-size:20px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.12)}
+
+.visual-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.visual-card{
+  height:205px;border:0;border-radius:27px;overflow:hidden;position:relative;padding:0;
+  color:white;text-align:left;background:#30262a;
+}
+.visual-card:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(15,10,12,.68) 100%);z-index:1}
+.visual-card .art{position:absolute;inset:0}
+.visual-card .label{position:absolute;z-index:2;left:17px;bottom:17px;right:14px}
+.visual-card .label strong{display:block;font-size:21px;font-weight:500}
+.visual-card .label span{display:block;margin-top:5px;font-size:11px;color:rgba(255,255,255,.78)}
+.visual-card .open{position:absolute;right:14px;top:14px;z-index:2;border:1px solid rgba(255,255,255,.55);border-radius:20px;padding:4px 9px;font-size:10px}
+
+/* abstract photographic covers */
+.art-care{background:
+ radial-gradient(circle at 55% 28%,#e3b7a0 0 11%,transparent 12%),
+ radial-gradient(ellipse at 55% 76%,#805c70 0 25%,transparent 26%),
+ linear-gradient(135deg,#c8d9d4,#8fa8a3)}
+.art-evolution{background:
+ radial-gradient(circle at 57% 30%,#e4b29b 0 11%,transparent 12%),
+ radial-gradient(ellipse at 57% 78%,#c07855 0 27%,transparent 28%),
+ linear-gradient(135deg,#d99462,#9d5948)}
+.art-podcast{background:
+ radial-gradient(circle at 52% 48%,transparent 0 19%,rgba(255,255,255,.35) 20% 21%,transparent 22%),
+ repeating-linear-gradient(90deg,transparent 0 8px,rgba(255,255,255,.18) 9px 10px,transparent 11px 15px),
+ radial-gradient(circle at 50% 48%,#a76c49,#2b1712 63%)}
+.art-practice{background:
+ radial-gradient(circle at 50% 31%,#d5a47e 0 10%,transparent 11%),
+ radial-gradient(ellipse at 50% 78%,#a87554 0 24%,transparent 25%),
+ linear-gradient(145deg,#ece9df,#d8d0c1)}
+.art-live{background:
+ radial-gradient(circle at 50% 31%,#d7a18b 0 10%,transparent 11%),
+ radial-gradient(ellipse at 50% 80%,#6b4c5e 0 26%,transparent 27%),
+ linear-gradient(135deg,#adcbd3,#7f9da9)}
+.art-questions{background:
+ radial-gradient(circle at 55% 32%,#e0b19a 0 10%,transparent 11%),
+ radial-gradient(ellipse at 55% 79%,#8f6c75 0 25%,transparent 26%),
+ linear-gradient(135deg,#e1ddd4,#b7aaa3)}
+.art-about{background:
+ linear-gradient(90deg,transparent 49%,rgba(255,255,255,.26) 50%,transparent 51%),
+ linear-gradient(0deg,transparent 49%,rgba(255,255,255,.18) 50%,transparent 51%),
+ linear-gradient(135deg,#d88554,#b65d3f)}
+.art-sessions{background:
+ radial-gradient(circle at 55% 30%,#deb19c 0 10%,transparent 11%),
+ radial-gradient(ellipse at 55% 80%,#4d3945 0 25%,transparent 26%),
+ linear-gradient(135deg,#8f6c80,#4d3945)}
+
+.new-section{margin-top:28px;border-top:0;padding-top:0}
+.section-kicker{display:none}
+.section-title.with-kicker,.section-title{font-size:20px;margin:28px 4px 12px}
+.new-list .podcast-card{background:#fff;border:0;border-radius:22px;box-shadow:none}
+.secondary-links,.home-cta{display:none}
+
+.nav{
+  left:12px;right:12px;bottom:12px;border-radius:31px;background:#050505;
+  padding:7px;grid-template-columns:repeat(4,1fr);box-shadow:0 12px 32px rgba(0,0,0,.28)
+}
+.nav button{color:white;border-radius:24px}
+.nav button.active{background:#292729;color:#e8b09a}
+@media(max-width:380px){.visual-card{height:190px}.visual-card .label strong{font-size:19px}}
+
+
+/* =========================================================
+   MBS OFFICIAL PALETTE — VISUAL CLUB
+   70% cream/white · 20% MBS mauve · 10% dark accents
+========================================================= */
+:root{
+  --mbs-mauve:#8D687F;
+  --mbs-mauve-dark:#5E4354;
+  --mbs-mauve-soft:#C9B3C1;
+  --mbs-lavender:#E7DBE2;
+  --mbs-cream:#F6F2EC;
+  --mbs-white-cream:#FFFDF9;
+  --mbs-beige:#E8DED4;
+  --mbs-ink:#211D20;
+  --mbs-muted:#776D72;
+}
+html,body{background:var(--mbs-cream);color:var(--mbs-ink)}
+.app{background:var(--mbs-cream)}
+.home-header h1{color:var(--mbs-ink)}
+.home-header .subtitle{color:var(--mbs-muted)}
+
+.visual-hero{
+  background:
+    radial-gradient(circle at 78% 38%,rgba(255,255,255,.23),transparent 24%),
+    radial-gradient(circle at 68% 45%,rgba(94,67,84,.32),transparent 24%),
+    linear-gradient(120deg,var(--mbs-mauve-soft),var(--mbs-lavender));
+}
+.visual-hero:before,.visual-hero:after{
+  background:linear-gradient(var(--mbs-mauve-dark),var(--mbs-mauve-soft));
+}
+
+/* Every visual stays inside the MBS family */
+.art-care{
+  background:
+    radial-gradient(circle at 55% 28%,#E8DED4 0 11%,transparent 12%),
+    radial-gradient(ellipse at 55% 76%,#8D687F 0 25%,transparent 26%),
+    linear-gradient(135deg,#E7DBE2,#C9B3C1)
+}
+.art-evolution{
+  background:
+    radial-gradient(circle at 57% 30%,#E8DED4 0 11%,transparent 12%),
+    radial-gradient(ellipse at 57% 78%,#5E4354 0 27%,transparent 28%),
+    linear-gradient(135deg,#C9B3C1,#8D687F)
+}
+.art-podcast{
+  background:
+    radial-gradient(circle at 52% 48%,transparent 0 19%,rgba(255,255,255,.42) 20% 21%,transparent 22%),
+    repeating-linear-gradient(90deg,transparent 0 8px,rgba(255,255,255,.16) 9px 10px,transparent 11px 15px),
+    radial-gradient(circle at 50% 48%,#8D687F,#211D20 68%)
+}
+.art-practice{
+  background:
+    radial-gradient(circle at 50% 31%,#E8DED4 0 10%,transparent 11%),
+    radial-gradient(ellipse at 50% 78%,#C9B3C1 0 24%,transparent 25%),
+    linear-gradient(145deg,#FFFDF9,#E8DED4)
+}
+.art-live{
+  background:
+    radial-gradient(circle at 50% 31%,#E8DED4 0 10%,transparent 11%),
+    radial-gradient(ellipse at 50% 80%,#5E4354 0 26%,transparent 27%),
+    linear-gradient(135deg,#C9B3C1,#8D687F)
+}
+.art-questions{
+  background:
+    radial-gradient(circle at 55% 32%,#E8DED4 0 10%,transparent 11%),
+    radial-gradient(ellipse at 55% 79%,#8D687F 0 25%,transparent 26%),
+    linear-gradient(135deg,#FFFDF9,#C9B3C1)
+}
+.art-about{
+  background:
+    linear-gradient(90deg,transparent 49%,rgba(255,255,255,.26) 50%,transparent 51%),
+    linear-gradient(0deg,transparent 49%,rgba(255,255,255,.18) 50%,transparent 51%),
+    linear-gradient(135deg,#8D687F,#5E4354)
+}
+.art-sessions{
+  background:
+    radial-gradient(circle at 55% 30%,#E8DED4 0 10%,transparent 11%),
+    radial-gradient(ellipse at 55% 80%,#5E4354 0 25%,transparent 26%),
+    linear-gradient(135deg,#8D687F,#211D20)
+}
+.new-list .podcast-card,.podcast-card,.search,.filter-entry,.filter-option,.about-content,.whatsapp-card,.back,.journey-link{
+  background:var(--mbs-white-cream);
+  border-color:var(--mbs-beige);
+}
+.podcast-tag{background:var(--mbs-lavender);border-color:var(--mbs-mauve-soft);color:var(--mbs-mauve-dark)}
+.nav{background:var(--mbs-ink)}
+.nav button.active{background:var(--mbs-mauve-dark);color:#fff}
+
+
+/* =========================================================
+   MBS V7 — MINIMAL
+========================================================= */
+.app{max-width:620px;padding:16px 16px 104px}
+.home-header{padding:4px 2px 18px}
+.brand-logo{width:44px;height:44px}
+.home-header h1{font-size:20px}
+.home-header .subtitle{font-size:10px;letter-spacing:.05em}
+
+/* Clean hero */
+.visual-hero{
+  height:118px;
+  margin:0 0 12px;
+  border-radius:22px;
+  background:var(--mbs-mauve-dark);
+}
+.visual-hero:before,.visual-hero:after{display:none}
+.hero-copy{left:20px;bottom:19px}
+.hero-copy small{border:0;padding:0;font-size:9px;opacity:.65}
+.hero-copy strong{font-size:20px;margin-top:7px;text-shadow:none}
+
+/* Less visual noise: simple tonal cards */
+.visual-grid{gap:9px}
+.visual-card{
+  height:150px;
+  border-radius:22px;
+  background:var(--mbs-white-cream);
+  color:var(--mbs-ink);
+  border:1px solid var(--mbs-beige);
+}
+.visual-card:before{display:none}
+.visual-card .art{
+  inset:0;
+  opacity:1;
+}
+.visual-card .open{display:none}
+.visual-card .label{
+  left:15px;right:15px;bottom:14px;
+  padding-top:30px;
+  background:linear-gradient(180deg,transparent,rgba(255,253,249,.92) 42%);
+}
+.visual-card .label strong{font-size:17px;font-weight:600;color:var(--mbs-ink)}
+.visual-card .label span{font-size:10px;color:var(--mbs-muted);margin-top:3px}
+
+/* Minimal abstract covers */
+.art-care{background:linear-gradient(145deg,var(--mbs-lavender),var(--mbs-mauve-soft))}
+.art-evolution{background:linear-gradient(145deg,var(--mbs-mauve-soft),var(--mbs-mauve))}
+.art-live{background:linear-gradient(145deg,var(--mbs-beige),var(--mbs-lavender))}
+.art-podcast{background:linear-gradient(145deg,var(--mbs-mauve-dark),var(--mbs-mauve))}
+.art-practice{background:linear-gradient(145deg,var(--mbs-white-cream),var(--mbs-beige))}
+.art-questions{background:linear-gradient(145deg,var(--mbs-lavender),var(--mbs-beige))}
+.art-about{background:linear-gradient(145deg,var(--mbs-mauve),var(--mbs-mauve-dark))}
+.art-sessions{background:linear-gradient(145deg,var(--mbs-beige),var(--mbs-mauve-soft))}
+
+/* Dark cards need light labels */
+.visual-card:nth-child(4) .label,
+.visual-card:nth-child(6) .label{
+  background:linear-gradient(180deg,transparent,rgba(33,29,32,.9) 42%);
+}
+.visual-card:nth-child(4) .label strong,
+.visual-card:nth-child(6) .label strong{color:#fff}
+.visual-card:nth-child(4) .label span,
+.visual-card:nth-child(6) .label span{color:rgba(255,255,255,.7)}
+
+.section-title{font-size:17px;margin:25px 2px 10px}
+.new-list{gap:8px}
+.new-list .podcast-card{
+  border-radius:18px;
+  padding:14px;
+  border:1px solid var(--mbs-beige);
+}
+.nav{
+  left:16px;right:16px;bottom:14px;
+  border-radius:25px;
+  padding:5px;
+  box-shadow:0 8px 24px rgba(33,29,32,.18);
+}
+.nav button{font-size:10px}
+.nav-icon{font-size:17px}
+
+@media(max-width:380px){
+  .visual-card{height:140px}
+  .visual-card .label strong{font-size:16px}
+}
+
+
+/* =========================================================
+   MBS V8 — QUIET LUXURY
+========================================================= */
+html,body{background:#FFFDF9;color:#211D20}
+.app{max-width:620px;padding:18px 18px 108px;background:#FFFDF9}
+
+.home-header{
+  padding:2px 0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand-logo{width:42px;height:42px;margin:0;object-fit:contain}
+.home-header h1,.home-header .subtitle,.home-header .eyebrow{display:none}
+.mbs-wordmark{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#776D72;
+}
+
+/* Remove decorative hero entirely */
+.visual-hero{display:none}
+
+/* Main journeys */
+.quiet-intro{padding:10px 2px 24px}
+.quiet-intro small{
+  display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:#8D687F;margin-bottom:9px
+}
+.quiet-intro h1{
+  margin:0;max-width:410px;font-size:31px;line-height:1.08;
+  letter-spacing:-1.1px;font-weight:500
+}
+.quiet-intro p{
+  margin:10px 0 0;max-width:410px;color:#776D72;font-size:13px;line-height:1.5
+}
+
+.quiet-journeys{display:grid;gap:10px}
+.quiet-journey{
+  min-height:126px;width:100%;border-radius:24px;padding:20px;
+  border:1px solid #E8DED4;background:#FFF;text-align:left;color:#211D20;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.quiet-journey.evolution{background:#F2EAEF;border-color:#E7DBE2}
+.quiet-journey .topline{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8D687F
+}
+.quiet-journey .arrow{font-size:22px;letter-spacing:0}
+.quiet-journey strong{display:block;font-size:24px;font-weight:520;letter-spacing:-.5px}
+.quiet-journey span{display:block;margin-top:5px;font-size:12px;color:#776D72}
+
+/* Resource list: typography first */
+.quiet-section{margin-top:34px}
+.quiet-section-head{
+  margin-bottom:10px;font-size:10px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:#776D72
+}
+.quiet-resources{
+  border-top:1px solid #E8DED4;
+}
+.quiet-resource{
+  width:100%;min-height:67px;padding:0 2px;border:0;border-bottom:1px solid #E8DED4;
+  background:transparent;color:#211D20;text-align:left;
+  display:grid;grid-template-columns:34px 1fr 24px;gap:9px;align-items:center
+}
+.quiet-resource .qicon{
+  width:30px;height:30px;display:flex;align-items:center;justify-content:flex-start;
+  color:#8D687F
+}
+.quiet-resource .line-icon{width:19px;height:19px}
+.quiet-resource strong{font-size:16px;font-weight:540}
+.quiet-resource span{display:block;margin-top:2px;color:#776D72;font-size:10px}
+.quiet-resource .qarrow{font-size:20px;color:#C9B3C1}
+
+/* Hide old card grid */
+.visual-grid{display:none}
+
+/* New content becomes visually important */
+.new-section{
+  margin-top:36px;padding:0;border:0
+}
+.section-title{
+  margin:0 0 12px;font-size:21px;font-weight:540;letter-spacing:-.4px
+}
+.new-list{display:grid;gap:8px}
+.new-list .podcast-card{
+  border:1px solid #E8DED4;background:#FFF;border-radius:20px;
+  padding:15px;box-shadow:none
+}
+.new-list .podcast-title{font-size:15px;line-height:1.35}
+.podcast-tag{
+  background:#F2EAEF;border-color:#E7DBE2;color:#5E4354
+}
+
+/* Secondary links */
+.quiet-secondary{margin-top:32px;display:grid;gap:8px}
+.quiet-secondary button{
+  width:100%;border:1px solid #E8DED4;background:#FFFDF9;color:#211D20;
+  border-radius:18px;padding:15px 16px;text-align:left;
+  display:flex;justify-content:space-between;align-items:center
+}
+.quiet-secondary strong{font-size:14px;font-weight:560}
+.quiet-secondary span{font-size:19px;color:#C9B3C1}
+
+/* Inner pages */
+.search,.filter-entry,.filter-option,.about-content,.whatsapp-card,.back,.journey-link,.podcast-card{
+  box-shadow:none;border-color:#E8DED4
+}
+
+/* Bottom navigation */
+.nav{
+  left:18px;right:18px;bottom:14px;background:#211D20;
+  border-radius:25px;padding:5px;box-shadow:0 10px 28px rgba(33,29,32,.14)
+}
+.nav button{color:#BEB5BA}
+.nav button.active{background:transparent;color:#FFF}
+.nav-icon{font-size:17px}
+
+@media(max-width:380px){
+  .quiet-intro h1{font-size:28px}
+  .quiet-journey{min-height:118px}
+}
+
+
+/* =========================================================
+   MBS V9 — WARM PREMIUM
+   richer than Quiet Luxury, still clean
+========================================================= */
+html,body{background:#EDE5E8;color:#211D20}
+.app{
+  max-width:620px;
+  background:linear-gradient(180deg,#E9DDE4 0,#F2EBE7 310px,#F6F1EC 100%);
+}
+
+/* richer top area */
+.home-header{
+  margin:-18px -18px 0;
+  padding:24px 20px 14px;
+  background:#E9DDE4;
+}
+.brand-logo{width:48px;height:48px}
+.mbs-wordmark{color:#5E4354;font-weight:650}
+
+.quiet-intro{
+  margin:0 -18px 16px;
+  padding:12px 20px 27px;
+  background:#E9DDE4;
+}
+.quiet-intro small{color:#8D687F}
+.quiet-intro h1{
+  font-size:33px;
+  color:#211D20;
+}
+.quiet-intro p{color:#6E6068}
+
+/* stronger journey identity */
+.quiet-journeys{gap:11px}
+.quiet-journey{
+  min-height:142px;
+  border:0;
+  background:#8D687F;
+  color:#fff;
+  box-shadow:0 10px 26px rgba(94,67,84,.12);
+}
+.quiet-journey.evolution{
+  background:#5E4354;
+  border:0;
+}
+.quiet-journey .topline{color:rgba(255,255,255,.68)}
+.quiet-journey strong{font-size:25px;color:#fff}
+.quiet-journey span{color:rgba(255,255,255,.72)}
+.quiet-journey .arrow{color:#fff}
+
+/* library gets a contained tinted panel */
+.quiet-section{
+  margin:28px -6px 0;
+  padding:20px 16px 9px;
+  border-radius:26px;
+  background:#FFF9F5;
+  border:1px solid rgba(141,104,127,.10);
+}
+.quiet-section-head{
+  color:#8D687F;
+  margin-bottom:9px;
+}
+.quiet-resources{border-top-color:#E8DED4}
+.quiet-resource{border-bottom-color:#E8DED4}
+.quiet-resource .qicon{
+  width:34px;height:34px;
+  justify-content:center;
+  border-radius:12px;
+  background:#E7DBE2;
+  color:#5E4354;
+}
+.quiet-resource strong{font-size:16px}
+.quiet-resource .qarrow{color:#8D687F}
+
+/* latest content sits on warm mauve block */
+.new-section{
+  margin:28px -6px 0;
+  padding:20px 16px 16px;
+  border-radius:26px;
+  background:#D9C7D1;
+}
+.new-section .section-title{
+  color:#3F3039;
+  margin-bottom:13px;
+}
+.new-list .podcast-card{
+  background:#FFFDF9;
+  border:0;
+  border-radius:18px;
+}
+
+/* secondary */
+.quiet-secondary{gap:9px;margin-top:22px}
+.quiet-secondary button{
+  background:#F0E6EA;
+  border-color:#E0D2D9;
+}
+.quiet-secondary strong{color:#4B3944}
+
+/* inner page / navigation consistency */
+.nav{
+  background:#211D20;
+  box-shadow:0 12px 30px rgba(33,29,32,.22);
+}
+.nav button.active{
+  background:#5E4354;
+  color:#fff;
+}
+
+
+/* =========================================================
+   MBS BRAND PALETTE — PRIMARY #B49AAE
+========================================================= */
+:root{
+  --mbs-primary:#B49AAE;
+  --mbs-dark:#5E4A59;
+  --mbs-light:#E9DFE6;
+  --mbs-cream:#F6F2EC;
+  --mbs-surface:#FFFDF9;
+  --mbs-ink:#211D20;
+  --mbs-muted:#776D72;
+  --mbs-border:#E5DCE1;
+}
+
+html,body{background:var(--mbs-cream);color:var(--mbs-ink)}
+.app{
+  background:linear-gradient(
+    180deg,
+    var(--mbs-light) 0,
+    #F1E9ED 310px,
+    var(--mbs-cream) 100%
+  );
+}
+
+/* Header / intro */
+.home-header{background:var(--mbs-light)}
+.mbs-wordmark{color:var(--mbs-dark)}
+.quiet-intro{background:var(--mbs-light)}
+.quiet-intro small{color:var(--mbs-primary)}
+.quiet-intro p{color:var(--mbs-muted)}
+
+/* Main MBS paths */
+.quiet-journey{
+  background:var(--mbs-primary);
+  box-shadow:0 10px 26px rgba(94,74,89,.12);
+}
+.quiet-journey.evolution{background:var(--mbs-dark)}
+.quiet-journey .topline{color:rgba(255,255,255,.72)}
+.quiet-journey strong{color:#fff}
+.quiet-journey span{color:rgba(255,255,255,.78)}
+
+/* Library */
+.quiet-section{
+  background:var(--mbs-surface);
+  border-color:var(--mbs-border);
+}
+.quiet-section-head{color:var(--mbs-dark)}
+.quiet-resources,
+.quiet-resource{border-color:var(--mbs-border)}
+.quiet-resource .qicon{
+  background:var(--mbs-light);
+  color:var(--mbs-dark);
+}
+.quiet-resource .qarrow{color:var(--mbs-primary)}
+
+/* New in MBS */
+.new-section{background:var(--mbs-primary)}
+.new-section .section-title{color:#fff}
+.new-list .podcast-card{
+  background:var(--mbs-surface);
+  border-color:transparent;
+}
+.podcast-tag{
+  background:var(--mbs-light);
+  border-color:#D9CBD4;
+  color:var(--mbs-dark);
+}
+
+/* Secondary links */
+.quiet-secondary button{
+  background:var(--mbs-light);
+  border-color:#DCCFD7;
+}
+.quiet-secondary strong{color:var(--mbs-dark)}
+.quiet-secondary span{color:var(--mbs-primary)}
+
+/* General UI */
+.search,.filter-entry,.filter-option,.about-content,.whatsapp-card,.back,.journey-link,.podcast-card{
+  border-color:var(--mbs-border);
+}
+.nav{background:var(--mbs-ink)}
+.nav button.active{background:var(--mbs-dark);color:#fff}
+
+
+/* =========================================================
+   MBS TYPOGRAPHY — MONTSERRAT + VISUAL HIERARCHY
+========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+html,body,button,input,textarea,select{
+  font-family:'Montserrat',Arial,sans-serif !important;
+}
+
+/* Cleaner text hierarchy */
+.quiet-intro small,
+.mbs-wordmark,
+.quiet-section-head,
+.quiet-journey .topline{
+  font-weight:600;
+  letter-spacing:.11em;
+}
+
+.quiet-intro h1{
+  max-width:440px;
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:30px;
+  line-height:1.16;
+  letter-spacing:-.7px;
+  font-weight:600;
+}
+
+.quiet-intro p{
+  max-width:430px;
+  margin-top:11px;
+  font-size:12px;
+  line-height:1.65;
+  font-weight:400;
+}
+
+.quiet-journey{
+  padding:20px 21px;
+}
+.quiet-journey strong{
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:21px;
+  line-height:1.2;
+  font-weight:600;
+  letter-spacing:-.25px;
+}
+.quiet-journey span{
+  font-size:11px;
+  line-height:1.5;
+}
+.quiet-journey .topline{
+  font-size:9px;
+}
+
+/* Library: stronger scan hierarchy */
+.quiet-section-head{
+  font-size:10px;
+  margin-bottom:12px;
+}
+.quiet-resource{
+  min-height:72px;
+  grid-template-columns:38px 1fr 22px;
+  gap:12px;
+}
+.quiet-resource strong{
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:14px;
+  line-height:1.3;
+  font-weight:600;
+}
+.quiet-resource span{
+  margin-top:4px;
+  font-size:10px;
+  line-height:1.45;
+}
+
+/* Latest materials */
+.new-section .section-title{
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:18px;
+  font-weight:600;
+  letter-spacing:-.2px;
+}
+.podcast-title{
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:14px !important;
+  line-height:1.45;
+  font-weight:600 !important;
+}
+.podcast-description,
+.podcast-meta,
+.podcast-date{
+  font-size:10px;
+  line-height:1.55;
+}
+.podcast-tag{
+  font-size:9px;
+  font-weight:500;
+}
+
+/* Secondary */
+.quiet-secondary strong{
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* Inner pages */
+.page > h1{
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-weight:600;
+  letter-spacing:-.6px;
+}
+.page > .subtitle{
+  line-height:1.6;
+}
+.about-content h2,
+.about-content h3{
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-weight:600;
+}
+.about-content p,
+.about-content li{
+  line-height:1.7;
+}
+
+/* Bottom navigation */
+.nav button{
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:.01em;
+}
+
+
+/* =========================================================
+   MBS FINAL — MINIMAL LINE LANGUAGE
+========================================================= */
+:root{
+  --mbs-primary:#B49AAE;
+  --mbs-dark:#5E4A59;
+  --mbs-light:#E9DFE6;
+  --mbs-cream:#F6F2EC;
+  --mbs-surface:#FFFDF9;
+  --mbs-ink:#211D20;
+  --mbs-muted:#776D72;
+  --mbs-border:#E5DCE1;
+}
+
+/* Fine decorative line — quiet, recognisable, not illustrative */
+.mbs-line{
+  height:42px;
+  margin:5px 0 19px;
+  position:relative;
+  overflow:hidden;
+  opacity:.72;
+}
+.mbs-line svg{width:100%;height:100%;display:block}
+.mbs-line path{
+  fill:none;
+  stroke:var(--mbs-primary);
+  stroke-width:1.15;
+  stroke-linecap:round;
+}
+
+/* Cleaner spacing rhythm */
+.quiet-intro{padding-bottom:18px}
+.quiet-journeys{margin-top:0}
+.quiet-section{margin-top:25px}
+.new-section{margin-top:25px}
+.quiet-secondary{margin-top:18px}
+
+/* Refined cards */
+.quiet-journey{
+  position:relative;
+  overflow:hidden;
+}
+.quiet-journey:after{
+  content:"";
+  position:absolute;
+  width:110px;height:110px;
+  right:-52px;top:-52px;
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:50%;
+}
+.quiet-journey:before{
+  content:"";
+  position:absolute;
+  width:78px;height:78px;
+  right:-39px;top:-39px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:50%;
+}
+.quiet-resource{transition:background .18s ease}
+.quiet-resource:active{background:#F7F1F4}
+
+/* Consistent content-type chips */
+.content-type-chip{
+  display:inline-flex;
+  align-items:center;
+  min-height:20px;
+  padding:3px 8px;
+  margin-bottom:7px;
+  border-radius:999px;
+  background:var(--mbs-light);
+  color:var(--mbs-dark);
+  font-size:8px;
+  line-height:1;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* Reading page for text information */
+.info-reader{
+  display:none;
+  margin-top:14px;
+  padding:20px;
+  border:1px solid var(--mbs-border);
+  border-radius:22px;
+  background:var(--mbs-surface);
+}
+.info-reader.active{display:block}
+.info-reader h2{
+  margin:0 0 12px;
+  font-size:19px;
+  line-height:1.35;
+  font-weight:600;
+}
+.info-reader-body{
+  white-space:pre-wrap;
+  font-size:12px;
+  line-height:1.75;
+  color:var(--mbs-ink);
+}
+.info-reader-meta{
+  margin-bottom:12px;
+  font-size:9px;
+  color:var(--mbs-muted);
+}
+
+/* Same filter language across libraries */
+.theme-filter-row{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:3px 0 11px;
+  scrollbar-width:none;
+}
+.theme-filter-row::-webkit-scrollbar{display:none}
+.theme-filter-chip{
+  flex:0 0 auto;
+  border:1px solid var(--mbs-border);
+  background:var(--mbs-surface);
+  color:var(--mbs-muted);
+  border-radius:999px;
+  padding:7px 11px;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:9px;
+  font-weight:500;
+}
+.theme-filter-chip.active{
+  background:var(--mbs-dark);
+  border-color:var(--mbs-dark);
+  color:#fff;
+}
+
+
+/* =========================================================
+   MBS FINAL — SESSIONS 1:1 FEATURE
+========================================================= */
+.sessions-feature{
+  position:relative;
+  overflow:hidden;
+  margin-top:24px;
+  padding:22px 20px 20px;
+  border-radius:24px;
+  border:1px solid rgba(180,154,174,.38);
+  background:linear-gradient(135deg,#5E4A59 0%,#735E6D 100%);
+  color:#fff;
+  box-shadow:0 10px 26px rgba(94,74,89,.12);
+}
+.sessions-feature:before,
+.sessions-feature:after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:50%;
+  pointer-events:none;
+}
+.sessions-feature:before{
+  width:150px;height:150px;right:-78px;top:-82px;
+}
+.sessions-feature:after{
+  width:104px;height:104px;right:-55px;top:-58px;
+}
+.sessions-feature .sessions-kicker{
+  position:relative;z-index:1;
+  display:block;
+  margin-bottom:10px;
+  font-size:9px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:#E9DFE6;
+}
+.sessions-feature h3{
+  position:relative;z-index:1;
+  margin:0;
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:20px;
+  line-height:1.25;
+  font-weight:600;
+  letter-spacing:-.3px;
+}
+.sessions-feature p{
+  position:relative;z-index:1;
+  max-width:390px;
+  margin:8px 0 17px;
+  font-size:11px;
+  line-height:1.6;
+  color:rgba(255,255,255,.74);
+}
+.sessions-feature button{
+  position:relative;z-index:1;
+  width:100%;
+  min-height:43px;
+  border:1px solid rgba(255,255,255,.26);
+  border-radius:15px;
+  background:#B49AAE;
+  color:#211D20;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.sessions-feature button:active{
+  transform:scale(.99);
+}
+
+
+/* =========================================================
+   MBS — SESSIONS 1:1 PRESENTATION
+========================================================= */
+#sessions{
+  padding-bottom:105px;
+}
+.sessions-page-head{
+  margin-top:22px;
+}
+.sessions-page-kicker,
+.sessions-label{
+  display:block;
+  margin-bottom:9px;
+  color:#B49AAE;
+  font-size:9px;
+  line-height:1;
+  font-weight:700;
+  letter-spacing:.13em;
+}
+.sessions-page-head h1{
+  margin:0;
+  color:#211D20;
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:31px;
+  line-height:1.12;
+  font-weight:600;
+  letter-spacing:-.7px;
+}
+.sessions-page-head p{
+  max-width:430px;
+  margin:11px 0 0;
+  color:#776D72;
+  font-size:12px;
+  line-height:1.65;
+}
+.sessions-editorial-line{
+  height:36px;
+  margin:17px 0 22px;
+  opacity:.72;
+}
+.sessions-editorial-line svg{width:100%;height:100%;display:block}
+.sessions-editorial-line path{
+  fill:none;
+  stroke:#B49AAE;
+  stroke-width:1.15;
+  stroke-linecap:round;
+}
+.sessions-about,
+.sessions-formats{
+  padding:21px;
+  border:1px solid #E5DCE1;
+  border-radius:24px;
+  background:#FFFDF9;
+}
+.sessions-about h2,
+.sessions-cta h2{
+  margin:0 0 10px;
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:19px;
+  line-height:1.35;
+  font-weight:600;
+  letter-spacing:-.25px;
+}
+.sessions-about p{
+  margin:8px 0 0;
+  color:#665D62;
+  font-size:11px;
+  line-height:1.72;
+}
+.sessions-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px;
+  margin:10px 0 24px;
+}
+.sessions-info-card{
+  display:grid;
+  grid-template-columns:31px 1fr;
+  column-gap:12px;
+  padding:16px 17px;
+  border:1px solid #E5DCE1;
+  border-radius:19px;
+  background:#F6F2EC;
+}
+.sessions-info-card > span{
+  grid-row:1 / 3;
+  color:#B49AAE;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.08em;
+}
+.sessions-info-card strong{
+  color:#5E4A59;
+  font-size:12px;
+  font-weight:600;
+}
+.sessions-info-card p{
+  margin:4px 0 0;
+  color:#776D72;
+  font-size:10px;
+  line-height:1.55;
+}
+.sessions-formats{
+  margin-top:0;
+}
+.sessions-format-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:13px 0;
+  border-top:1px solid #E5DCE1;
+}
+.sessions-format-row:nth-of-type(2){border-top:0}
+.sessions-format-row strong{
+  color:#211D20;
+  font-size:11px;
+  font-weight:600;
+}
+.sessions-format-row p{
+  margin:3px 0 0;
+  color:#5E4A59;
+  font-size:11px;
+  font-weight:600;
+}
+.sessions-cta{
+  position:relative;
+  overflow:hidden;
+  margin-top:12px;
+  padding:22px 21px;
+  border-radius:24px;
+  background:#5E4A59;
+  color:#fff;
+}
+.sessions-cta:after{
+  content:"";
+  position:absolute;
+  width:140px;height:140px;
+  right:-76px;top:-80px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:50%;
+}
+.sessions-cta .sessions-label{color:#E9DFE6}
+.sessions-cta h2{position:relative;z-index:1;color:#fff}
+.sessions-cta p{
+  position:relative;z-index:1;
+  max-width:390px;
+  margin:0 0 16px;
+  color:rgba(255,255,255,.72);
+  font-size:10px;
+  line-height:1.6;
+}
+.sessions-cta a{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  border-radius:15px;
+  background:#B49AAE;
+  color:#211D20;
+  text-decoration:none;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:11px;
+  font-weight:700;
+}
+
+
+/* MBS FINAL — slightly larger typography */
+body{font-size:16px}
+
+.quiet-intro h1{font-size:32px}
+.quiet-intro p{font-size:13px}
+.quiet-journey strong{font-size:22px}
+.quiet-journey span{font-size:12px}
+
+.quiet-resource strong{font-size:15px}
+.quiet-resource span{font-size:11px}
+.quiet-section-head{font-size:11px}
+
+.new-section .section-title{font-size:19px}
+.podcast-title{font-size:15px !important}
+.podcast-description,.podcast-meta,.podcast-date{font-size:11px}
+.podcast-tag{font-size:10px}
+
+.quiet-secondary strong{font-size:14px}
+.nav button{font-size:10px}
+
+.sessions-page-kicker,.sessions-label{font-size:10px}
+.sessions-page-head h1{font-size:33px}
+.sessions-page-head p{font-size:13px}
+.sessions-about h2,.sessions-cta h2{font-size:20px}
+.sessions-about p{font-size:12px}
+.sessions-info-card strong{font-size:13px}
+.sessions-info-card p{font-size:11px}
+.sessions-format-row strong{font-size:12px}
+.sessions-format-row p{font-size:12px}
+.sessions-cta p{font-size:11px}
+.sessions-cta a{font-size:12px}
+
+
+/* =========================================================
+   MBS FINAL — PAGE RHYTHM + RESPONSIVE TYPOGRAPHY
+========================================================= */
+:root{
+  --page-pad:20px;
+  --content-max:720px;
+}
+
+/* One clear reading column on every page */
+.page{
+  width:100%;
+  max-width:var(--content-max);
+  margin:0 auto;
+  padding-left:var(--page-pad);
+  padding-right:var(--page-pad);
+  box-sizing:border-box;
+}
+
+/* Page headings */
+.page > h1,
+.sessions-page-head h1{
+  font-size:clamp(27px,7vw,34px) !important;
+  line-height:1.12 !important;
+  letter-spacing:-.65px;
+}
+.page > .subtitle,
+.sessions-page-head p{
+  max-width:520px;
+  font-size:clamp(12px,3.2vw,14px) !important;
+  line-height:1.65 !important;
+}
+
+/* Home hierarchy */
+.quiet-intro h1{
+  font-size:clamp(27px,7.2vw,33px) !important;
+  line-height:1.14;
+}
+.quiet-intro p{
+  font-size:clamp(12px,3.1vw,13px) !important;
+  line-height:1.65;
+}
+.quiet-journey strong{font-size:clamp(19px,5vw,22px) !important}
+.quiet-journey span{font-size:clamp(11px,2.9vw,12px) !important}
+
+/* Library cards */
+.quiet-resource strong{
+  font-size:clamp(13px,3.6vw,15px) !important;
+  line-height:1.3;
+}
+.quiet-resource span{
+  font-size:clamp(10px,2.8vw,11px) !important;
+  line-height:1.5;
+}
+
+/* Content cards */
+.podcast-title{
+  font-size:clamp(13px,3.7vw,15px) !important;
+  line-height:1.42 !important;
+}
+.podcast-description{
+  font-size:clamp(11px,3vw,12px) !important;
+  line-height:1.65 !important;
+}
+.podcast-meta,.podcast-date{font-size:10px !important}
+
+/* Long written content = reading page */
+.about-content{
+  max-width:660px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.about-content h2{
+  margin:30px 0 11px;
+  font-size:clamp(19px,5vw,23px) !important;
+  line-height:1.28;
+}
+.about-content h3{
+  margin:23px 0 9px;
+  font-size:clamp(15px,4vw,18px) !important;
+  line-height:1.35;
+}
+.about-content p,
+.about-content li{
+  font-size:clamp(12px,3.2vw,14px) !important;
+  line-height:1.75 !important;
+}
+.about-content p{margin:0 0 14px}
+
+/* Sessions: each idea becomes a visually separate page block */
+#sessions{
+  max-width:720px;
+  margin:0 auto;
+}
+.sessions-page-head{
+  padding:8px 0 3px;
+}
+.sessions-about,
+.sessions-formats,
+.sessions-cta{
+  margin-top:18px;
+}
+.sessions-about{
+  padding:24px 21px;
+}
+.sessions-about h2,
+.sessions-cta h2{
+  font-size:clamp(18px,4.8vw,21px) !important;
+  line-height:1.35;
+}
+.sessions-about p{
+  font-size:clamp(11.5px,3.1vw,13px) !important;
+  line-height:1.72;
+}
+.sessions-grid{
+  margin-top:12px;
+  gap:10px;
+}
+.sessions-info-card{
+  padding:18px;
+}
+.sessions-info-card strong{
+  font-size:clamp(12px,3.4vw,14px) !important;
+}
+.sessions-info-card p{
+  font-size:clamp(10.5px,2.9vw,12px) !important;
+  line-height:1.6;
+}
+.sessions-formats{
+  padding:22px 21px;
+}
+.sessions-format-row{
+  min-height:55px;
+  padding:12px 0;
+}
+.sessions-format-row strong,
+.sessions-format-row p{
+  font-size:clamp(11px,3vw,13px) !important;
+}
+.sessions-cta{
+  padding:25px 21px;
+}
+.sessions-cta p{
+  max-width:480px;
+  font-size:clamp(11px,3vw,12px) !important;
+  line-height:1.65;
+}
+.sessions-cta a{
+  min-height:48px;
+  font-size:12px !important;
+}
+
+/* Information reading mode */
+.info-reader{
+  max-width:660px;
+  margin-left:auto;
+  margin-right:auto;
+  padding:clamp(20px,5vw,30px);
+}
+.info-reader h2{
+  font-size:clamp(19px,5vw,24px) !important;
+  line-height:1.3;
+}
+.info-reader-body{
+  font-size:clamp(12px,3.2vw,14px) !important;
+  line-height:1.78 !important;
+}
+
+/* Comfortable desktop/tablet spacing without making mobile oversized */
+@media (min-width:700px){
+  :root{--page-pad:30px}
+  .quiet-intro,
+  .quiet-section,
+  .new-section{padding-left:26px;padding-right:26px}
+  .sessions-grid{grid-template-columns:repeat(3,1fr)}
+  .sessions-info-card{
+    display:block;
+    min-height:145px;
+  }
+  .sessions-info-card > span{
+    display:block;
+    margin-bottom:14px;
+  }
+  .sessions-info-card p{margin-top:7px}
+}
+
+/* Small phones */
+@media (max-width:370px){
+  :root{--page-pad:16px}
+  .quiet-journey{padding:18px}
+  .sessions-about,.sessions-formats,.sessions-cta{padding:19px 17px}
+}
+
+
+/* =========================================================
+   MBS HOME — CLEAN FINAL BUILD
+========================================================= */
+#home{
+  padding-top:0 !important;
+  padding-left:18px !important;
+  padding-right:18px !important;
+}
+.final-hero{
+  position:relative;
+  height:285px;
+  margin:0 -18px 25px;
+  overflow:hidden;
+  border-radius:0 0 30px 30px;
+  background:#B49AAE;
+}
+.final-hero img{
+  width:100%;height:100%;display:block;
+  object-fit:cover;
+  object-position:center;
+}
+.final-hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(50,34,45,.50),rgba(50,34,45,.12) 55%,transparent);
+}
+.final-hero-copy{
+  position:absolute;left:23px;bottom:27px;z-index:2;color:white;
+}
+.final-hero-copy span{
+  display:block;margin-bottom:7px;font-size:9px;font-weight:600;letter-spacing:.14em;
+}
+.final-hero-copy h1{
+  margin:0;font-size:38px;line-height:1;font-weight:500;letter-spacing:-1.2px;
+}
+.final-hero-copy p{
+  margin:8px 0 0;font-size:11px;line-height:1.45;color:rgba(255,255,255,.88);
+}
+.final-section-head{margin:0 2px 12px}
+.final-section-head span{
+  display:block;color:#5E4A59;font-size:9px;font-weight:700;letter-spacing:.13em;
+}
+.final-section-head p{
+  margin:5px 0 0;color:#776D72;font-size:10px;line-height:1.5;
+}
+.final-journeys{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.final-journey{
+  position:relative;overflow:hidden;min-height:138px;padding:18px 15px;
+  border:0;border-radius:23px;text-align:left;color:white;
+  font-family:'Montserrat',Arial,sans-serif;
+}
+.final-journey.care{background:#B49AAE}
+.final-journey.evolution{background:#5E4A59}
+.final-journey:after{
+  content:"";position:absolute;width:100px;height:100px;right:-48px;top:-48px;
+  border:1px solid rgba(255,255,255,.17);border-radius:50%;
+}
+.final-journey span{display:block;font-size:10px;font-weight:600}
+.final-journey strong{
+  display:block;margin:14px 0 7px;font-size:15px;font-weight:600;letter-spacing:.02em;
+}
+.final-journey small{
+  display:block;max-width:120px;font-size:8.5px;line-height:1.5;opacity:.75;
+}
+.final-journey b{
+  position:absolute;right:15px;bottom:14px;font-size:16px;font-weight:400;
+}
+.library-head{margin-top:27px}
+.final-library{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.final-library button{
+  min-height:114px;padding:15px;border:1px solid #E5DCE1;border-radius:21px;
+  background:#FFFDF9;text-align:left;color:#211D20;font-family:'Montserrat',Arial,sans-serif;
+}
+.final-icon{
+  display:flex;width:27px;height:27px;align-items:center;justify-content:center;
+  margin-bottom:13px;border:1px solid #D9C9D3;border-radius:50%;
+  color:#5E4A59;font-style:normal;font-size:13px;
+}
+.final-library strong{display:block;font-size:12px;font-weight:600}
+.final-library small{
+  display:block;margin-top:5px;color:#776D72;font-size:8.5px;line-height:1.45;
+}
+.final-new{
+  margin-top:26px;padding:20px 17px;border-radius:24px;background:#E9DFE6;
+}
+.final-new > div:first-child span{
+  color:#5E4A59;font-size:8px;font-weight:700;letter-spacing:.13em;
+}
+.final-new h2{
+  margin:5px 0 15px;font-size:18px;font-weight:600;color:#211D20;
+}
+.final-session{
+  position:relative;height:225px;margin-top:24px;overflow:hidden;border-radius:25px;background:#5E4A59;
+}
+.final-session img{
+  width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+}
+.final-session-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(47,32,43,.72),rgba(47,32,43,.17) 68%,transparent);
+}
+.final-session-copy{
+  position:absolute;z-index:2;left:19px;top:24px;width:48%;color:white;
+}
+.final-session-copy > span{font-size:8px;font-weight:600;letter-spacing:.12em}
+.final-session-copy h2{margin:9px 0 8px;font-size:20px;line-height:1.2;font-weight:600}
+.final-session-copy p{
+  margin:0 0 15px;font-size:9px;line-height:1.55;color:rgba(255,255,255,.80);
+}
+.final-session-copy button{
+  border:0;border-radius:999px;background:#B49AAE;color:white;
+  padding:10px 14px;font:600 9px 'Montserrat',Arial,sans-serif;
+}
+@media(min-width:700px){
+  .final-hero{height:360px}
+  .final-library{grid-template-columns:repeat(3,1fr)}
+  .final-session{height:285px}
+}
+
+
+/* =========================================================
+   MBS — FINAL VISUAL CLUB UI
+========================================================= */
+:root{
+  --mbs:#B49AAE;--mbs-dark:#5E4A59;--mbs-pale:#E9DFE6;
+  --cream:#F6F2EC;--paper:#FFFDFC;--ink:#211D20;
+}
+body{background:#d9c6d1!important;font-family:'Montserrat',Arial,sans-serif!important}
+.app{background:#fffaf8!important}
+#home.mbs-visual-home{
+  max-width:760px!important;padding:0 12px 104px!important;
+}
+.visual-top{
+  height:62px;display:flex;align-items:center;justify-content:center;
+  background:#fffaf8;margin:0 -12px;
+}
+.visual-brand{font-size:22px;font-weight:500;letter-spacing:.08em;color:#211D20}
+.visual-hero{
+  position:relative;height:225px;overflow:hidden;border-radius:25px;margin-bottom:11px;
+  background:var(--mbs);
+}
+.visual-hero img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.visual-hero-shade{
+  position:absolute;inset:0;background:linear-gradient(90deg,rgba(45,30,41,.48),rgba(45,30,41,.05) 66%);
+}
+.visual-hero-copy{position:absolute;z-index:2;left:23px;top:30px;color:#fff}
+.visual-hero-copy span{font-size:8px;letter-spacing:.14em;font-weight:600}
+.visual-hero-copy h1{font-size:37px;line-height:1;margin:8px 0 8px;font-weight:500}
+.visual-hero-copy p{font-size:10px;line-height:1.45;margin:0;color:rgba(255,255,255,.9)}
+.visual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.visual-card{
+  position:relative;overflow:hidden;min-height:155px;border:0;border-radius:24px;
+  padding:0;text-align:left;font-family:'Montserrat',Arial,sans-serif;
+  background-size:cover;background-position:center;color:#fff;
+}
+.visual-card-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(30,20,27,.67),rgba(30,20,27,.05) 72%)}
+.visual-card-copy{position:absolute;z-index:2;left:16px;right:36px;bottom:15px}
+.visual-card-copy strong{display:block;font-size:15px;line-height:1.12;font-weight:500}
+.visual-card-copy span{display:block;margin-top:5px;font-size:8.5px;line-height:1.35;color:rgba(255,255,255,.83)}
+.visual-card b{
+  position:absolute;z-index:3;right:13px;bottom:14px;width:29px;height:29px;
+  display:flex;align-items:center;justify-content:center;border-radius:50%;
+  background:rgba(180,154,174,.88);font-size:14px;font-weight:400;
+}
+.card-care{background:linear-gradient(145deg,#8e746d,#c9aaa1)}
+.card-care:before,.card-evolution:before,.card-podcast:before,.card-practice:before,
+.card-live:before,.card-questions:before,.card-info:before,.card-about:before{
+  content:"";position:absolute;inset:0;opacity:.68;background-size:cover;
+}
+.card-care:before{background:radial-gradient(circle at 70% 22%,#ead4c7 0 4%,transparent 5%),linear-gradient(145deg,#79655f,#c9a69b)}
+.card-evolution:before{background:linear-gradient(145deg,#735a68,#b49aae 50%,#d5b7a6)}
+.card-podcast:before{background:radial-gradient(circle at 65% 45%,#b49aae 0 8%,transparent 9%),linear-gradient(135deg,#392c30,#8f6757)}
+.card-practice:before{background:linear-gradient(135deg,#d9cdc4,#a9867e 58%,#6e4e4e)}
+.card-live:before{background:linear-gradient(135deg,#6d534a,#c3a88f 50%,#55413e)}
+.card-questions:before{background:linear-gradient(145deg,#bda2ac,#dfc8c0)}
+.card-info:before{background:linear-gradient(135deg,#9d817b,#d8c4bb)}
+.card-about:before{background:linear-gradient(145deg,#745566,#b49aae 48%,#d8b8ad)}
+.visual-session{
+  position:relative;height:128px;overflow:hidden;border-radius:24px;margin-top:10px;background:var(--mbs-dark);
+}
+.visual-session img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.visual-session-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(43,29,39,.73),rgba(43,29,39,.05) 72%)}
+.visual-session-copy{position:absolute;z-index:2;left:17px;top:22px;color:#fff;width:47%}
+.visual-session-copy strong{display:block;font-size:17px;font-weight:500}
+.visual-session-copy span{display:block;margin-top:6px;font-size:8.5px;line-height:1.4;color:rgba(255,255,255,.83)}
+.visual-session button{
+  position:absolute;z-index:3;left:17px;bottom:15px;border:0;border-radius:999px;
+  padding:8px 12px;background:#B49AAE;color:#fff;font:600 8px 'Montserrat',sans-serif;
+}
+.visual-new{margin-top:20px;padding:19px 15px;border-radius:23px;background:#F2E8ED}
+.visual-new>span{font-size:8px;letter-spacing:.13em;font-weight:700;color:#5E4A59}
+.visual-new h2{margin:5px 0 13px;font-size:17px;font-weight:600;color:#211D20}
+
+/* Strong app-like bottom navigation */
+.nav{
+  left:12px!important;right:12px!important;bottom:10px!important;width:auto!important;
+  border:0!important;border-radius:28px!important;background:#090909!important;
+  padding:7px 7px 8px!important;box-shadow:0 10px 28px rgba(0,0,0,.18)!important;
+}
+.nav button{color:#fff!important;opacity:.78;font-family:'Montserrat',sans-serif!important}
+.nav button.active{background:#282628!important;border-radius:22px!important;opacity:1}
+.nav button.active span,.nav button.active div{color:#D7A7B5!important}
+@media(min-width:700px){
+  .visual-hero{height:320px}
+  .visual-grid{grid-template-columns:repeat(4,1fr)}
+  .visual-card{min-height:180px}
+  .visual-session{height:190px}
+}
+
 </style>
 </head>
 
@@ -1030,198 +2848,151 @@ h3{
      HOME
 ====================================================== -->
 
-<section id="home" class="page active">
 
-  <div class="home-header">
 
-    <div class="eyebrow">
-      Bine ai venit ♡
+<section id="home" class="page active mbs-visual-home">
+  <div class="visual-top">
+    <div class="visual-brand">MBS</div>
+  </div>
+
+  <div class="visual-hero">
+    <img src="./mbs-home-final.png" alt="MBS">
+    <div class="visual-hero-shade"></div>
+    <div class="visual-hero-copy">
+      <span>BUN VENIT ÎN</span>
+      <h1>MBS</h1>
+      <p>Mind · Body · Soul<br>Evolution</p>
     </div>
-
-    <h1>
-      MBS Evolution
-    </h1>
-
-    <p class="subtitle">
-      Mind • Body • Soul
-    </p>
-
   </div>
 
+  <div class="visual-grid">
+    <button class="visual-card card-care" data-page="care">
+      <div class="visual-card-shade"></div>
+      <div class="visual-card-copy"><strong>MBS Care</strong><span>Corp · Emoții · Minte · Suflet</span></div>
+      <b>→</b>
+    </button>
 
-  <div class="section-title">
-    Explorează
+    <button class="visual-card card-evolution" data-page="evolution">
+      <div class="visual-card-shade"></div>
+      <div class="visual-card-copy"><strong>MBS Evolution</strong><span>Clarific · Direcționez · Acționez</span></div>
+      <b>→</b>
+    </button>
+
+    <button class="visual-card card-podcast" data-page="podcasts">
+      <div class="visual-card-shade"></div>
+      <div class="visual-card-copy"><strong>Podcasturi</strong><span>Audio · teme · explicații</span></div>
+      <b>→</b>
+    </button>
+
+    <button class="visual-card card-practice" data-page="practices">
+      <div class="visual-card-shade"></div>
+      <div class="visual-card-copy"><strong>Practici</strong><span>Exerciții · meditații</span></div>
+      <b>→</b>
+    </button>
+
+    <button class="visual-card card-live" data-page="live">
+      <div class="visual-card-shade"></div>
+      <div class="visual-card-copy"><strong>Live-uri</strong><span>Întâlniri · înregistrări</span></div>
+      <b>→</b>
+    </button>
+
+    <button class="visual-card card-questions" data-page="answers">
+      <div class="visual-card-shade"></div>
+      <div class="visual-card-copy"><strong>Întrebări</strong><span>Răspunsuri pentru comunitate</span></div>
+      <b>→</b>
+    </button>
+
+    <button class="visual-card card-info" data-page="info">
+      <div class="visual-card-shade"></div>
+      <div class="visual-card-copy"><strong>Informații</strong><span>Mesaje · texte · explicații</span></div>
+      <b>→</b>
+    </button>
+
+    <button class="visual-card card-about" data-page="about">
+      <div class="visual-card-shade"></div>
+      <div class="visual-card-copy"><strong>Despre MBS®</strong><span>Filosofie · perspectivă</span></div>
+      <b>→</b>
+    </button>
   </div>
 
-
-  <div class="home-grid">
-
-
-    <!-- DESPRE MBS -->
-
-    <button
-      class="home-card about-card"
-      data-page="about"
-    >
-
-      <div class="home-icon about-icon">
-        M•B•S
-      </div>
-
-      <div>
-
-        <div class="card-title">
-          Despre MBS®
-        </div>
-
-        <div class="card-sub">
-          Dincolo de comportament
-        </div>
-
-      </div>
-
-    </button>
-
-
-    <!-- PODCASTURI -->
-
-    <button
-      class="home-card"
-      data-page="podcasts"
-    >
-
-      <div class="home-icon">
-        ▶
-      </div>
-
-      <div>
-
-        <div class="card-title">
-          Podcasturi
-        </div>
-
-        <div class="card-sub">
-          Audio, reflecții și materiale MBS
-        </div>
-
-      </div>
-
-    </button>
-
-
-    <!-- INTREBARI -->
-
-    <button
-      class="home-card"
-      data-page="answers"
-    >
-
-      <div class="home-icon">
-        ?
-      </div>
-
-      <div>
-
-        <div class="card-title">
-          Răspund la întrebări
-        </div>
-
-        <div class="card-sub">
-          Răspunsuri audio la întrebări
-        </div>
-
-      </div>
-
-    </button>
-
-
-    <!-- PRACTICI -->
-
-    <button
-      class="home-card"
-      data-page="practices"
-    >
-
-      <div class="home-icon">
-        ◎
-      </div>
-
-      <div>
-
-        <div class="card-title">
-          Practici
-        </div>
-
-        <div class="card-sub">
-          Exerciții și practici ghidate
-        </div>
-
-      </div>
-
-    </button>
-
-
-    <!-- SALVATE -->
-
-    <button
-      class="home-card"
-      data-page="saved"
-    >
-
-      <div class="home-icon">
-        ♡
-      </div>
-
-      <div>
-
-        <div class="card-title">
-          Salvate
-        </div>
-
-        <div class="card-sub">
-          Biblioteca ta personală
-        </div>
-
-      </div>
-
-    </button>
-
-
-    <!-- SESIUNI -->
-
-    <button
-      class="home-card full"
-      data-page="sessions"
-    >
-
-      <div class="home-icon">
-        ○
-      </div>
-
-      <div>
-
-        <div class="card-title">
-          Sesiuni individuale 1:1
-        </div>
-
-        <div class="card-sub">
-          Informații și programări
-        </div>
-
-      </div>
-
-    </button>
-
-
+  <div class="visual-session">
+    <img src="./mbs-session-final.png" alt="Sesiuni 1:1">
+    <div class="visual-session-shade"></div>
+    <div class="visual-session-copy">
+      <strong>Sesiuni 1:1</strong>
+      <span>Claritate · susținere · pași concreți</span>
+    </div>
+    <button data-page="sessions">Află mai multe →</button>
   </div>
 
+  <div class="visual-new">
+    <span>NOU ÎN MBS</span>
+    <h2>Ultimele materiale</h2>
+    <div id="newList" class="podcast-list"></div>
+  </div>
 </section>
 
 
 
+
+<!-- MBS CARE -->
+<section id="care" class="page">
+  <button class="back" data-page="home">‹ Înapoi</button>
+  <div class="eyebrow">MBS Care</div>
+  <h2>Reglez</h2>
+  <p class="subtitle">Spațiul pentru Corp · Emoții · Minte · Suflet.</p>
+  <div class="journey-list">
+    <button class="journey-link" data-url="https://t.me/+ZU9CAIUisgA2OGE0"><div><strong>Corp</strong><span>Somn · Alimentație · Hidratare · Mișcare</span></div><b>›</b></button>
+    <button class="journey-link" data-url="https://t.me/+PSvYZ20X7D04OGY0"><div><strong>Emoții</strong><span>Conștientizare și explorare emoțională</span></div><b>›</b></button>
+    <button class="journey-link" data-url="https://t.me/+lcppdchz1n8yN2Y0"><div><strong>Minte</strong><span>Înțelegerea și antrenarea minții</span></div><b>›</b></button>
+    <button class="journey-link" data-url="https://t.me/+ZKNpcKAQyBdlYTc0"><div><strong>Suflet</strong><span>Reconectare cu sine</span></div><b>›</b></button>
+    <button class="journey-link group" data-url="https://t.me/+_PerbkyzI0s0NTM0"><div><strong>Grupul MBS Care</strong><span>Spațiul comunității</span></div><b>›</b></button>
+  </div>
+</section>
+
+<!-- MBS EVOLUTION -->
+<section id="evolution" class="page">
+  <button class="back" data-page="home">‹ Înapoi</button>
+  <div class="eyebrow">MBS EVOLUTION</div>
+  <h2>Direcționez</h2>
+  <p class="subtitle">Spațiul MBS dedicat creării conștiente a vieții pe care ți-o dorești.</p>
+  <div class="about-content">
+    <h3>Clarific</h3><p>Ce îmi doresc cu adevărat?</p>
+    <h3>Direcționez</h3><p>Unde îmi îndrept atenția și energia?</p>
+    <h3>Acționez</h3><p>Cum îmi aliniez alegerile și acțiunile cu direcția aleasă?</p>
+    <div class="mbs-question">Unde se duce ATENȚIA, acolo se duce ENERGIA.</div>
+  </div>
+</section>
+
+<!-- LIVE -->
+<section id="live" class="page">
+  <button class="back" data-page="home">‹ Înapoi</button>
+  <h2>Live-uri</h2>
+  <p class="subtitle">Revezi întâlnirile MBS.</p>
+  <div class="search"><span class="search-icon">⌕</span><input id="liveSearch" type="text" placeholder="Caută..."></div>
+  <div id="liveList"></div>
+</section>
+
 <!-- ======================================================
      DESPRE MBS
 ====================================================== -->
+
+<section id="info" class="page">
+  <button class="back" data-page="home">← Înapoi</button>
+  <div class="eyebrow">MBS · BIBLIOTECĂ</div>
+  <h1>Informații</h1>
+  <p class="subtitle">Mesaje · texte · explicații · materiale scrise</p>
+  <div class="search">
+    <span>⌕</span>
+    <input id="infoSearch" type="text" placeholder="Caută în informații">
+  </div>
+  <div id="infoList" class="podcast-list"></div>
+  <div id="infoReader" class="info-reader">
+    <div id="infoReaderMeta" class="info-reader-meta"></div>
+    <h2 id="infoReaderTitle"></h2>
+    <div id="infoReaderBody" class="info-reader-body"></div>
+  </div>
+</section>
 
 <section id="about" class="page">
 
@@ -1782,50 +3553,79 @@ h3{
 ====================================================== -->
 
 <section id="sessions" class="page">
+  <button class="back" data-page="home">← Înapoi</button>
 
-  <button
-    class="back"
-    data-page="home"
-  >
-    ‹ Înapoi
-  </button>
-
-
-  <div class="eyebrow">
-    MBS Evolution
+  <div class="sessions-page-head">
+    <span class="sessions-page-kicker">LUCRU INDIVIDUAL</span>
+    <h1>Sesiuni 1:1</h1>
+    <p>Un spațiu individual în care lucrăm asupra unei situații concrete din viața ta.</p>
   </div>
 
-  <h2>
-    Sesiuni individuale 1:1
-  </h2>
-
-  <p class="subtitle">
-    Un spațiu individual pentru explorarea reacțiilor,
-    tiparelor și proceselor care te influențează.
-  </p>
-
-
-  <div class="whatsapp-card">
-
-    <h3>
-      Vrei mai multe informații?
-    </h3>
-
-    <p>
-      Scrie-mi direct pe WhatsApp pentru detalii despre
-      sesiunea individuală și programare.
-    </p>
-
-
-    <button
-      id="whatsappButton"
-      class="primary"
-    >
-      Scrie-mi pe WhatsApp
-    </button>
-
+  <div class="sessions-editorial-line" aria-hidden="true">
+    <svg viewBox="0 0 560 36" preserveAspectRatio="none">
+      <path d="M2 24 C82 5, 127 32, 199 17 S322 9, 382 23 S486 29, 558 11"/>
+    </svg>
   </div>
 
+  <div class="sessions-about">
+    <span class="sessions-label">DESPRE SESIUNI</span>
+    <h2>Pornim de la ceea ce se întâmplă acum.</h2>
+    <p>Poate fi o dificultate legată de corp, emoții, alimentație, relații, familie, muncă, bani, valoare personală, decizii sau control.</p>
+    <p>Nu lucrăm cu o formulă identică pentru toată lumea. Explorăm situația ta concretă, ceea ce o menține și direcția în care vrei să mergi.</p>
+  </div>
+
+  <div class="sessions-grid">
+    <div class="sessions-info-card">
+      <span>01</span>
+      <strong>Clarificăm</strong>
+      <p>Ce se întâmplă acum și care este problema asupra căreia vrei să lucrăm.</p>
+    </div>
+    <div class="sessions-info-card">
+      <span>02</span>
+      <strong>Explorăm</strong>
+      <p>Corpul, emoțiile, gândurile și comportamentele implicate în situația ta.</p>
+    </div>
+    <div class="sessions-info-card">
+      <span>03</span>
+      <strong>Integrăm</strong>
+      <p>Ceea ce ai observat și direcția concretă pe care vrei să o susții mai departe.</p>
+    </div>
+  </div>
+
+  <div class="sessions-formats">
+    <span class="sessions-label">CUM PUTEM LUCRA</span>
+    <div class="sessions-format-row">
+      <div>
+        <strong>Sesiune individuală</strong>
+        <p>80 €</p>
+      </div>
+    </div>
+    <div class="sessions-format-row">
+      <div>
+        <strong>Pachet 3 sesiuni</strong>
+        <p>220 €</p>
+      </div>
+    </div>
+    <div class="sessions-format-row">
+      <div>
+        <strong>Pachet 6 sesiuni</strong>
+        <p>420 €</p>
+      </div>
+    </div>
+    <div class="sessions-format-row">
+      <div>
+        <strong>Pachet 10 sesiuni</strong>
+        <p>650 €</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sessions-cta">
+    <span class="sessions-label">1:1</span>
+    <h2>Vrei să lucrăm împreună?</h2>
+    <p>Scrie-mi pentru a-mi spune pe scurt cu ce ai vrea să lucrăm.</p>
+    <a href="https://wa.me/393281015815?text=Bun%C4%83%21%20A%C8%99%20dori%20mai%20multe%20informa%C8%9Bii%20despre%20o%20sesiune%20individual%C4%83." target="_blank" rel="noopener" id="sessionsWhatsAppFinal">Scrie-mi pe WhatsApp →</a>
+  </div>
 </section>
 
 
@@ -1838,52 +3638,10 @@ h3{
 ====================================================== -->
 
 <nav class="nav">
-
-  <button
-    class="active"
-    data-page="home"
-  >
-
-    <span class="nav-icon">
-      ⌂
-    </span>
-
-    <span class="nav-text">
-      Acasă
-    </span>
-
-  </button>
-
-
-  <button
-    data-page="podcasts"
-  >
-
-    <span class="nav-icon">
-      ▶
-    </span>
-
-    <span class="nav-text">
-      Podcasturi
-    </span>
-
-  </button>
-
-
-  <button
-    data-page="saved"
-  >
-
-    <span class="nav-icon">
-      ♡
-    </span>
-
-    <span class="nav-text">
-      Salvate
-    </span>
-
-  </button>
-
+  <button class="active" data-page="home"><span class="nav-icon">⌂</span><span class="nav-text">Acasă</span></button>
+  <button data-page="practices"><span class="nav-icon">◎</span><span class="nav-text">Practici</span></button>
+  <button data-page="podcasts"><span class="nav-icon">▶</span><span class="nav-text">Podcasturi</span></button>
+  <button data-page="saved"><span class="nav-icon">♡</span><span class="nav-text">Salvate</span></button>
 </nav>
 
 
@@ -1917,7 +3675,8 @@ const WHATSAPP_URL =
 const CATEGORY_TAGS = [
   "podcasturi",
   "intrebari",
-  "practici"
+  "practici",
+  "live"
 ];
 
 
@@ -2054,6 +3813,15 @@ function openPage(id) {
 
   if (id === "saved") {
     renderSaved();
+  }
+
+  if (id === "live") {
+    renderLive();
+  renderInfo();
+  }
+
+  if (id === "home") {
+    renderNew();
   }
 
 }
@@ -2379,6 +4147,10 @@ async function loadTelegramContent() {
             hashtags,
             telegram_file_id,
             telegram_date,
+            telegram_chat_id,
+            telegram_chat_title,
+            telegram_chat_username,
+            telegram_message_id,
             is_published
           `
         )
@@ -2426,6 +4198,9 @@ async function loadTelegramContent() {
     renderPractices();
 
     renderSaved();
+    renderLive();
+  renderInfo();
+    renderNew();
 
 
   } catch(error) {
@@ -2569,6 +4344,9 @@ function toggleFavorite(
   renderPractices();
 
   renderSaved();
+  renderLive();
+  renderInfo();
+  renderNew();
 
 }
 
@@ -4163,6 +5941,129 @@ async function startApp() {
 
 startApp();
 
+</script>
+
+
+<script>
+(function(){
+  const categoryTags = new Set(["podcasturi","practici","intrebari","live","informatii"]);
+
+  function cleanTag(t){
+    return String(t || "").replace(/^#/,"").toLowerCase();
+  }
+
+  function typeLabel(item){
+    const tags=(item.hashtags||[]).map(cleanTag);
+    if(tags.includes("podcasturi")) return "Podcast";
+    if(tags.includes("practici")) return "Practică";
+    if(tags.includes("intrebari")) return "Întrebare";
+    if(tags.includes("live")) return "Live";
+    if(tags.includes("informatii")) return "Informație";
+    return "MBS";
+  }
+
+  function sourceLabel(item){
+    const s=String(item.telegram_chat_title||"").toLowerCase();
+    if(s.includes("corp")) return "CORP";
+    if(s.includes("emo")) return "EMOȚII";
+    if(s.includes("minte")) return "MINTE";
+    if(s.includes("suflet")) return "SUFLET";
+    if(s.includes("evolution")) return "EVOLUTION";
+    return "";
+  }
+
+  // Add semantic labels to rendered cards without changing the existing data layer.
+  function enrichCards(){
+    document.querySelectorAll(".podcast-card").forEach(card=>{
+      if(card.dataset.mbsEnriched) return;
+      const title=card.querySelector(".podcast-title");
+      if(!title) return;
+      const titleText=(title.textContent||"").trim();
+      const item=(window.telegramItems||[]).find(x=>(x.title||"").trim()===titleText);
+      if(!item) return;
+      const chip=document.createElement("div");
+      chip.className="content-type-chip";
+      const src=sourceLabel(item);
+      chip.textContent=typeLabel(item)+(src ? " · "+src : "");
+      title.parentNode.insertBefore(chip,title);
+      card.dataset.mbsEnriched="1";
+    });
+  }
+
+  // Open full text from Information cards in a clean reading block.
+  document.addEventListener("click",function(e){
+    const card=e.target.closest("#infoList .podcast-card");
+    if(!card) return;
+    const title=(card.querySelector(".podcast-title")?.textContent||"").trim();
+    const item=(window.telegramItems||[]).find(x=>(x.title||"").trim()===title);
+    if(!item) return;
+    const reader=document.getElementById("infoReader");
+    if(!reader) return;
+    document.getElementById("infoReaderTitle").textContent=item.title||"Informație";
+    document.getElementById("infoReaderBody").textContent=item.text||"";
+    const src=sourceLabel(item);
+    document.getElementById("infoReaderMeta").textContent="INFORMAȚIE"+(src?" · "+src:"");
+    reader.classList.add("active");
+    reader.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+
+  // Observe dynamic Supabase renders and apply the visual metadata.
+  const obs=new MutationObserver(enrichCards);
+  obs.observe(document.body,{childList:true,subtree:true});
+  setTimeout(enrichCards,250);
+})();
+</script>
+
+
+<script>
+/* MBS CORE ROUTER — independent from Supabase */
+(function () {
+  function go(id) {
+    var target = document.getElementById(id);
+    if (!target) return false;
+
+    document.querySelectorAll(".page").forEach(function (p) {
+      p.classList.remove("active");
+    });
+    target.classList.add("active");
+
+    document.querySelectorAll(".nav [data-page]").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-page") === id);
+    });
+
+    window.scrollTo(0, 0);
+    return true;
+  }
+
+  window.mbsGo = go;
+
+  document.addEventListener("click", function (e) {
+    var pageButton = e.target.closest("[data-page]");
+    if (pageButton) {
+      var id = pageButton.getAttribute("data-page");
+      if (id && document.getElementById(id)) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        go(id);
+        return;
+      }
+    }
+
+    var urlButton = e.target.closest("[data-url]");
+    if (urlButton) {
+      var url = urlButton.getAttribute("data-url");
+      if (url) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openTelegramLink && url.indexOf("t.me/") !== -1) {
+          Telegram.WebApp.openTelegramLink(url);
+        } else {
+          window.open(url, "_blank", "noopener");
+        }
+      }
+    }
+  }, true);
+})();
 </script>
 
 </body>
