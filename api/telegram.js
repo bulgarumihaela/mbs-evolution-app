@@ -17,6 +17,7 @@ function getCategory(hashtags) {
       return CATEGORY_HASHTAGS[hashtag];
     }
   }
+
   return null;
 }
 
@@ -27,6 +28,7 @@ function getContentType(post) {
   if (post.video_note) return "video";
   if (post.photo) return "photo";
   if (post.document) return "document";
+
   return "post";
 }
 
@@ -63,7 +65,10 @@ export default async function handler(req, res) {
 
   try {
     const update = req.body;
-    const post = update.channel_post || update.edited_channel_post;
+
+    const post =
+      update.channel_post ||
+      update.edited_channel_post;
 
     if (!post) {
       return res.status(200).json({
@@ -74,6 +79,7 @@ export default async function handler(req, res) {
     }
 
     const text = post.caption || post.text || "";
+
     const hashtags = extractHashtags(text);
     const category = getCategory(hashtags);
     const contentType = getContentType(post);
@@ -81,17 +87,33 @@ export default async function handler(req, res) {
 
     const row = {
       telegram_message_id: post.message_id,
-      telegram_chat_id: String(post.chat?.id || ""),
-      telegram_chat_title: post.chat?.title || "",
-      telegram_chat_username: post.chat?.username || null,
+
+      telegram_chat_id: String(
+        post.chat?.id || ""
+      ),
+
+      telegram_chat_title:
+        post.chat?.title || "",
+
+      telegram_chat_username:
+        post.chat?.username || null,
+
       title: getTitle(text),
+
       text: text,
+
       content_type: contentType,
+
       hashtags: hashtags,
+
       telegram_file_id: telegramFileId,
+
       telegram_date: post.date
-        ? new Date(post.date * 1000).toISOString()
+        ? new Date(
+            post.date * 1000
+          ).toISOString()
         : new Date().toISOString(),
+
       is_published: true,
     };
 
@@ -103,52 +125,80 @@ export default async function handler(req, res) {
       })
     );
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+    const supabaseUrl =
+      process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+    // CHEIA SECRETĂ SERVER-SIDE
+    const supabaseKey =
+      process.env.SUPABASE_SECRET_KEY;
 
     if (!supabaseUrl || !supabaseKey) {
-      throw new Error("Supabase environment variables are missing");
+      throw new Error(
+        "Supabase environment variables are missing"
+      );
     }
 
     const response = await fetch(
       `${supabaseUrl}/rest/v1/telegram_content?on_conflict=telegram_chat_id,telegram_message_id`,
       {
         method: "POST",
+
         headers: {
           apikey: supabaseKey,
-          Authorization: `Bearer ${supabaseKey}`,
-          "Content-Type": "application/json",
-          Prefer: "resolution=merge-duplicates,return=representation",
+
+          Authorization:
+            `Bearer ${supabaseKey}`,
+
+          "Content-Type":
+            "application/json",
+
+          Prefer:
+            "resolution=merge-duplicates,return=representation",
         },
+
         body: JSON.stringify(row),
       }
     );
 
-    const resultText = await response.text();
+    const resultText =
+      await response.text();
 
     if (!response.ok) {
-      console.error("SUPABASE ERROR:", resultText);
+      console.error(
+        "SUPABASE ERROR:",
+        resultText
+      );
 
       return res.status(500).json({
         ok: false,
-        error: "Could not save Telegram content",
+        error:
+          "Could not save Telegram content",
         details: resultText,
       });
     }
 
-    console.log("MBS SAVED TO SUPABASE:", resultText);
+    console.log(
+      "MBS SAVED TO SUPABASE:",
+      resultText
+    );
 
     return res.status(200).json({
       ok: true,
       received: true,
       saved: true,
     });
+
   } catch (error) {
-    console.error("Telegram webhook error:", error);
+    console.error(
+      "Telegram webhook error:",
+      error
+    );
 
     return res.status(500).json({
       ok: false,
-      error: error.message || "Internal server error",
+      error:
+        error.message ||
+        "Internal server error",
     });
   }
 }
