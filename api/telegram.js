@@ -17,27 +17,43 @@ function getCategory(hashtags) {
       return CATEGORY_HASHTAGS[hashtag];
     }
   }
-
   return null;
-}
-
-function getThemeHashtags(hashtags) {
-  return hashtags.filter((tag) => !CATEGORY_HASHTAGS[tag]);
 }
 
 function getContentType(post) {
   if (post.audio) return "audio";
-  if (post.voice) return "audio";
+  if (post.voice) return "voice";
   if (post.video) return "video";
   if (post.video_note) return "video";
   if (post.photo) return "photo";
   if (post.document) return "document";
+  return "post";
+}
 
-  return "text";
+function getTelegramFileId(post) {
+  if (post.audio?.file_id) return post.audio.file_id;
+  if (post.voice?.file_id) return post.voice.file_id;
+  if (post.video?.file_id) return post.video.file_id;
+  if (post.video_note?.file_id) return post.video_note.file_id;
+  if (post.document?.file_id) return post.document.file_id;
+
+  if (Array.isArray(post.photo) && post.photo.length) {
+    return post.photo[post.photo.length - 1].file_id;
+  }
+
+  return null;
+}
+
+function getTitle(text = "") {
+  const firstLine = text
+    .split("\n")
+    .map((line) => line.trim())
+    .find((line) => line && !line.startsWith("#"));
+
+  return firstLine || "Postare Telegram";
 }
 
 export default async function handler(req, res) {
-  // Telegram trimite update-urile prin POST
   if (req.method !== "POST") {
     return res.status(200).json({
       ok: true,
@@ -47,8 +63,6 @@ export default async function handler(req, res) {
 
   try {
     const update = req.body;
-
-    // Pentru postări noi în canale
     const post = update.channel_post || update.edited_channel_post;
 
     if (!post) {
@@ -60,77 +74,81 @@ export default async function handler(req, res) {
     }
 
     const text = post.caption || post.text || "";
-
     const hashtags = extractHashtags(text);
     const category = getCategory(hashtags);
-    const themes = getThemeHashtags(hashtags);
     const contentType = getContentType(post);
+    const telegramFileId = getTelegramFileId(post);
 
-    const channel = {
-      id: post.chat?.id || null,
-      title: post.chat?.title || "",
-      username: post.chat?.username || "",
-    };
-
-    const telegramLink =
-      channel.username && post.message_id
-        ? `https://t.me/${channel.username}/${post.message_id}`
-        : null;
-
-    const item = {
-      message_id: post.message_id,
-      date: post.date,
-      channel_id: channel.id,
-      channel_title: channel.title,
-      channel_username: channel.username,
-
-      category,
+    const row = {
+      telegram_message_id: post.message_id,
+      telegram_chat_id: String(post.chat?.id || ""),
+      telegram_chat_title: post.chat?.title || "",
+      telegram_chat_username: post.chat?.username || null,
+      title: getTitle(text),
+      text: text,
       content_type: contentType,
-
-      hashtags,
-      themes,
-
-      text,
-
-      telegram_link: telegramLink,
+      hashtags: hashtags,
+      telegram_file_id: telegramFileId,
+      telegram_date: post.date
+        ? new Date(post.date * 1000).toISOString()
+        : new Date().toISOString(),
+      is_published: true,
     };
 
-    console.log("MBS TELEGRAM CONTENT:", JSON.stringify(item));
+    console.log(
+      "MBS TELEGRAM CONTENT:",
+      JSON.stringify({
+        ...row,
+        category,
+      })
+    );
 
-    /*
-      IMPORTANT:
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-      Deocamdată doar RECEPȚIONĂM și CLASIFICĂM postarea.
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error("Supabase environment variables are missing");
+    }
 
-      Exemplu:
+    const response = await fetch(
+      `${supabaseUrl}/rest/v1/telegram_content?on_conflict=telegram_chat_id,telegram_message_id`,
+      {
+        method: "POST",
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+          "Content-Type": "application/json",
+          Prefer: "resolution=merge-duplicates,return=representation",
+        },
+        body: JSON.stringify(row),
+      }
+    );
 
-      #podcasturi #emotii #anxietate
+    const resultText = await response.text();
 
-      devine:
+    if (!response.ok) {
+      console.error("SUPABASE ERROR:", resultText);
 
-      category: "podcasturi"
+      return res.status(500).json({
+        ok: false,
+        error: "Could not save Telegram content",
+        details: resultText,
+      });
+    }
 
-      themes:
-      [
-        "#emotii",
-        "#anxietate"
-      ]
-
-      În pasul următor conectăm acest obiect la
-      biblioteca MBS App.
-    */
+    console.log("MBS SAVED TO SUPABASE:", resultText);
 
     return res.status(200).json({
       ok: true,
       received: true,
-      item,
+      saved: true,
     });
   } catch (error) {
     console.error("Telegram webhook error:", error);
 
     return res.status(500).json({
       ok: false,
-      error: "Internal server error",
+      error: error.message || "Internal server error",
     });
   }
 }
