@@ -2626,215 +2626,6 @@ body{font-size:16px}
   .sessions-about,.sessions-formats,.sessions-cta{padding:19px 17px}
 }
 
-
-/* =========================================================
-   MBS HOME — CLEAN FINAL BUILD
-========================================================= */
-#home{
-  padding-top:0 !important;
-  padding-left:18px !important;
-  padding-right:18px !important;
-}
-.final-hero{
-  position:relative;
-  height:285px;
-  margin:0 -18px 25px;
-  overflow:hidden;
-  border-radius:0 0 30px 30px;
-  background:#B49AAE;
-}
-.final-hero img{
-  width:100%;height:100%;display:block;
-  object-fit:cover;
-  object-position:center;
-}
-.final-hero-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(50,34,45,.50),rgba(50,34,45,.12) 55%,transparent);
-}
-.final-hero-copy{
-  position:absolute;left:23px;bottom:27px;z-index:2;color:white;
-}
-.final-hero-copy span{
-  display:block;margin-bottom:7px;font-size:9px;font-weight:600;letter-spacing:.14em;
-}
-.final-hero-copy h1{
-  margin:0;font-size:38px;line-height:1;font-weight:500;letter-spacing:-1.2px;
-}
-.final-hero-copy p{
-  margin:8px 0 0;font-size:11px;line-height:1.45;color:rgba(255,255,255,.88);
-}
-.final-section-head{margin:0 2px 12px}
-.final-section-head span{
-  display:block;color:#5E4A59;font-size:9px;font-weight:700;letter-spacing:.13em;
-}
-.final-section-head p{
-  margin:5px 0 0;color:#776D72;font-size:10px;line-height:1.5;
-}
-.final-journeys{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.final-journey{
-  position:relative;overflow:hidden;min-height:138px;padding:18px 15px;
-  border:0;border-radius:23px;text-align:left;color:white;
-  font-family:'Montserrat',Arial,sans-serif;
-}
-.final-journey.care{background:#B49AAE}
-.final-journey.evolution{background:#5E4A59}
-.final-journey:after{
-  content:"";position:absolute;width:100px;height:100px;right:-48px;top:-48px;
-  border:1px solid rgba(255,255,255,.17);border-radius:50%;
-}
-.final-journey span{display:block;font-size:10px;font-weight:600}
-.final-journey strong{
-  display:block;margin:14px 0 7px;font-size:15px;font-weight:600;letter-spacing:.02em;
-}
-.final-journey small{
-  display:block;max-width:120px;font-size:8.5px;line-height:1.5;opacity:.75;
-}
-.final-journey b{
-  position:absolute;right:15px;bottom:14px;font-size:16px;font-weight:400;
-}
-.library-head{margin-top:27px}
-.final-library{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.final-library button{
-  min-height:114px;padding:15px;border:1px solid #E5DCE1;border-radius:21px;
-  background:#FFFDF9;text-align:left;color:#211D20;font-family:'Montserrat',Arial,sans-serif;
-}
-.final-icon{
-  display:flex;width:27px;height:27px;align-items:center;justify-content:center;
-  margin-bottom:13px;border:1px solid #D9C9D3;border-radius:50%;
-  color:#5E4A59;font-style:normal;font-size:13px;
-}
-.final-library strong{display:block;font-size:12px;font-weight:600}
-.final-library small{
-  display:block;margin-top:5px;color:#776D72;font-size:8.5px;line-height:1.45;
-}
-.final-new{
-  margin-top:26px;padding:20px 17px;border-radius:24px;background:#E9DFE6;
-}
-.final-new > div:first-child span{
-  color:#5E4A59;font-size:8px;font-weight:700;letter-spacing:.13em;
-}
-.final-new h2{
-  margin:5px 0 15px;font-size:18px;font-weight:600;color:#211D20;
-}
-.final-session{
-  position:relative;height:225px;margin-top:24px;overflow:hidden;border-radius:25px;background:#5E4A59;
-}
-.final-session img{
-  width:100%;height:100%;display:block;object-fit:cover;object-position:center;
-}
-.final-session-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(47,32,43,.72),rgba(47,32,43,.17) 68%,transparent);
-}
-.final-session-copy{
-  position:absolute;z-index:2;left:19px;top:24px;width:48%;color:white;
-}
-.final-session-copy > span{font-size:8px;font-weight:600;letter-spacing:.12em}
-.final-session-copy h2{margin:9px 0 8px;font-size:20px;line-height:1.2;font-weight:600}
-.final-session-copy p{
-  margin:0 0 15px;font-size:9px;line-height:1.55;color:rgba(255,255,255,.80);
-}
-.final-session-copy button{
-  border:0;border-radius:999px;background:#B49AAE;color:white;
-  padding:10px 14px;font:600 9px 'Montserrat',Arial,sans-serif;
-}
-@media(min-width:700px){
-  .final-hero{height:360px}
-  .final-library{grid-template-columns:repeat(3,1fr)}
-  .final-session{height:285px}
-}
-
-
-/* =========================================================
-   MBS — FINAL VISUAL CLUB UI
-========================================================= */
-:root{
-  --mbs:#B49AAE;--mbs-dark:#5E4A59;--mbs-pale:#E9DFE6;
-  --cream:#F6F2EC;--paper:#FFFDFC;--ink:#211D20;
-}
-body{background:#d9c6d1!important;font-family:'Montserrat',Arial,sans-serif!important}
-.app{background:#fffaf8!important}
-#home.mbs-visual-home{
-  max-width:760px!important;padding:0 12px 104px!important;
-}
-.visual-top{
-  height:62px;display:flex;align-items:center;justify-content:center;
-  background:#fffaf8;margin:0 -12px;
-}
-.visual-brand{font-size:22px;font-weight:500;letter-spacing:.08em;color:#211D20}
-.visual-hero{
-  position:relative;height:225px;overflow:hidden;border-radius:25px;margin-bottom:11px;
-  background:var(--mbs);
-}
-.visual-hero img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.visual-hero-shade{
-  position:absolute;inset:0;background:linear-gradient(90deg,rgba(45,30,41,.48),rgba(45,30,41,.05) 66%);
-}
-.visual-hero-copy{position:absolute;z-index:2;left:23px;top:30px;color:#fff}
-.visual-hero-copy span{font-size:8px;letter-spacing:.14em;font-weight:600}
-.visual-hero-copy h1{font-size:37px;line-height:1;margin:8px 0 8px;font-weight:500}
-.visual-hero-copy p{font-size:10px;line-height:1.45;margin:0;color:rgba(255,255,255,.9)}
-.visual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.visual-card{
-  position:relative;overflow:hidden;min-height:155px;border:0;border-radius:24px;
-  padding:0;text-align:left;font-family:'Montserrat',Arial,sans-serif;
-  background-size:cover;background-position:center;color:#fff;
-}
-.visual-card-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(30,20,27,.67),rgba(30,20,27,.05) 72%)}
-.visual-card-copy{position:absolute;z-index:2;left:16px;right:36px;bottom:15px}
-.visual-card-copy strong{display:block;font-size:15px;line-height:1.12;font-weight:500}
-.visual-card-copy span{display:block;margin-top:5px;font-size:8.5px;line-height:1.35;color:rgba(255,255,255,.83)}
-.visual-card b{
-  position:absolute;z-index:3;right:13px;bottom:14px;width:29px;height:29px;
-  display:flex;align-items:center;justify-content:center;border-radius:50%;
-  background:rgba(180,154,174,.88);font-size:14px;font-weight:400;
-}
-.card-care{background:linear-gradient(145deg,#8e746d,#c9aaa1)}
-.card-care:before,.card-evolution:before,.card-podcast:before,.card-practice:before,
-.card-live:before,.card-questions:before,.card-info:before,.card-about:before{
-  content:"";position:absolute;inset:0;opacity:.68;background-size:cover;
-}
-.card-care:before{background:radial-gradient(circle at 70% 22%,#ead4c7 0 4%,transparent 5%),linear-gradient(145deg,#79655f,#c9a69b)}
-.card-evolution:before{background:linear-gradient(145deg,#735a68,#b49aae 50%,#d5b7a6)}
-.card-podcast:before{background:radial-gradient(circle at 65% 45%,#b49aae 0 8%,transparent 9%),linear-gradient(135deg,#392c30,#8f6757)}
-.card-practice:before{background:linear-gradient(135deg,#d9cdc4,#a9867e 58%,#6e4e4e)}
-.card-live:before{background:linear-gradient(135deg,#6d534a,#c3a88f 50%,#55413e)}
-.card-questions:before{background:linear-gradient(145deg,#bda2ac,#dfc8c0)}
-.card-info:before{background:linear-gradient(135deg,#9d817b,#d8c4bb)}
-.card-about:before{background:linear-gradient(145deg,#745566,#b49aae 48%,#d8b8ad)}
-.visual-session{
-  position:relative;height:128px;overflow:hidden;border-radius:24px;margin-top:10px;background:var(--mbs-dark);
-}
-.visual-session img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.visual-session-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(43,29,39,.73),rgba(43,29,39,.05) 72%)}
-.visual-session-copy{position:absolute;z-index:2;left:17px;top:22px;color:#fff;width:47%}
-.visual-session-copy strong{display:block;font-size:17px;font-weight:500}
-.visual-session-copy span{display:block;margin-top:6px;font-size:8.5px;line-height:1.4;color:rgba(255,255,255,.83)}
-.visual-session button{
-  position:absolute;z-index:3;left:17px;bottom:15px;border:0;border-radius:999px;
-  padding:8px 12px;background:#B49AAE;color:#fff;font:600 8px 'Montserrat',sans-serif;
-}
-.visual-new{margin-top:20px;padding:19px 15px;border-radius:23px;background:#F2E8ED}
-.visual-new>span{font-size:8px;letter-spacing:.13em;font-weight:700;color:#5E4A59}
-.visual-new h2{margin:5px 0 13px;font-size:17px;font-weight:600;color:#211D20}
-
-/* Strong app-like bottom navigation */
-.nav{
-  left:12px!important;right:12px!important;bottom:10px!important;width:auto!important;
-  border:0!important;border-radius:28px!important;background:#090909!important;
-  padding:7px 7px 8px!important;box-shadow:0 10px 28px rgba(0,0,0,.18)!important;
-}
-.nav button{color:#fff!important;opacity:.78;font-family:'Montserrat',sans-serif!important}
-.nav button.active{background:#282628!important;border-radius:22px!important;opacity:1}
-.nav button.active span,.nav button.active div{color:#D7A7B5!important}
-@media(min-width:700px){
-  .visual-hero{height:320px}
-  .visual-grid{grid-template-columns:repeat(4,1fr)}
-  .visual-card{min-height:180px}
-  .visual-session{height:190px}
-}
-
 </style>
 </head>
 
@@ -2848,90 +2639,65 @@ body{background:#d9c6d1!important;font-family:'Montserrat',Arial,sans-serif!impo
      HOME
 ====================================================== -->
 
-
-
-<section id="home" class="page active mbs-visual-home">
-  <div class="visual-top">
-    <div class="visual-brand">MBS</div>
+<section id="home" class="page active">
+  <div class="home-header">
+    <img src="./logo.png" alt="MBS" class="brand-logo">
+    <div class="mbs-wordmark">Mind · Body · Soul</div>
   </div>
 
-  <div class="visual-hero">
-    <img src="./mbs-home-final.png" alt="MBS">
-    <div class="visual-hero-shade"></div>
-    <div class="visual-hero-copy">
-      <span>BUN VENIT ÎN</span>
-      <h1>MBS</h1>
-      <p>Mind · Body · Soul<br>Evolution</p>
+  <div class="quiet-intro">
+    <small>MBS®</small>
+    <h1>Tot ce ai nevoie.<br>Într-un singur spațiu.</h1>
+    <p>Reglează. Direcționează. Explorează resursele MBS în ritmul tău.</p>
+  </div>
+
+  
+  <div class="mbs-line" aria-hidden="true">
+    <svg viewBox="0 0 560 42" preserveAspectRatio="none">
+      <path d="M2 28 C72 7, 120 36, 187 20 S304 10, 365 25 S474 34, 558 13"/>
+      <path d="M122 25 C165 13, 198 14, 235 22" opacity=".42"/>
+    </svg>
+  </div>
+
+  <div class="quiet-journeys">
+    <button class="quiet-journey" data-page="care">
+      <div class="topline"><span>REGLEZ</span><span class="arrow">→</span></div>
+      <div><strong>MBS Care</strong><span>Corp · Emoții · Minte · Suflet</span></div>
+    </button>
+    <button class="quiet-journey evolution" data-page="evolution">
+      <div class="topline"><span>DIRECȚIONEZ</span><span class="arrow">→</span></div>
+      <div><strong>MBS Evolution</strong><span>Clarific · Direcționez · Acționez</span></div>
+    </button>
+  </div>
+
+  <div class="quiet-section">
+    <div class="quiet-section-head">Bibliotecă</div>
+    <div class="quiet-resources">
+      <button class="quiet-resource" data-page="podcasts"><div class="qicon"><svg class="line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 9v6M9 6v12M13 8v8M17 4v16M21 10v4"/></svg></div><div><strong>Podcasturi</strong><span>Audio MBS</span></div><div class="qarrow">›</div></button>
+      <button class="quiet-resource" data-page="practices"><div class="qicon"><svg class="line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5"/></svg></div><div><strong>Practici</strong><span>Exerciții și meditații</span></div><div class="qarrow">›</div></button>
+      <button class="quiet-resource" data-page="live"><div class="qicon"><svg class="line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="6" width="16" height="12" rx="3"/><path d="m10 9 5 3-5 3Z"/></svg></div><div><strong>Live-uri</strong><span>Întâlniri și înregistrări</span></div><div class="qarrow">›</div></button>
+      <button class="quiet-resource" data-page="info"><div class="qicon"><svg class="line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4h12a2 2 0 0 1 2 2v14H8a2 2 0 0 1-2-2V4Z"/><path d="M9 8h8M9 12h8M9 16h5"/></svg></div><div><strong>Informații</strong><span>Mesaje · texte · explicații · materiale scrise</span></div><div class="qarrow">›</div></button>
+      <button class="quiet-resource" data-page="answers"><div class="qicon"><svg class="line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.7 2.7 0 1 1 4.7 1.8c-1.2 1.1-2.2 1.5-2.2 3.2"/><path d="M12 18h.01"/></svg></div><div><strong>Întrebări</strong><span>Răspunsuri MBS</span></div><div class="qarrow">›</div></button>
     </div>
   </div>
 
-  <div class="visual-grid">
-    <button class="visual-card card-care" data-page="care">
-      <div class="visual-card-shade"></div>
-      <div class="visual-card-copy"><strong>MBS Care</strong><span>Corp · Emoții · Minte · Suflet</span></div>
-      <b>→</b>
-    </button>
-
-    <button class="visual-card card-evolution" data-page="evolution">
-      <div class="visual-card-shade"></div>
-      <div class="visual-card-copy"><strong>MBS Evolution</strong><span>Clarific · Direcționez · Acționez</span></div>
-      <b>→</b>
-    </button>
-
-    <button class="visual-card card-podcast" data-page="podcasts">
-      <div class="visual-card-shade"></div>
-      <div class="visual-card-copy"><strong>Podcasturi</strong><span>Audio · teme · explicații</span></div>
-      <b>→</b>
-    </button>
-
-    <button class="visual-card card-practice" data-page="practices">
-      <div class="visual-card-shade"></div>
-      <div class="visual-card-copy"><strong>Practici</strong><span>Exerciții · meditații</span></div>
-      <b>→</b>
-    </button>
-
-    <button class="visual-card card-live" data-page="live">
-      <div class="visual-card-shade"></div>
-      <div class="visual-card-copy"><strong>Live-uri</strong><span>Întâlniri · înregistrări</span></div>
-      <b>→</b>
-    </button>
-
-    <button class="visual-card card-questions" data-page="answers">
-      <div class="visual-card-shade"></div>
-      <div class="visual-card-copy"><strong>Întrebări</strong><span>Răspunsuri pentru comunitate</span></div>
-      <b>→</b>
-    </button>
-
-    <button class="visual-card card-info" data-page="info">
-      <div class="visual-card-shade"></div>
-      <div class="visual-card-copy"><strong>Informații</strong><span>Mesaje · texte · explicații</span></div>
-      <b>→</b>
-    </button>
-
-    <button class="visual-card card-about" data-page="about">
-      <div class="visual-card-shade"></div>
-      <div class="visual-card-copy"><strong>Despre MBS®</strong><span>Filosofie · perspectivă</span></div>
-      <b>→</b>
-    </button>
+  <div class="new-section">
+    <div class="section-title">Nou în MBS</div>
+    <div id="newList" class="new-list"></div>
   </div>
 
-  <div class="visual-session">
-    <img src="./mbs-session-final.png" alt="Sesiuni 1:1">
-    <div class="visual-session-shade"></div>
-    <div class="visual-session-copy">
-      <strong>Sesiuni 1:1</strong>
-      <span>Claritate · susținere · pași concreți</span>
+  <div class="quiet-secondary">
+    <button data-page="about"><strong>Despre MBS®</strong><span>›</span></button>
     </div>
+  <div class="sessions-feature">
+    <span class="sessions-kicker">LUCRU INDIVIDUAL</span>
+    <h3>Sesiuni 1:1</h3>
+    <p>Un spațiu individual pentru a explora ceea ce se întâmplă acum și direcția în care vrei să mergi.</p>
     <button data-page="sessions">Află mai multe →</button>
   </div>
-
-  <div class="visual-new">
-    <span>NOU ÎN MBS</span>
-    <h2>Ultimele materiale</h2>
-    <div id="newList" class="podcast-list"></div>
+  <div style="display:none">
   </div>
 </section>
-
 
 
 
@@ -2968,7 +2734,7 @@ body{background:#d9c6d1!important;font-family:'Montserrat',Arial,sans-serif!impo
 <section id="live" class="page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <h2>Live-uri</h2>
-  <p class="subtitle">Revezi întâlnirile MBS.</p>
+  <p class="subtitle">Revezi întâlnirile MBS MBS.</p>
   <div class="search"><span class="search-icon">⌕</span><input id="liveSearch" type="text" placeholder="Caută..."></div>
   <div id="liveList"></div>
 </section>
@@ -6011,58 +5777,6 @@ startApp();
   const obs=new MutationObserver(enrichCards);
   obs.observe(document.body,{childList:true,subtree:true});
   setTimeout(enrichCards,250);
-})();
-</script>
-
-
-<script>
-/* MBS CORE ROUTER — independent from Supabase */
-(function () {
-  function go(id) {
-    var target = document.getElementById(id);
-    if (!target) return false;
-
-    document.querySelectorAll(".page").forEach(function (p) {
-      p.classList.remove("active");
-    });
-    target.classList.add("active");
-
-    document.querySelectorAll(".nav [data-page]").forEach(function (b) {
-      b.classList.toggle("active", b.getAttribute("data-page") === id);
-    });
-
-    window.scrollTo(0, 0);
-    return true;
-  }
-
-  window.mbsGo = go;
-
-  document.addEventListener("click", function (e) {
-    var pageButton = e.target.closest("[data-page]");
-    if (pageButton) {
-      var id = pageButton.getAttribute("data-page");
-      if (id && document.getElementById(id)) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        go(id);
-        return;
-      }
-    }
-
-    var urlButton = e.target.closest("[data-url]");
-    if (urlButton) {
-      var url = urlButton.getAttribute("data-url");
-      if (url) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.openTelegramLink && url.indexOf("t.me/") !== -1) {
-          Telegram.WebApp.openTelegramLink(url);
-        } else {
-          window.open(url, "_blank", "noopener");
-        }
-      }
-    }
-  }, true);
 })();
 </script>
 
