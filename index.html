@@ -3228,6 +3228,53 @@ body.audio-is-active .page{
   font-size:14px !important;
 }
 
+
+/* =========================================================
+   AIRIER MBS BACKGROUND
+   Lighter, softer version approved from visual reference
+========================================================= */
+:root{
+  --mbs-page-bg:#DCCDD8;
+}
+
+/* Main app/page background */
+html,
+body,
+.app,
+.page{
+  background-color:#DCCDD8 !important;
+}
+
+/* Soft depth without the previous dark/heavy mauve */
+body{
+  background:
+    radial-gradient(circle at 15% 8%, rgba(255,253,249,.46), transparent 29%),
+    radial-gradient(circle at 88% 36%, rgba(233,223,230,.58), transparent 34%),
+    linear-gradient(180deg,#D9C8D5 0%,#E2D5DE 52%,#DCCDD8 100%) !important;
+}
+
+.page{
+  background:transparent !important;
+}
+
+/* Keep MBS Care / Evolve contrast but soften them slightly */
+#home .mbs-world-main,
+#home .mbs-world-evolution{
+  background:#725E6D !important;
+}
+
+/* Material section label/subtitle remain readable on lighter background */
+#home .materials-heading,
+#home .materials-heading .materials-subtitle{
+  color:#6B5866 !important;
+  -webkit-text-fill-color:#6B5866 !important;
+}
+
+/* Internal pages inherit the same lighter atmosphere */
+.page:not(#home){
+  background:transparent !important;
+}
+
 </style>
 </head>
 
