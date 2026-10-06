@@ -4304,6 +4304,13 @@ async function toggleAudio(button) {
   audio.addEventListener("play", () => {
     button.classList.remove("loading");
     button.classList.add("is-playing");
+
+    const title =
+      player.querySelector(".player-title")?.textContent?.trim() ||
+      player.closest(".content-card")?.querySelector(".content-title")?.textContent?.trim() ||
+      "Audio MBS";
+
+    showPersistentPlayer(title);
     syncPersistentPlayer();
   });
 
@@ -4314,6 +4321,7 @@ async function toggleAudio(button) {
 
   audio.addEventListener("ended", () => {
     button.classList.remove("is-playing");
+    hidePersistentPlayer();
     audio.currentTime = 0;
     const progress = player.querySelector(".player-progress");
     if (progress) {
@@ -4333,6 +4341,14 @@ async function toggleAudio(button) {
 
   try {
     await audio.play();
+
+    const title =
+      player.querySelector(".player-title")?.textContent?.trim() ||
+      player.closest(".content-card")?.querySelector(".content-title")?.textContent?.trim() ||
+      "Audio MBS";
+
+    showPersistentPlayer(title);
+    syncPersistentPlayer();
   } catch(error) {
     console.error("Play error:", error);
     button.classList.remove("loading", "is-playing");
