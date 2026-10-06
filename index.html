@@ -3438,6 +3438,114 @@ button.back{
   white-space:nowrap !important;
 }
 
+
+/* HOME — Despre MBS® extra slim */
+#home .about-card,
+#home .about-mbs-card,
+#home [data-page="about"],
+#home [data-target="about"],
+#home [onclick*="about"] {
+  min-height:62px !important;
+  height:62px !important;
+  padding-top:5px !important;
+  padding-bottom:5px !important;
+}
+
+
+/* HOME — Despre MBS® ultra slim */
+#home .about-card,
+#home .about-mbs-card,
+#home [data-page="about"],
+#home [data-target="about"],
+#home [onclick*="about"]{
+  min-height:50px !important;
+  height:50px !important;
+  padding-top:3px !important;
+  padding-bottom:3px !important;
+}
+
+
+/* DESPRE MBS — reduce ONLY the white frame, keep text/icon sizes unchanged */
+#home .home-card.about-card[data-page="about"]{
+  min-height:46px !important;
+  height:46px !important;
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+}
+
+/* Restore/preserve original content sizing */
+#home .home-card.about-card[data-page="about"] .card-title{
+  font-size:inherit;
+}
+#home .home-card.about-card[data-page="about"] .card-sub{
+  font-size:inherit;
+}
+
+
+/* DESPRE MBS — compact card with ALL content kept inside */
+#home .home-card[data-page="about"]{
+  grid-column:1/-1 !important;
+  box-sizing:border-box !important;
+  min-height:54px !important;
+  height:54px !important;
+  padding:6px 12px !important;
+  display:grid !important;
+  grid-template-columns:32px minmax(0,1fr) 18px !important;
+  align-items:center !important;
+  gap:9px !important;
+  overflow:hidden !important;
+}
+
+/* smaller icon, fixed on the left */
+#home .home-card[data-page="about"] .home-icon{
+  position:static !important;
+  width:30px !important;
+  height:30px !important;
+  min-width:30px !important;
+  min-height:30px !important;
+  margin:0 !important;
+  padding:6px !important;
+  box-sizing:border-box !important;
+  align-self:center !important;
+}
+
+/* text stays INSIDE the white frame */
+#home .home-card[data-page="about"] .home-copy,
+#home .home-card[data-page="about"] .home-text,
+#home .home-card[data-page="about"] .home-content{
+  min-width:0 !important;
+  margin:0 !important;
+  align-self:center !important;
+}
+
+#home .home-card[data-page="about"] .home-title{
+  position:static !important;
+  margin:0 0 2px 0 !important;
+  padding:0 !important;
+  font-size:14px !important;
+  line-height:1.05 !important;
+  white-space:nowrap !important;
+}
+
+#home .home-card[data-page="about"] .home-sub{
+  position:static !important;
+  margin:0 !important;
+  padding:0 !important;
+  font-size:10px !important;
+  line-height:1.05 !important;
+  white-space:nowrap !important;
+}
+
+/* small arrow remains inside on the right */
+#home .home-card[data-page="about"] .home-arrow{
+  position:static !important;
+  width:18px !important;
+  height:18px !important;
+  margin:0 !important;
+  align-self:center !important;
+  justify-self:end !important;
+}
+
 </style>
 </head>
 
