@@ -2774,6 +2774,170 @@ body.audio-is-active .page{
   color:#8A7A83 !important;
 }
 
+
+/* =========================================================
+   MBS CARE — INTERNAL HUB
+========================================================= */
+.mbs-care-page{
+  padding-bottom:110px !important;
+}
+.care-hero{
+  margin-top:14px;
+  padding:28px 23px 26px;
+  border-radius:28px;
+  background:linear-gradient(145deg,#5E4A59 0%,#776171 100%);
+  color:#FFFDF9;
+  position:relative;
+  overflow:hidden;
+}
+.care-hero:after{
+  content:"";
+  position:absolute;
+  width:145px;height:145px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:50%;
+  right:-62px;top:-55px;
+}
+.care-eyebrow{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.16em;
+  color:#E9DFE6;
+  margin-bottom:12px;
+}
+.care-hero h2{
+  max-width:290px;
+  margin:0 0 11px;
+  font-size:28px;
+  line-height:1.12;
+  letter-spacing:-.02em;
+  color:#FFFDF9;
+}
+.care-hero p{
+  max-width:330px;
+  margin:0;
+  font-size:14px;
+  line-height:1.58;
+  color:#E9DFE6;
+}
+.care-section-label{
+  margin:24px 3px 11px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.15em;
+  color:#8D7786;
+}
+.care-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+}
+.care-card{
+  position:relative;
+  min-height:164px;
+  padding:15px;
+  border:1px solid rgba(180,154,174,.24);
+  border-radius:23px;
+  font-family:inherit;
+  text-align:left;
+  color:#382F35;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+  cursor:pointer;
+}
+.care-body{background:#F6F2EC;}
+.care-emotions{background:#E9DFE6;}
+.care-mind{background:#F0E8ED;}
+.care-soul{background:#FFFDF9;}
+.care-card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+.care-number{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  color:#9B8393;
+}
+.care-icon{
+  width:38px;height:38px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(180,154,174,.14);
+  color:#5E4A59;
+}
+.care-icon svg{
+  width:21px;height:21px;
+  fill:none;stroke:currentColor;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.care-card strong{
+  display:block;
+  margin-bottom:5px;
+  font-size:17px;
+  letter-spacing:.01em;
+  color:#4D3E48;
+}
+.care-card > div:nth-child(2) span{
+  display:block;
+  padding-right:18px;
+  font-size:11px;
+  line-height:1.4;
+  color:#83747D;
+}
+.care-arrow{
+  position:absolute;
+  right:13px;
+  bottom:15px;
+  width:15px;height:15px;
+  fill:none;stroke:#8D7786;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.care-more{
+  margin-top:14px;
+  padding:20px 21px;
+  border-radius:22px;
+  background:#FFFDF9;
+  border:1px solid #E5DCE1;
+}
+.care-more span{
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.14em;
+  color:#9A7F92;
+}
+.care-more strong{
+  display:block;
+  margin:7px 0 5px;
+  font-size:16px;
+  color:#4D3E48;
+}
+.care-more p{
+  margin:0;
+  font-size:12.5px;
+  line-height:1.55;
+  color:#83747D;
+}
+@media(max-width:360px){
+  .care-grid{gap:9px;}
+  .care-card{min-height:154px;padding:13px;}
+  .care-hero h2{font-size:25px;}
+}
+
+
+/* Telegram Mini App: internal Back sits below Telegram Close control */
+#mbsHub .back{
+  margin-top:44px !important;
+  min-height:34px !important;
+  height:34px !important;
+  padding:5px 13px !important;
+  line-height:1 !important;
+  border-radius:17px !important;
+}
+
 </style>
 </head>
 
@@ -2940,17 +3104,81 @@ body.audio-is-active .page{
 <!-- ======================================================
      MBS HUB
 ====================================================== -->
-<section id="mbsHub" class="page mbs-hub-page">
+<section id="mbsHub" class="page mbs-hub-page mbs-care-page">
   <button class="back" data-page="home">‹ Înapoi</button>
-  <div class="mbs-hub-head">
-    <div class="eyebrow">METODA</div>
-    <h2>MBS Care</h2>
-    <p>Spațiul dedicat corpului, emoțiilor, minții și sufletului.</p>
+
+  <div class="care-hero">
+    <div class="care-eyebrow">MBS CARE</div>
+    <h2>Înțelege ce se întâmplă în tine.</h2>
+    <p>Explorează cele patru dimensiuni prin care poți privi ceea ce trăiești acum.</p>
   </div>
-  <div class="mbs-hub-placeholder">
-    <span>STRUCTURĂ</span>
-    <strong>Corp · Emoții · Minte · Suflet</strong>
-    <p>Paginile tale existente vor putea fi adăugate aici ca secțiuni interne ale aplicației.</p>
+
+  <div class="care-section-label">EXPLOREAZĂ</div>
+
+  <div class="care-grid">
+    <button class="care-card care-body" type="button" data-care-section="corp">
+      <div class="care-card-top">
+        <span class="care-number">01</span>
+        <div class="care-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 4.2c-2.1 0-3.8 1.7-3.8 3.8 0 1.4.8 2.7 1.9 3.3-1.8.8-3.1 2.6-3.1 4.7v3.2h10V16c0-2.1-1.3-3.9-3.1-4.7A3.8 3.8 0 0 0 12 4.2Z"/></svg>
+        </div>
+      </div>
+      <div>
+        <strong>CORP</strong>
+        <span>Semnale · senzații · simptome</span>
+      </div>
+      <svg class="care-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+    </button>
+
+    <button class="care-card care-emotions" type="button" data-care-section="emotii">
+      <div class="care-card-top">
+        <span class="care-number">02</span>
+        <div class="care-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/></svg>
+        </div>
+      </div>
+      <div>
+        <strong>EMOȚII</strong>
+        <span>Emoții · nevoi · reglare</span>
+      </div>
+      <svg class="care-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+    </button>
+
+    <button class="care-card care-mind" type="button" data-care-section="minte">
+      <div class="care-card-top">
+        <span class="care-number">03</span>
+        <div class="care-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9.2 18.5H8a3 3 0 0 1-2.2-5A3.5 3.5 0 0 1 8.4 8a4.1 4.1 0 0 1 7.8 1.3 3.4 3.4 0 0 1 1.4 6.5H15"/><path d="M12 8.5v11M9.5 12H12M12 15.5h2.5"/></svg>
+        </div>
+      </div>
+      <div>
+        <strong>MINTE</strong>
+        <span>Gânduri · convingeri · tipare</span>
+      </div>
+      <svg class="care-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+    </button>
+
+    <button class="care-card care-soul" type="button" data-care-section="suflet">
+      <div class="care-card-top">
+        <span class="care-number">04</span>
+        <div class="care-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3.8c.9 3.3 2.9 5.3 6.2 6.2-3.3.9-5.3 2.9-6.2 6.2-.9-3.3-2.9-5.3-6.2-6.2 3.3-.9 5.3-2.9 6.2-6.2Z"/><path d="M18.5 15.5c.3 1.2 1.1 2 2.3 2.3-1.2.3-2 1.1-2.3 2.3-.3-1.2-1.1-2-2.3-2.3 1.2-.3 2-1.1 2.3-2.3Z"/></svg>
+        </div>
+      </div>
+      <div>
+        <strong>SUFLET</strong>
+        <span>Sens · valori · direcție</span>
+      </div>
+      <svg class="care-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <div class="care-more">
+    <div>
+      <span>MAI MULT ÎN MBS CARE</span>
+      <strong>Spațiul va crește împreună cu tine.</strong>
+      <p>Aici vom putea adăuga treptat noi direcții și pagini, fără să schimbăm structura principală.</p>
+    </div>
   </div>
 </section>
 
@@ -5902,6 +6130,16 @@ async function startApp() {
 
 startApp();
 
+</script>
+
+
+<script>
+document.addEventListener("click", function(e){
+  const card = e.target.closest("[data-care-section]");
+  if(!card) return;
+  const section = card.getAttribute("data-care-section");
+  window.dispatchEvent(new CustomEvent("mbs-care-section", {detail:{section:section}}));
+});
 </script>
 
 </body>
