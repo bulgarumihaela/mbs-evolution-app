@@ -2424,6 +2424,105 @@ body.audio-is-active .page{padding-top:76px !important;}
   .persistent-title{font-size:14px !important;}
 }
 
+
+/* MBS GLOBAL MINI PLAYER — fixed above the hero, Samadhi-inspired */
+.persistent-player{
+  position:fixed !important;
+  top:calc(env(safe-area-inset-top, 0px) + 10px) !important;
+  left:50% !important;
+  transform:translate(-50%,-18px) !important;
+  width:min(calc(100% - 28px),620px) !important;
+  min-height:60px !important;
+  height:60px !important;
+  padding:7px 10px 9px !important;
+  display:grid !important;
+  grid-template-columns:38px 32px minmax(0,1fr) 46px 34px 32px !important;
+  align-items:center !important;
+  gap:5px !important;
+  background:rgba(246,242,236,.97) !important;
+  border:1px solid rgba(180,154,174,.30) !important;
+  border-radius:23px !important;
+  box-shadow:0 8px 24px rgba(94,74,89,.10) !important;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  z-index:9999 !important;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .22s ease,transform .22s ease,visibility .22s ease !important;
+  overflow:hidden !important;
+}
+.persistent-player.is-visible{
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  transform:translate(-50%,0) !important;
+}
+.persistent-main{
+  min-width:0 !important;
+  align-self:center !important;
+}
+.persistent-title{
+  color:#211D20 !important;
+  font-size:14px !important;
+  line-height:1.15 !important;
+  font-weight:700 !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  margin:0 0 8px !important;
+}
+.persistent-play,.persistent-forward,.persistent-volume,.persistent-close{
+  border:0 !important;
+  background:transparent !important;
+  color:#211D20 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+}
+.persistent-play{width:38px !important;height:38px !important;}
+.persistent-forward{width:32px !important;height:38px !important;}
+.persistent-volume{width:34px !important;height:38px !important;}
+.persistent-close{width:32px !important;height:38px !important;}
+.persistent-play svg{width:27px !important;height:27px !important;}
+.persistent-forward svg{width:23px !important;height:23px !important;}
+.persistent-volume svg{width:23px !important;height:23px !important;}
+.persistent-close svg{width:22px !important;height:22px !important;}
+.persistent-speed{
+  width:44px !important;
+  height:40px !important;
+  border:0 !important;
+  border-radius:20px !important;
+  background:#E9E3DD !important;
+  color:#211D20 !important;
+  font-size:14px !important;
+  font-weight:700 !important;
+}
+.persistent-progress{
+  position:absolute !important;
+  left:12px !important;
+  right:12px !important;
+  bottom:2px !important;
+  width:calc(100% - 24px) !important;
+  height:3px !important;
+  margin:0 !important;
+  accent-color:#B49AAE !important;
+}
+body.audio-is-active .page{
+  padding-top:78px !important;
+}
+@media(max-width:390px){
+  .persistent-player{
+    width:calc(100% - 20px) !important;
+    grid-template-columns:34px 29px minmax(0,1fr) 42px 31px 29px !important;
+    gap:3px !important;
+    padding-left:7px !important;
+    padding-right:7px !important;
+  }
+  .persistent-title{font-size:13px !important;}
+}
+
 </style>
 </head>
 
@@ -5376,6 +5475,7 @@ function showPersistentPlayer(title = "Audio MBS") {
   if (player) {
     player.classList.add("visible");
     player.setAttribute("aria-hidden", "false");
+  player.classList.add("is-visible");
     document.body.classList.add("audio-is-active");
   }
 }
@@ -5385,6 +5485,7 @@ function hidePersistentPlayer() {
   if (player) {
     player.classList.remove("visible");
     player.setAttribute("aria-hidden", "true");
+  player.classList.remove("is-visible");
   }
   document.body.classList.remove("audio-is-active");
 }
