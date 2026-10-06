@@ -3901,6 +3901,49 @@ button.back{
   line-height:1.2 !important;
 }
 
+
+/* === MBS SESSIONS 1:1 — integrated final === */
+#sessions{padding-bottom:118px}
+#sessions>.back{margin-bottom:12px}
+#sessions .sessions-shell{width:100%;max-width:620px;margin:0 auto}
+#sessions .sessions-header{padding:7px 3px 18px}
+#sessions .sessions-kicker,#sessions .sessions-index,#sessions .sessions-cta-label{display:block;color:#725E6D;font-size:10px;line-height:1.2;font-weight:800;letter-spacing:.15em}
+#sessions .sessions-header h2{margin:7px 0 12px;color:#211D20;font-size:27px;line-height:1.08;letter-spacing:-.55px}
+#sessions .sessions-header p{margin:0 0 8px;color:#5E5259;font-size:15.5px;line-height:1.56}
+#sessions .sessions-block{margin:12px 0;padding:20px 19px;border:1px solid rgba(94,74,89,.09);border-radius:22px;background:rgba(255,253,249,.82);box-shadow:0 10px 28px rgba(63,48,58,.045)}
+#sessions .sessions-block>h3{margin:6px 0 13px;color:#2A2327;font-size:18px;line-height:1.22;letter-spacing:-.2px}
+#sessions .sessions-block>p,#sessions .sessions-step p{color:#62575D;font-size:14.5px;line-height:1.55}
+#sessions .sessions-block>p{margin:0 0 14px}
+#sessions .sessions-examples{display:grid;gap:7px;margin:15px 0}
+#sessions .sessions-examples div{position:relative;padding:11px 12px 11px 30px;border-radius:14px;background:#F6F2EC;color:#51474D;font-size:13.5px;line-height:1.42}
+#sessions .sessions-examples div:before{content:"";position:absolute;left:13px;top:17px;width:5px;height:5px;border-radius:50%;background:#B49AAE}
+#sessions .sessions-emphasis{margin-top:15px;padding:14px 15px;border-left:3px solid #B49AAE;border-radius:0 15px 15px 0;background:#F1E8EE;color:#5E4A59;font-size:14px;line-height:1.5}
+#sessions .sessions-emphasis strong{color:#493A45;font-weight:750}
+#sessions .sessions-process{padding-bottom:18px}
+#sessions .sessions-step{display:grid;grid-template-columns:31px minmax(0,1fr);gap:11px;padding:16px 0;border-top:1px solid rgba(94,74,89,.09)}
+#sessions .sessions-step:first-of-type{margin-top:3px}
+#sessions .step-number{width:31px;height:31px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#F1E8EE;color:#725E6D;font-size:10px;font-weight:800;letter-spacing:.04em}
+#sessions .sessions-step h4{margin:2px 0 6px;color:#342A30;font-size:14.5px;line-height:1.3;font-weight:750}
+#sessions .sessions-step p{margin:0 0 8px}
+#sessions .sessions-step p:last-child{margin-bottom:0}
+#sessions .sessions-step strong{color:#4E3E49;font-weight:700}
+#sessions .sessions-outcome{margin-top:4px;padding:16px 15px;border-radius:17px;background:#5E4A59;color:#F6F2EC;text-align:center;font-size:13.5px;line-height:1.48}
+#sessions .sessions-outcome strong{display:block;margin:3px 0;color:#FFFDF9;font-size:14px}
+#sessions .sessions-cta{margin:12px 0 0;padding:23px 20px 20px;border-radius:22px;background:#5E4A59;color:#FFFDF9;box-shadow:0 12px 30px rgba(63,48,58,.09)}
+#sessions .sessions-cta-label{color:#DCCDD8}
+#sessions .sessions-cta h3{margin:7px 0 8px;color:#FFFDF9;font-size:19px;line-height:1.22}
+#sessions .sessions-cta p{margin:0 0 16px;color:#EEE5EB;font-size:14px;line-height:1.5}
+#sessions .sessions-cta-button{width:100%;min-height:47px;padding:11px 15px;border:0;border-radius:15px;background:#FFFDF9;color:#493A45;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;font-weight:750;box-shadow:none}
+#sessions .sessions-cta-button span{font-size:19px;font-weight:400}
+#sessions .sessions-note{margin:14px 7px 0;color:#665A61;font-size:10.5px;line-height:1.52;text-align:left}
+@media(max-width:375px){
+ #sessions .sessions-header h2{font-size:25px}
+ #sessions .sessions-header p{font-size:15px}
+ #sessions .sessions-block{padding:18px 16px}
+ #sessions .sessions-step{grid-template-columns:29px minmax(0,1fr);gap:9px}
+ #sessions .step-number{width:29px;height:29px}
+}
+
 </style>
 </head>
 
@@ -4525,40 +4568,99 @@ button.back{
   <div id="liveList"></div>
 </section>
 
+
 <section id="sessions" class="page">
+
   <button class="back" data-page="home">‹ Înapoi</button>
 
-  <div class="sessions-page-head">
-    <div class="sessions-kicker">LUCRU INDIVIDUAL</div>
-    <h2>Sesiuni 1:1</h2>
-    <p class="subtitle">Un spațiu individual în care lucrăm asupra unei situații concrete din viața ta.</p>
-  </div>
+  <div class="sessions-shell">
 
-  <div class="sessions-intro-card">
-    <div class="sessions-label">DESPRE SESIUNI</div>
-    <h3>Pornim de la ceea ce se întâmplă acum.</h3>
-    <p>Poate fi o dificultate legată de corp, emoții, alimentație, relații, familie, muncă, bani, valoare personală, decizii sau control.</p>
-    <p>Nu lucrăm cu o formulă identică pentru toată lumea. Explorăm situația ta concretă, ceea ce o menține și direcția în care vrei să mergi.</p>
-  </div>
+    <header class="sessions-header">
+      <div class="sessions-kicker">LUCRU INDIVIDUAL · MBS®</div>
+      <h2>Sesiuni individuale 1:1</h2>
+      <p>Un spațiu individual de explorare și dezvoltare personală, pornind de la o situație concretă din viața ta pe care îți dorești să o schimbi.</p>
+      <p>Nu este nevoie să știi de ce se întâmplă sau de unde vine. Pornim de la ceea ce trăiești în prezent și explorăm ceea ce devine relevant pe parcurs.</p>
+    </header>
 
-  <div class="sessions-steps">
-    <div class="session-step"><span>01</span><div><strong>Clarificăm</strong><p>Ce se întâmplă acum, ce te apasă cel mai mult și asupra cărei situații vrei să lucrăm.</p></div></div>
-    <div class="session-step"><span>02</span><div><strong>Explorăm</strong><p>Observăm împreună corpul, emoțiile, gândurile, reacțiile și comportamentele care apar în situația ta.</p></div></div>
-    <div class="session-step"><span>03</span><div><strong>Facem legăturile</strong><p>Privim ce se repetă, ce menține situația și unde există spațiu pentru o perspectivă sau un răspuns diferit.</p></div></div>
-    <div class="session-step"><span>04</span><div><strong>Integrăm</strong><p>Punem în ordine ceea ce ai observat și conturăm o direcție concretă pe care o poți susține mai departe în viața ta.</p></div></div>
-  </div>
+    <section class="sessions-block sessions-intro">
+      <span class="sessions-index">01</span>
+      <h3>Cu ce poți veni</h3>
+      <p>Poți veni cu o situație în care observi că, deși conștient îți dorești ceva, reacțiile sau comportamentele tale automate te duc într-o altă direcție.</p>
 
-  <div class="sessions-details-card">
-    <div class="sessions-label">CÂND POATE FI POTRIVITĂ O SESIUNE</div>
-    <p>Când simți că te învârți în aceeași situație, reacționezi într-un mod pe care nu îl înțelegi, corpul îți transmite ceva sau știi ce ai vrea să schimbi, dar între a înțelege și a face diferit pare să existe un blocaj.</p>
-    <p>Poți veni cu o situație foarte concretă. Nu este nevoie să știi dinainte „care este problema reală”. Pornim exact de unde ești acum.</p>
-  </div>
+      <div class="sessions-examples">
+        <div>O reacție emoțională care se repetă</div>
+        <div>Un obicei sau un tipar pe care îți este greu să îl schimbi</div>
+        <div>O dificultate în relații, alimentație, stil de viață sau limite personale</div>
+        <div>O stare de blocaj ori un obiectiv spre care îți este greu să înaintezi</div>
+      </div>
 
-  <div class="sessions-contact">
-    <div class="sessions-label">PROGRAMARE</div>
-    <h3>Vrei să lucrăm împreună?</h3>
-    <p>Scrie-mi pe scurt cu ce ai vrea să lucrăm și îți ofer detaliile pentru sesiune.</p>
-    <button id="whatsappButton" class="primary">Scrie-mi pe WhatsApp</button>
+      <div class="sessions-emphasis">
+        Nu trebuie să vii cu explicația.<br>
+        <strong>Este suficient să vii cu ceea ce trăiești.</strong>
+      </div>
+    </section>
+
+    <section class="sessions-block sessions-process">
+      <span class="sessions-index">02</span>
+      <h3>Cum lucrăm</h3>
+
+      <div class="sessions-step">
+        <span class="step-number">01</span>
+        <div>
+          <h4>Pornim de la prezent</h4>
+          <p>Clarificăm situația concretă asupra căreia vrei să lucrăm și ce ai dori să fie diferit. Trăirea ta din prezent devine punctul nostru de plecare.</p>
+        </div>
+      </div>
+
+      <div class="sessions-step">
+        <span class="step-number">02</span>
+        <div>
+          <h4>Explorăm dincolo de explicația rațională</h4>
+          <p>Nu rămânem doar la ceea ce știi deja despre situație sau la ceea ce poți explica mental.</p>
+          <p>Îți îndreptăm atenția și către <strong>senzațiile corporale, emoțiile, reacțiile automate, imaginile, amintirile sau asocierile</strong> care pot apărea pe parcurs.</p>
+          <p>Nu stabilim dinainte ce ar trebui să găsim și nu presupunem existența unei anumite cauze.</p>
+        </div>
+      </div>
+
+      <div class="sessions-step">
+        <span class="step-number">03</span>
+        <div>
+          <h4>Lucrăm cu ceea ce apare</h4>
+          <p>În ritmul tău, folosim practici de <strong>conștientizare corporală, autoobservare, explorare ghidată și reflecție</strong>.</p>
+          <p>Atunci când apar amintiri sau asocieri cu experiențe anterioare, le explorăm ca parte a experienței tale subiective, fără evaluări diagnostice și fără a impune o anumită interpretare.</p>
+        </div>
+      </div>
+
+      <div class="sessions-step">
+        <span class="step-number">04</span>
+        <div>
+          <h4>Integrăm</h4>
+          <p>Aducem ceea ce ai observat înapoi în situația prezentă. Privim ce devine mai clar, ce observi diferit și ce alte răspunsuri sau alegeri devin disponibile pentru tine în viața de zi cu zi.</p>
+        </div>
+      </div>
+
+      <div class="sessions-outcome">
+        Scopul este să existe tot mai mult spațiu între
+        <strong>ceea ce apare automat</strong>
+        și
+        <strong>ceea ce alegi să faci mai departe.</strong>
+      </div>
+    </section>
+
+    <section class="sessions-cta">
+      <span class="sessions-cta-label">PROGRAMARE</span>
+      <h3>Vrei să lucrăm împreună?</h3>
+      <p>Dacă există o situație concretă asupra căreia vrei să lucrăm, poți solicita o sesiune individuală.</p>
+      <button id="whatsappButton" class="sessions-cta-button">
+        Programează o sesiune 1:1
+        <span aria-hidden="true">→</span>
+      </button>
+    </section>
+
+    <p class="sessions-note">
+      MBS® este un model educațional de dezvoltare personală. Sesiunile au caracter educațional și de explorare personală și nu constituie psihoterapie, evaluare psihologică, diagnostic sau tratament medical. Atunci când situația necesită intervenție clinică sau medicală, este recomandată adresarea către profesionistul competent.
+    </p>
+
   </div>
 </section>
 
