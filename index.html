@@ -2568,6 +2568,212 @@ body.audio-is-active .page{
   padding-top:68px !important;
 }
 
+
+/* MBS® + MBS Evolution */
+.mbs-worlds{
+  grid-column:1/-1;
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:2px 0 0;
+}
+.mbs-world-card{
+  position:relative;
+  min-width:0;
+  min-height:136px;
+  padding:17px;
+  border-radius:24px;
+  border:1px solid rgba(180,154,174,.22);
+  font-family:inherit;
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:space-between;
+  cursor:pointer;
+}
+.mbs-world-main{background:#E9DFE6;color:#211D20;}
+.mbs-world-evolution{background:#5E4A59;color:#FFFDF9;border-color:#5E4A59;}
+.mbs-world-icon{
+  width:39px;height:39px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.55);
+}
+.mbs-world-evolution .mbs-world-icon{background:rgba(255,255,255,.12);}
+.mbs-world-icon svg,.mbs-world-arrow{
+  fill:none;stroke:currentColor;stroke-width:1.55;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.mbs-world-icon svg{width:21px;height:21px;}
+.mbs-world-copy{display:flex;flex-direction:column;gap:3px;padding-right:14px;}
+.mbs-world-kicker{font-size:9px;font-weight:700;letter-spacing:.14em;opacity:.62;}
+.mbs-world-copy strong{font-size:17px;line-height:1.15;}
+.mbs-world-copy span:last-child{font-size:11px;line-height:1.35;opacity:.7;}
+.mbs-world-arrow{position:absolute;right:13px;bottom:16px;width:16px;height:16px;opacity:.62;}
+
+.mbs-hub-page{padding-bottom:110px;}
+.mbs-hub-head{
+  margin-top:14px;padding:27px 23px;border-radius:28px;
+  background:linear-gradient(145deg,#E9DFE6,#F6F2EC);
+}
+.mbs-hub-head.evolution{background:linear-gradient(145deg,#5E4A59,#80697A);color:#FFFDF9;}
+.mbs-hub-head h2{font-size:30px;margin:8px 0 10px;}
+.mbs-hub-head p{font-size:15px;line-height:1.6;margin:0;opacity:.78;}
+.mbs-hub-placeholder{
+  margin-top:14px;padding:22px;border-radius:25px;
+  background:#FFFDF9;border:1px solid #E5DCE1;
+}
+.mbs-hub-placeholder span{font-size:10px;letter-spacing:.12em;font-weight:700;color:#9A7F92;}
+.mbs-hub-placeholder strong{display:block;font-size:18px;margin:7px 0;color:#211D20;}
+.mbs-hub-placeholder p{font-size:14px;line-height:1.55;color:#776D72;margin:0;}
+
+
+/* Distinct navigation entrances: MBS® / MBS Evolution */
+.mbs-worlds{
+  grid-template-columns:1fr !important;
+  gap:10px !important;
+  margin:10px 0 4px !important;
+}
+.mbs-world-card{
+  min-height:88px !important;
+  padding:15px 18px !important;
+  border-radius:20px !important;
+  flex-direction:row !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:14px !important;
+  box-shadow:none !important;
+}
+.mbs-world-main{
+  background:#FFFDF9 !important;
+  color:#5E4A59 !important;
+  border:1.5px solid #B49AAE !important;
+}
+.mbs-world-evolution{
+  background:#5E4A59 !important;
+  color:#FFFDF9 !important;
+  border:1.5px solid #5E4A59 !important;
+}
+.mbs-world-icon{
+  flex:0 0 45px !important;
+  width:45px !important;
+  height:45px !important;
+  border-radius:50% !important;
+  background:#E9DFE6 !important;
+}
+.mbs-world-evolution .mbs-world-icon{
+  background:rgba(255,255,255,.13) !important;
+}
+.mbs-world-copy{
+  flex:1 !important;
+  padding-right:25px !important;
+  gap:2px !important;
+}
+.mbs-world-copy strong{
+  font-size:18px !important;
+}
+.mbs-world-copy span:last-child{
+  font-size:11.5px !important;
+}
+.mbs-world-arrow{
+  right:18px !important;
+  bottom:auto !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+}
+
+/* Make "<span class="library-title-light">Biblioteca audio MBS</span>" readable on mauve content pages */
+.library-subtitle,
+.page-subtitle,
+.content-header .subtitle,
+.content-hero .subtitle,
+#podcasturi .subtitle,
+#podcasts .subtitle{
+  color:#F6F2EC !important;
+  opacity:.92 !important;
+}
+
+
+.library-title-light{color:#F6F2EC !important;opacity:.94 !important;}
+
+/* DESPRE MBS — tertiary/editorial treatment, distinct from MBS® / Evolution */
+.about-card,
+[data-page="about"].about-card,
+.home-about-card{
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid rgba(94,74,89,.18) !important;
+  border-bottom:1px solid rgba(94,74,89,.18) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  min-height:64px !important;
+  padding:15px 4px !important;
+}
+
+/* <span class="library-title-light">BIBLIOTECA MBS</span> — force light text on the mauve header */
+.library-title-light,
+.library-subtitle,
+#podcasturi .library-title-light,
+#podcasts .library-title-light,
+#podcasturi .page-subtitle,
+#podcasts .page-subtitle{
+  color:#FFFDF9 !important;
+  -webkit-text-fill-color:#FFFDF9 !important;
+  opacity:1 !important;
+}
+
+
+/* FINAL visual hierarchy */
+
+/* 1. "Biblioteca MBS" on Home — clearly light */
+#home .materials-heading .materials-subtitle{
+  color:#F6F2EC !important;
+  -webkit-text-fill-color:#F6F2EC !important;
+  opacity:1 !important;
+}
+
+/* 2. MBS® + MBS Evolution — same visual family */
+#home .mbs-world-main,
+#home .mbs-world-evolution{
+  background:#5E4A59 !important;
+  color:#FFFDF9 !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  box-shadow:0 8px 20px rgba(94,74,89,.10) !important;
+}
+#home .mbs-world-main .mbs-world-icon,
+#home .mbs-world-evolution .mbs-world-icon{
+  background:rgba(255,255,255,.13) !important;
+}
+#home .mbs-world-main .mbs-world-kicker,
+#home .mbs-world-evolution .mbs-world-kicker,
+#home .mbs-world-main .mbs-world-copy span:last-child,
+#home .mbs-world-evolution .mbs-world-copy span:last-child{
+  color:#F6F2EC !important;
+}
+
+/* 3. Despre MBS® — intentionally separate from the two main entrances */
+#home .home-card.about-card[data-page="about"]{
+  background:#F6F2EC !important;
+  color:#5E4A59 !important;
+  border:1px solid rgba(180,154,174,.32) !important;
+  border-radius:18px !important;
+  min-height:72px !important;
+  padding:12px 16px !important;
+  box-shadow:none !important;
+}
+#home .home-card.about-card[data-page="about"] .home-icon{
+  background:transparent !important;
+  border:1px solid rgba(180,154,174,.45) !important;
+  color:#5E4A59 !important;
+}
+#home .home-card.about-card[data-page="about"] .card-title{
+  color:#5E4A59 !important;
+}
+#home .home-card.about-card[data-page="about"] .card-sub{
+  color:#8A7A83 !important;
+}
+
 </style>
 </head>
 
@@ -2631,6 +2837,32 @@ body.audio-is-active .page{
       </div>
 
     </button>
+
+    <div class="mbs-worlds" aria-label="Spațiile MBS">
+      <button class="mbs-world-card mbs-world-main" type="button" data-page="mbsHub">
+        <div class="mbs-world-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><path d="M8.5 12h7M12 8.5v7"/></svg>
+        </div>
+        <div class="mbs-world-copy">
+          <span class="mbs-world-kicker">CARE</span>
+          <strong>MBS Care</strong>
+          <span>Corp · Emoții · Minte · Suflet</span>
+        </div>
+        <svg class="mbs-world-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+      </button>
+
+      <button class="mbs-world-card mbs-world-evolution" type="button" data-page="evolutionHub">
+        <div class="mbs-world-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M5 18c4-.3 6.6-1.7 8.2-4.1 1.3-2 1.8-4.3 2-7.2"/><path d="m11.8 7.5 3.6-1 1.2 3.5"/></svg>
+        </div>
+        <div class="mbs-world-copy">
+          <span class="mbs-world-kicker">EVOLVE</span>
+          <strong>MBS Evolve</strong>
+          <span>Spațiul tău de dezvoltare</span>
+        </div>
+        <svg class="mbs-world-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+      </button>
+    </div>
 
     <!-- SESIUNI -->
 
@@ -2704,6 +2936,40 @@ body.audio-is-active .page{
 </section>
 
 
+
+<!-- ======================================================
+     MBS HUB
+====================================================== -->
+<section id="mbsHub" class="page mbs-hub-page">
+  <button class="back" data-page="home">‹ Înapoi</button>
+  <div class="mbs-hub-head">
+    <div class="eyebrow">METODA</div>
+    <h2>MBS Care</h2>
+    <p>Spațiul dedicat corpului, emoțiilor, minții și sufletului.</p>
+  </div>
+  <div class="mbs-hub-placeholder">
+    <span>STRUCTURĂ</span>
+    <strong>Corp · Emoții · Minte · Suflet</strong>
+    <p>Paginile tale existente vor putea fi adăugate aici ca secțiuni interne ale aplicației.</p>
+  </div>
+</section>
+
+<!-- ======================================================
+     MBS EVOLUTION HUB
+====================================================== -->
+<section id="evolutionHub" class="page mbs-hub-page">
+  <button class="back" data-page="home">‹ Înapoi</button>
+  <div class="mbs-hub-head evolution">
+    <div class="eyebrow">EVOLUȚIE</div>
+    <h2>MBS Evolve</h2>
+    <p>Spațiul dedicat dezvoltării, practicilor și evoluției personale.</p>
+  </div>
+  <div class="mbs-hub-placeholder">
+    <span>ÎN DEZVOLTARE</span>
+    <strong>Construim pe parcurs.</strong>
+    <p>Fiecare nouă secțiune va putea fi conectată aici fără să aglomerăm pagina principală.</p>
+  </div>
+</section>
 
 <!-- ======================================================
      DESPRE MBS
@@ -3026,7 +3292,7 @@ body.audio-is-active .page{
   </h2>
 
   <p class="subtitle">
-    Biblioteca audio MBS
+    <span class="library-title-light">Biblioteca audio MBS</span>
   </p>
 
 
