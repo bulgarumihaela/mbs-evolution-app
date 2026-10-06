@@ -2976,43 +2976,54 @@ body.audio-is-active .page{
 }
 
 
-/* INTERNAL PAGE HEADER:
-   Back stays where it is; only the bold page title uses the empty space to its right.
-   Subtitle remains in normal flow / unchanged. */
-.page.internal-title-row{
-  position:relative !important;
-}
-.page.internal-title-row > .back{
-  position:relative !important;
-  z-index:2 !important;
-}
-.page.internal-title-row > h2{
-  position:absolute !important;
-  top:34px !important;
-  left:190px !important;
-  right:34px !important;
-  margin:0 !important;
+/* =========================================================
+   COMPACT INTERNAL HEADERS — Samadhi-inspired spacing
+   Only internal page top area; cards/content remain unchanged.
+========================================================= */
+
+/* Back: thin and safely below Telegram controls, without wasting space */
+.page:not(#home) > .back,
+#mbsHub .back{
+  margin-top:24px !important;
+  margin-bottom:18px !important;
   min-height:30px !important;
-  display:flex !important;
-  align-items:center !important;
-  font-size:clamp(22px,5.7vw,31px) !important;
-  line-height:1.02 !important;
-  font-weight:700 !important;
-  letter-spacing:-.025em !important;
-  overflow-wrap:anywhere !important;
-}
-/* Do not move subtitles */
-.page.internal-title-row > .subtitle{
-  position:static !important;
+  height:30px !important;
+  padding:3px 12px !important;
+  border-radius:15px !important;
+  line-height:1 !important;
 }
 
-/* Slightly tighter title on very narrow phones so long labels still fit */
-@media(max-width:390px){
-  .page.internal-title-row > h2{
-    left:178px !important;
-    right:22px !important;
-    font-size:clamp(20px,5.4vw,27px) !important;
-  }
+/* Standard internal page titles */
+.page:not(#home) > h2{
+  font-size:30px !important;
+  line-height:1.08 !important;
+  letter-spacing:-.025em !important;
+  margin-top:0 !important;
+  margin-bottom:6px !important;
+}
+
+/* Standard internal subtitles */
+.page:not(#home) > h2 + .subtitle,
+.page:not(#home) > .subtitle{
+  font-size:15px !important;
+  line-height:1.4 !important;
+  margin-top:0 !important;
+  margin-bottom:18px !important;
+}
+
+/* Search starts closer to the compact title block */
+.page:not(#home) > .search{
+  margin-top:14px !important;
+}
+
+/* MBS Care has its own hero instead of h2/subtitle: bring it closer to Back */
+#mbsHub .care-hero{
+  margin-top:0 !important;
+}
+
+/* Other custom internal hero blocks */
+.mbs-hub-page > .mbs-hub-head{
+  margin-top:0 !important;
 }
 
 </style>
@@ -3262,7 +3273,7 @@ body.audio-is-active .page{
 <!-- ======================================================
      MBS EVOLUTION HUB
 ====================================================== -->
-<section id="evolutionHub" class="page mbs-hub-page internal-title-row">
+<section id="evolutionHub" class="page mbs-hub-page">
   <button class="back" data-page="home">‹ Înapoi</button>
   <div class="mbs-hub-head evolution">
     <div class="eyebrow">EVOLUȚIE</div>
@@ -3280,7 +3291,7 @@ body.audio-is-active .page{
      DESPRE MBS
 ====================================================== -->
 
-<section id="about" class="page internal-title-row">
+<section id="about" class="page">
 
   <button class="back" data-page="home"><span class="bottom-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4Z"/></svg></span>
     ‹ Înapoi
@@ -3586,7 +3597,7 @@ body.audio-is-active .page{
      PODCASTURI
 ====================================================== -->
 
-<section id="podcasts" class="page internal-title-row">
+<section id="podcasts" class="page">
 
   <button class="back" data-page="home">
     ‹ Înapoi
@@ -3746,7 +3757,7 @@ body.audio-is-active .page{
      PRACTICI
 ====================================================== -->
 
-<section id="practices" class="page internal-title-row">
+<section id="practices" class="page">
 
   <button
     class="back"
@@ -3790,7 +3801,7 @@ body.audio-is-active .page{
      SALVATE
 ====================================================== -->
 
-<section id="saved" class="page internal-title-row">
+<section id="saved" class="page">
 
   <button
     class="back"
@@ -3839,7 +3850,7 @@ body.audio-is-active .page{
 ====================================================== -->
 
 
-<section id="info" class="page internal-title-row">
+<section id="info" class="page">
   <button class="back" data-page="home">Înapoi</button>
   <h2>Informații</h2>
   <p class="subtitle">Mesaje, texte, explicații și materiale scrise.</p>
@@ -3850,7 +3861,7 @@ body.audio-is-active .page{
 </section>
 
 
-<section id="live" class="page internal-title-row">
+<section id="live" class="page">
   <button class="back" data-page="home">Înapoi</button>
   <h2>Live-uri</h2>
   <p class="subtitle">Înregistrări și materiale din live-uri.</p>
@@ -3858,7 +3869,7 @@ body.audio-is-active .page{
   <div id="liveList"></div>
 </section>
 
-<section id="sessions" class="page internal-title-row">
+<section id="sessions" class="page">
   <button class="back" data-page="home">Înapoi</button>
 
   <div class="sessions-page-head">
