@@ -4373,6 +4373,21 @@ body,button,input,textarea,select{font-family:Arial,sans-serif!important;}
 <style id="trim-material-text-space">#home .materials-grid button.home-card.material-card:not([data-page="live"]){grid-template-rows:minmax(0,1fr) 58px!important}#home .materials-grid button.home-card.material-card:not([data-page="live"])>div:not(.material-photograph){height:58px!important;padding:8px 12px!important}#home .materials-grid button.home-card.material-card:not([data-page="live"]) .card-title{margin-bottom:3px!important}@media(max-width:360px){#home .materials-grid button.home-card.material-card:not([data-page="live"]){grid-template-rows:minmax(0,1fr) 62px!important}#home .materials-grid button.home-card.material-card:not([data-page="live"])>div:not(.material-photograph){height:62px!important;padding:8px 10px!important}}</style>
 <style id="balanced-material-text">#home .materials-grid button.home-card.material-card:not([data-page="live"])>div:not(.material-photograph){justify-content:center!important;padding-top:0!important;padding-bottom:0!important}#home .materials-grid button.home-card.material-card:not([data-page="live"]) .card-title{min-height:0!important;margin-top:0!important;margin-bottom:3px!important}#home .materials-grid button.home-card.material-card:not([data-page="live"]) .card-sub{margin:0!important}</style>
 <style id="back-button-clearance">body .app .page:not(#home)>button.back{margin-top:72px!important}body .app .sleep-content-page>button.care-return-button{margin-top:28px!important;position:relative!important;top:auto!important}</style>
+<style id="tracker-access-style">
+#careBody .tracker-access{margin:16px 0 0;padding:16px;border:1px solid #dbcbd5;border-radius:16px;background:#fffdfb;color:#493c45}
+#careBody .tracker-access h3{font:400 22px/1.25 Georgia,serif;margin:0 0 6px}
+#careBody .tracker-access p{font-size:13px;line-height:1.5;margin:0 0 12px}
+#careBody .tracker-access summary{cursor:pointer;font-size:13px;font-weight:600;color:#79566f;padding:10px 0;display:flex;justify-content:space-between;list-style:none}
+#careBody .tracker-access summary::-webkit-details-marker{display:none}
+#careBody .tracker-access form{display:grid;gap:8px;padding-top:8px}
+#careBody .tracker-access label{font-size:12px}
+#careBody .tracker-access input{width:100%;min-width:0;padding:10px 12px;border:1px solid #dbcbd5;border-radius:9px;background:#fff;color:#493c45;font-size:16px}
+#careBody .tracker-access button{padding:11px 12px;border:0;border-radius:9px;background:#79566f;color:#fff;font-size:13px;cursor:pointer}
+#careBody .tracker-access .tracker-access-note{font-size:11px;line-height:1.5;margin:3px 0;color:#6b5b65}
+#careBody .tracker-existing-access{display:inline-block;margin-top:10px;color:#79566f;font-size:12px;text-decoration:none}
+#careBody #trackerAccessStatus:empty{display:none}
+</style>
+<style id="tracker-open-button">#careBody .tracker-existing-access{display:flex;align-items:center;justify-content:center;width:100%;padding:11px 14px;margin:10px 0 8px;border:1px solid #79566f;border-radius:10px;background:#79566f;color:#fff;font-size:13px;font-weight:500;text-decoration:none}</style>
 </head>
 
 
@@ -4600,6 +4615,24 @@ body,button,input,textarea,select{font-family:Arial,sans-serif!important;}
       <div class="body-card-copy"><h3>Mișcare</h3><p>Energie și mobilitate</p></div>
     </button>
   </div>
+
+<section class="tracker-access" aria-labelledby="tracker-access-title">
+  <h3 id="tracker-access-title">Jurnalul corpului</h3>
+  <p>Urmărește alimentația, hidratarea, mișcarea și somnul.</p>
+  <details><summary>Solicită acces la jurnal <span aria-hidden="true">→</span></summary>
+    <form id="trackerAccessForm">
+      <label for="trackerName">Nume</label>
+      <input id="trackerName" name="name" autocomplete="name" required maxlength="100">
+      <label for="trackerEmail">Adresa de email</label>
+      <input id="trackerEmail" name="email" type="email" autocomplete="email" required maxlength="254">
+      <p class="tracker-access-note">Accesul se activează manual. Folosește această adresă și pentru autentificarea în jurnal.</p>
+      <button type="submit">Pregătește emailul de solicitare →</button>
+      <p class="tracker-access-note">Se deschide aplicația ta de email. Apasă „Trimite” pentru a finaliza solicitarea. Numele și emailul vor fi folosite pentru activarea accesului.</p>
+      <p id="trackerAccessStatus" role="status"></p>
+    </form>
+  </details>
+  <a class="tracker-existing-access" href="https://transformare-mbs.glide.page" target="_blank" rel="noopener">Deschide jurnalul ↗</a><p class="tracker-access-note">Autentifică-te cu emailul aprobat. Jurnalul este disponibil după activarea accesului.</p>
+</section>
 </section>
 <section id="careSleep" class="page sleep-content-page"><button type="button" class="care-return-button" data-page="careBody">‹ Înapoi la Corp</button><iframe class="sleep-content-frame" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;ro&quot;&gt;
 &lt;head&gt;&lt;base href=&quot;https://mbs-care-somn.vercel.app/&quot;&gt;
@@ -12175,5 +12208,19 @@ document.addEventListener("click", function(e){
 });
 </script>
 
+<script>
+document.getElementById('trackerAccessForm').addEventListener('submit',function(event){
+  event.preventDefault();
+  if(!this.reportValidity())return;
+  const name=this.elements.name.value.trim();
+  const email=this.elements.email.value.trim();
+  if(!name){this.elements.name.setCustomValidity('Completează numele.');this.elements.name.reportValidity();return;}
+  const subject='Solicitare acces — Jurnalul corpului MBS';
+  const body='Bună,\n\nDoresc activarea accesului la Jurnalul corpului MBS.\n\nNume: '+name+'\nEmail pentru acces: '+email+'\n\nMulțumesc!';
+  window.location.href='mailto:bulgaru.mihaella99@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  document.getElementById('trackerAccessStatus').textContent='Finalizează solicitarea apăsând „Trimite” în aplicația de email. Dacă nu se deschide, scrie la bulgaru.mihaella99@gmail.com și include numele și emailul pentru acces.';
+});
+document.getElementById('trackerName').addEventListener('input',function(){this.setCustomValidity('');});
+</script>
 </body>
 </html>
