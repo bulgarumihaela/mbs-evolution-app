@@ -3341,6 +3341,78 @@ body{
   font-weight:400 !important;
 }
 
+
+/* =========================================================
+   FINAL GLOBAL BACK NORMALIZATION
+   Same appearance as Podcasturi, including Despre MBS
+========================================================= */
+button.back,
+a.back,
+.back-button,
+.page-back,
+[class*="back"][role="button"],
+#about button,
+#about a.back,
+#aboutMbs button,
+#aboutMbs a.back,
+#about-mbs button,
+#about-mbs a.back{
+  width:auto !important;
+  min-width:0 !important;
+  max-width:max-content !important;
+  min-height:30px !important;
+  height:30px !important;
+  padding:3px 12px !important;
+  border:0 !important;
+  border-radius:15px !important;
+  background:#FFFDF9 !important;
+  color:#211D20 !important;
+  box-shadow:none !important;
+  font-family:Montserrat, sans-serif !important;
+  font-size:15px !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+  letter-spacing:0 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:3px !important;
+  white-space:nowrap !important;
+  -webkit-appearance:none !important;
+  appearance:none !important;
+}
+
+/* About MBS specific containers: remove inherited oversized typography */
+#about .back,
+#aboutMbs .back,
+#about-mbs .back,
+.about-page .back,
+.about-mbs-page .back{
+  min-height:30px !important;
+  height:30px !important;
+  padding:3px 12px !important;
+  border-radius:15px !important;
+  font-size:15px !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+}
+
+
+/* Exact Despre MBS page detected: #home */
+#home .back {
+  width:auto !important;
+  min-width:0 !important;
+  min-height:30px !important;
+  height:30px !important;
+  padding:3px 12px !important;
+  border-radius:15px !important;
+  background:#FFFDF9 !important;
+  color:#211D20 !important;
+  font-size:15px !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+}
+
 </style>
 </head>
 
