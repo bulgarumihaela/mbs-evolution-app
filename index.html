@@ -2523,6 +2523,51 @@ body.audio-is-active .page{
   .persistent-title{font-size:13px !important;}
 }
 
+
+/* Save = icon only */
+.save-button{
+  width:44px !important;
+  height:44px !important;
+  border-radius:15px !important;
+  padding:0 !important;
+}
+.save-bookmark-icon{
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.save-button.saved .save-bookmark-icon{
+  fill:currentColor;
+}
+
+/* Persistent player — slightly slimmer vertically, content sizes preserved */
+.persistent-player{
+  min-height:52px !important;
+  height:52px !important;
+  padding-top:4px !important;
+  padding-bottom:6px !important;
+  border-radius:21px !important;
+}
+.persistent-play,
+.persistent-forward,
+.persistent-volume,
+.persistent-close{
+  height:34px !important;
+}
+.persistent-speed{
+  height:36px !important;
+}
+.persistent-title{
+  margin-bottom:5px !important;
+}
+body.audio-is-active .page{
+  padding-top:68px !important;
+}
+
 </style>
 </head>
 
@@ -4619,11 +4664,9 @@ function cardHTML(
           aria-label="Salvează"
         >
 
-          ${
-            favorite
-              ? "Salvat"
-              : "Salvează"
-          }
+          <svg class="save-bookmark-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 4.5h10a1.5 1.5 0 0 1 1.5 1.5v14L12 16.2 5.5 20V6A1.5 1.5 0 0 1 7 4.5Z"></path>
+          </svg>
 
         </button>
 
