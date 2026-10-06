@@ -2363,6 +2363,67 @@ body.audio-is-active .page{
   z-index:2 !important;
 }
 
+
+/* Final readability + richer sessions. Hero/photo intentionally untouched. */
+#sessions .subtitle{font-size:15px !important;line-height:1.6 !important;}
+.sessions-intro-card p,.sessions-contact p,.sessions-details-card p{
+  font-size:15px !important;
+  line-height:1.65 !important;
+}
+.session-step strong{font-size:16px !important;}
+.session-step p{font-size:14px !important;line-height:1.58 !important;}
+.sessions-kicker,.sessions-label{font-size:11px !important;}
+.sessions-details-card{
+  margin-top:12px;
+  padding:22px 21px;
+  border-radius:25px;
+  background:rgba(255,253,249,.78);
+  border:1px solid rgba(180,154,174,.18);
+}
+.sessions-details-card p{margin:12px 0 0;color:#5f4f5b}
+
+/* Persistent audio bar — compact, top, reference-inspired */
+.persistent-player{
+  width:min(calc(100% - 22px),620px) !important;
+  min-height:62px !important;
+  padding:8px 10px 10px !important;
+  grid-template-columns:38px 34px minmax(0,1fr) 48px 36px 34px !important;
+  gap:5px !important;
+  border-radius:24px !important;
+  background:rgba(248,244,239,.98) !important;
+}
+.persistent-play{width:38px !important;height:38px !important;}
+.persistent-forward,.persistent-volume{
+  width:34px;height:38px;border:0;background:transparent;color:#3e333a;
+  display:flex;align-items:center;justify-content:center;padding:0;
+}
+.persistent-forward svg,.persistent-volume svg{
+  width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.65;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.persistent-title{
+  font-size:15px !important;
+  font-weight:700 !important;
+  margin-bottom:7px !important;
+}
+.persistent-speed{
+  width:46px !important;height:40px !important;border-radius:20px !important;
+  font-size:14px !important;
+}
+.persistent-progress{height:3px !important;}
+.persistent-close{width:34px !important;height:38px !important;}
+body.audio-is-active .page{padding-top:76px !important;}
+
+@media(max-width:390px){
+  .persistent-player{
+    grid-template-columns:34px 30px minmax(0,1fr) 44px 32px 30px !important;
+    gap:3px !important;
+    padding-left:7px !important;
+    padding-right:7px !important;
+  }
+  .persistent-title{font-size:14px !important;}
+}
+
 </style>
 </head>
 
@@ -3099,9 +3160,16 @@ body.audio-is-active .page{
   </div>
 
   <div class="sessions-steps">
-    <div class="session-step"><span>01</span><div><strong>Clarificăm</strong><p>Ce se întâmplă acum și care este problema asupra căreia vrei să lucrăm.</p></div></div>
-    <div class="session-step"><span>02</span><div><strong>Explorăm</strong><p>Corpul, emoțiile, gândurile și comportamentele implicate în situația ta.</p></div></div>
-    <div class="session-step"><span>03</span><div><strong>Integrăm</strong><p>Ceea ce ai observat și direcția concretă pe care vrei să o susții mai departe.</p></div></div>
+    <div class="session-step"><span>01</span><div><strong>Clarificăm</strong><p>Ce se întâmplă acum, ce te apasă cel mai mult și asupra cărei situații vrei să lucrăm.</p></div></div>
+    <div class="session-step"><span>02</span><div><strong>Explorăm</strong><p>Observăm împreună corpul, emoțiile, gândurile, reacțiile și comportamentele care apar în situația ta.</p></div></div>
+    <div class="session-step"><span>03</span><div><strong>Facem legăturile</strong><p>Privim ce se repetă, ce menține situația și unde există spațiu pentru o perspectivă sau un răspuns diferit.</p></div></div>
+    <div class="session-step"><span>04</span><div><strong>Integrăm</strong><p>Punem în ordine ceea ce ai observat și conturăm o direcție concretă pe care o poți susține mai departe în viața ta.</p></div></div>
+  </div>
+
+  <div class="sessions-details-card">
+    <div class="sessions-label">CÂND POATE FI POTRIVITĂ O SESIUNE</div>
+    <p>Când simți că te învârți în aceeași situație, reacționezi într-un mod pe care nu îl înțelegi, corpul îți transmite ceva sau știi ce ai vrea să schimbi, dar între a înțelege și a face diferit pare să existe un blocaj.</p>
+    <p>Poți veni cu o situație foarte concretă. Nu este nevoie să știi dinainte „care este problema reală”. Pornim exact de unde ești acum.</p>
   </div>
 
   <div class="sessions-contact">
@@ -3124,21 +3192,20 @@ body.audio-is-active .page{
 
 <div id="persistentPlayer" class="persistent-player" aria-hidden="true">
   <button id="persistentPlay" class="persistent-play" type="button" aria-label="Redă sau pune pauză">
-    <svg class="persistent-icon persistent-icon-play" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M8 5.5 18 12 8 18.5Z"></path>
-    </svg>
-    <svg class="persistent-icon persistent-icon-pause" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M9 6v12M15 6v12"></path>
-    </svg>
+    <svg class="persistent-icon persistent-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8 18.5 12 7 19.2Z"></path></svg>
+    <svg class="persistent-icon persistent-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"></path></svg>
   </button>
-
+  <button id="persistentForward" class="persistent-forward" type="button" aria-label="Înainte 15 secunde">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 5.5 15 12l-9.5 6.5Z"></path><path d="M18 5v14"></path></svg>
+  </button>
   <div class="persistent-main">
     <div id="persistentTitle" class="persistent-title">Audio MBS</div>
     <input id="persistentProgress" class="persistent-progress" type="range" min="0" max="1000" value="0" aria-label="Poziție audio">
   </div>
-
   <button id="persistentSpeed" class="persistent-speed" type="button">1x</button>
-
+  <button id="persistentVolume" class="persistent-volume" type="button" aria-label="Sunet">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10h4l5-4v12l-5-4H4Z"></path><path d="M16 9c1.5 1.5 1.5 4.5 0 6M18.5 6.5c3 3 3 8 0 11"></path></svg>
+  </button>
   <button id="persistentClose" class="persistent-close" type="button" aria-label="Închide playerul">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
   </button>
@@ -5345,6 +5412,23 @@ function bindPersistentPlayer() {
   const progress = document.getElementById("persistentProgress");
   const speed = document.getElementById("persistentSpeed");
   const close = document.getElementById("persistentClose");
+  const forward = document.getElementById("persistentForward");
+  const volume = document.getElementById("persistentVolume");
+
+  forward?.addEventListener("click", () => {
+    if (!activeAudio) return;
+    activeAudio.currentTime = Math.min(
+      Number.isFinite(activeAudio.duration) ? activeAudio.duration : activeAudio.currentTime + 15,
+      activeAudio.currentTime + 15
+    );
+    syncPersistentPlayer();
+  });
+
+  volume?.addEventListener("click", () => {
+    if (!activeAudio) return;
+    activeAudio.muted = !activeAudio.muted;
+    volume.classList.toggle("is-muted", activeAudio.muted);
+  });
 
   play?.addEventListener("click", async () => {
     if (!activeAudio) return;
