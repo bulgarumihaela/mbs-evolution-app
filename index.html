@@ -3275,6 +3275,72 @@ body{
   background:transparent !important;
 }
 
+
+/* =========================================================
+   UNIFORM BACK BUTTON — EXACTLY LIKE PODCAST FILTER PAGE
+   Applied to every internal screen
+========================================================= */
+.page:not(#home) .back,
+#mbsHub .back,
+.back{
+  width:auto !important;
+  min-width:0 !important;
+  min-height:30px !important;
+  height:30px !important;
+  padding:3px 12px !important;
+  margin-top:24px !important;
+  margin-bottom:18px !important;
+  border:0 !important;
+  border-radius:15px !important;
+  background:#FFFDF9 !important;
+  color:#211D20 !important;
+  box-shadow:none !important;
+  font-size:15px !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+  letter-spacing:0 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:3px !important;
+  white-space:nowrap !important;
+  -webkit-appearance:none !important;
+  appearance:none !important;
+}
+
+/* Normalize any page-specific variants */
+.page:not(#home) .back svg,
+#mbsHub .back svg,
+.back svg{
+  width:13px !important;
+  height:13px !important;
+  flex:0 0 13px !important;
+  stroke:currentColor !important;
+  stroke-width:1.8 !important;
+}
+
+/* Prevent special pages from stretching or restyling Back */
+#about .back,
+#info .back,
+#podcasts .back,
+#practices .back,
+#questions .back,
+#live .back,
+#saved .back,
+#sessions .back,
+#filters .back,
+#mbsHub .back{
+  width:auto !important;
+  min-height:30px !important;
+  height:30px !important;
+  padding:3px 12px !important;
+  border-radius:15px !important;
+  background:#FFFDF9 !important;
+  color:#211D20 !important;
+  font-size:15px !important;
+  font-weight:400 !important;
+}
+
 </style>
 </head>
 
